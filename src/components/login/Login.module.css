@@ -23,9 +23,10 @@
 .titlte {
   color: white;
   text-transform: uppercase;
-  animation-name: notsh;
-  animation-duration: 3s;
-  animation-iteration-count: ease-in;
+  /* animation-name: notsh;
+  animation-delay: 1s; 
+  animation-duration: 10s;
+  animation-iteration-count: ease-in; */
 }
 .cer {
   width: 1.2rem;
@@ -41,16 +42,8 @@
     transform: translateY(0);
   }
 }
-@keyframes notsh {
-  from {
-    display: none;
-    opacity: 0;
-  }
-  to {
-    display: inline;
-    opacity: 1;
-  }
-}
+
+
 .Form-container {
   display: flex;
   justify-content: center;
