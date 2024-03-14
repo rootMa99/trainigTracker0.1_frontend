@@ -28,6 +28,30 @@ const NavBar = (p) => {
                 home
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
+              >
+              Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/reporting"
+                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
+              >
+              reporting
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/uploadFiles"
+                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
+              >
+              upload Files
+              </NavLink>
+            </li>
           </ul>
         </div>
       )}

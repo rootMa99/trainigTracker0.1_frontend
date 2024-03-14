@@ -93,7 +93,8 @@ const Login = () => {
         <button className={c["Login"]}>Submit</button>
       </form>
       {err && (
-        <Notification message="The username or password you entered is incorrect. Please double-check your credentials and try again." />
+        <Notification message="The username or password you entered is incorrect.
+         Please double-check your credentials and try again." />
       )}
     </React.Fragment>
   );
