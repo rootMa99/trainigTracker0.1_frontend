@@ -1,17 +1,46 @@
 import React, { useState } from "react";
 import c from "./Login.module.css";
 import Notification from "../UI/Notification";
-
+import { useDispatch } from "react-redux";
+import api from "../../service/api";
+import { loginActions } from "../../store/loginSlice";
 const Login = () => {
   const [loginCred, setLogingCred] = useState({
     name: "",
     pwd: "",
   });
   const [err, setErr] = useState(false);
+  const dispatch = useDispatch();
 
   const ClickHandler = async (e) => {
     e.preventDefault();
-    setErr(true);
+    if (loginCred.name.trim() !== "" && loginCred.pwd.trim() !== "") {
+      const body = { userName: loginCred.name, password: loginCred.pwd };
+
+      try {
+        const response = await fetch(`${api}/auth/signIn`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+
+        const data = await response.json();
+        console.log(data);
+        dispatch(
+          loginActions.logIn({
+            role: data.role,
+            userName: data.userName,
+            token: data.token,
+          })
+        );
+      } catch (error) {
+        console.error("Error:", error);
+        setErr(true);
+      }
+    }
+    
   };
 
   const nameChangeHadler = (e) => {
@@ -37,7 +66,6 @@ const Login = () => {
       </div>
       <form className={c["Form-container"]} onSubmit={ClickHandler}>
         <h2 className={c["login-title"]}> Login </h2>
-
         <div>
           <div id="error" className={c["error-message"]}></div>
         </div>

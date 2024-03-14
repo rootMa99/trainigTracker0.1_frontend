@@ -16,6 +16,10 @@ const NavBar = (p) => {
       {isLoged.login && (
         <div className={c.links}>
           <ul>
+            <li style={{"color":"#f84018", "fontWeight":"600"}}>
+              Wellcome
+              {" " + isLoged.userName}
+            </li>
             <li>
               <NavLink
                 to="/home"

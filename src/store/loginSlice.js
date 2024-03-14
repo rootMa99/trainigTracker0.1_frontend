@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const login = createSlice({
+const loginS = createSlice({
   name: "logins",
   initialState: {
     isLoged: {
@@ -8,9 +8,9 @@ const login = createSlice({
       role: "",
       userName: "",
       token: "",
-    },
+    },},
     reducers: {
-      login(s, p) {
+      logIn(s, p) {
         s.isLoged.login = true;
         s.isLoged.role = p.payload.role;
         s.isLoged.userName = p.payload.userName;
@@ -25,9 +25,8 @@ const login = createSlice({
         };
       },
     },
-  },
 });
 
 
-export const loginActions=login.actions;
-export default login;
+export const loginActions = loginS.actions;
+export default loginS;
