@@ -7,14 +7,16 @@
   flex-direction: column;
   gap: 1rem;
   position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
+  top: 2rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 111111;
   text-transform: capitalize;
   padding-inline: 10px;
-  border-radius: 10px;
+  /* border-radius: 10px;
   background: linear-gradient(#810f0fa8, #f703036b) padding-box,
   linear-gradient(145deg, transparent 35%, rgb(145, 3, 3), rgb(211, 1, 1))
-    border-box;
+    border-box; */
 border: 2px solid transparent;
 background-size: 200% 100%;
 animation: gradient 5s ease infinite;
