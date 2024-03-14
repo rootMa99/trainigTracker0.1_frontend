@@ -4,7 +4,7 @@ import imglogo from "../../assets/aptiv-logo.svg";
 import { useSelector } from "react-redux";
 
 const NavBar = (p) => {
-  //const { isLoged } = useSelector((s) => s.loginr);
+  const { isLoged } = useSelector((s) => s.login);
 
   return (
     <div className={c.navBar}>
@@ -13,7 +13,8 @@ const NavBar = (p) => {
           <img src={imglogo} alt="logo for aptiv" />
         </NavLink>
       </div>
-      <div className={c.links}>
+      {isLoged.login && (
+        <div className={c.links}>
           <ul>
             <li>
               <NavLink
@@ -25,6 +26,7 @@ const NavBar = (p) => {
             </li>
           </ul>
         </div>
+      )}
     </div>
   );
 };

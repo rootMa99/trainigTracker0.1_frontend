@@ -27,3 +27,7 @@ const login = createSlice({
     },
   },
 });
+
+
+export const loginActions=login.actions;
+export default login;
