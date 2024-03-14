@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import c from "./NavBar.module.css";
 import imglogo from "../../assets/aptiv-logo.svg";
 import { useSelector } from "react-redux";
+import React from "react";
 
 const NavBar = (p) => {
   const { isLoged } = useSelector((s) => s.login);
@@ -16,7 +17,7 @@ const NavBar = (p) => {
       {isLoged.login && (
         <div className={c.links}>
           <ul>
-            <li style={{"color":"#f84018", "fontWeight":"600"}}>
+            <li style={{ color: "#f84018", fontWeight: "600" }}>
               Wellcome
               {" " + isLoged.userName}
             </li>
@@ -28,30 +29,40 @@ const NavBar = (p) => {
                 home
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/dashboard"
-                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
-              >
-              Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/reporting"
-                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
-              >
-              reporting
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/uploadFiles"
-                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
-              >
-              upload Files
-              </NavLink>
-            </li>
+            {(isLoged.role === "ROOT" || isLoged.role === "ADMIN") && (
+              <React.Fragment>
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    className={({ isActive }) =>
+                      isActive ? c.activeLink : c.link
+                    }
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/reporting"
+                    className={({ isActive }) =>
+                      isActive ? c.activeLink : c.link
+                    }
+                  >
+                    reporting
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/uploadFiles"
+                    className={({ isActive }) =>
+                      isActive ? c.activeLink : c.link
+                    }
+                  >
+                    upload Files
+                  </NavLink>
+                </li>
+              </React.Fragment>
+            )}
           </ul>
         </div>
       )}
