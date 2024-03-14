@@ -8,11 +8,10 @@ const Login = () => {
     pwd: "",
   });
   const [err, setErr] = useState(false);
- 
 
   const ClickHandler = async (e) => {
     e.preventDefault();
-    setErr(true)
+    setErr(true);
   };
 
   const nameChangeHadler = (e) => {
@@ -31,6 +30,11 @@ const Login = () => {
 
   return (
     <React.Fragment>
+      <div className={c.cont}>
+        <span className={c.cer}> </span>
+        <h1 className={c.titlte}>training center app</h1>
+        <span className={c.cer}> </span>
+      </div>
       <form className={c["Form-container"]} onSubmit={ClickHandler}>
         <h2 className={c["login-title"]}> Login </h2>
 
@@ -61,9 +65,9 @@ const Login = () => {
 
         <button className={c["Login"]}>Submit</button>
       </form>
-      {
-        err && <Notification message="username or password is incorrect. Please try again." />
-      }
+      {err && (
+        <Notification message="The username or password you entered is incorrect. Please double-check your credentials and try again." />
+      )}
     </React.Fragment>
   );
 };

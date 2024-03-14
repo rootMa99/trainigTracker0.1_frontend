@@ -11,6 +11,46 @@
   z-index: 1;
   color: white;
 }
+.cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  animation-name: top;
+  animation-duration: 2s;
+  animation-iteration-count: ease-in;
+}
+.titlte {
+  color: white;
+  text-transform: uppercase;
+  animation-name: notsh;
+  animation-duration: 3s;
+  animation-iteration-count: ease-in;
+}
+.cer {
+  width: 1.2rem;
+  height: 1.2rem;
+  background-color: #f84018;
+  border-radius: 50%;
+}
+@keyframes top {
+  from {
+    transform: translateY(-5rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes notsh {
+  from {
+    display: none;
+    opacity: 0;
+  }
+  to {
+    display: inline;
+    opacity: 1;
+  }
+}
 .Form-container {
   display: flex;
   justify-content: center;
@@ -54,7 +94,7 @@
   border: 2px solid #000;
 }
 .username:hover,
-.userpassword:hover{
+.userpassword:hover {
   border: 2px solid #000;
   cursor: pointer;
 }
