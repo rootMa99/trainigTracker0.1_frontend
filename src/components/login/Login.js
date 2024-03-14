@@ -40,7 +40,6 @@ const Login = () => {
         setErr(true);
       }
     }
-    
   };
 
   const nameChangeHadler = (e) => {
