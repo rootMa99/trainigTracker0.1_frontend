@@ -4,6 +4,7 @@ import Notification from "../UI/Notification";
 import { useDispatch } from "react-redux";
 import api from "../../service/api";
 import { loginActions } from "../../store/loginSlice";
+import aptivBgVid from "../../assets/videointro.mp4";
 const Login = () => {
   const [loginCred, setLogingCred] = useState({
     name: "",
@@ -58,6 +59,9 @@ const Login = () => {
 
   return (
     <React.Fragment>
+      <video className={c.videoBg} autoPlay loop playsInline muted>
+        <source src={aptivBgVid} type="video/mp4" />
+      </video>
       <div className={c.cont}>
         <span className={c.cer}> </span>
         <h1 className={c.titlte}>training center app</h1>
@@ -93,8 +97,10 @@ const Login = () => {
         <button className={c["Login"]}>Submit</button>
       </form>
       {err && (
-        <Notification message="The username or password you entered is incorrect.
-         Please double-check your credentials and try again." />
+        <Notification
+          message="The username or password you entered is incorrect.
+         Please double-check your credentials and try again."
+        />
       )}
     </React.Fragment>
   );

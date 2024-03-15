@@ -1,9 +1,4 @@
-.main {
-  position: relative;
-  z-index: 1;
-  color: white;
-  background-color: rgba(199, 12, 12, 0.82);
-}
+
 .cont {
   display: flex;
   align-items: center;
@@ -16,6 +11,7 @@
 .titlte {
   color: white;
   text-transform: uppercase;
+  z-index: 1;
   /* animation-name: notsh;
   animation-delay: 1s; 
   animation-duration: 10s;
@@ -24,6 +20,7 @@
 .cer {
   width: 1.2rem;
   height: 1.2rem;
+  z-index: 1;
   background-color: #f84018;
   border-radius: 50%;
 }
@@ -42,7 +39,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: transparent;
+  background-color: #16161633;
+  border: 2px solid #f84018;
   color: #f84018;
   width: 25rem;
   border-radius: 10px;
@@ -60,23 +58,22 @@
 .username,
 .userpassword {
   text-align: center;
-  border: 2px solid #f84018;
   margin: 0.6rem;
   color: white;
   background: transparent;
   padding: 0.8rem 2rem;
-  border-radius: 3rem;
+  border-radius: 10px;
   width: 19rem;
   font-size: 1.2rem;
   outline: none;
   transition: all 0.2s ease-in-out;
+  border: 2px solid #f84018;
+  background-color: #00000077;
+ 
 }
 .username:focus,
 .userpassword:focus {
   transform: scale(1.03);
-  animation-name: colorChange;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
   border: 2px solid #000;
 }
 .username:hover,
@@ -89,7 +86,7 @@
   border: 2px solid #f84018;
   padding: 0.5rem 3rem;
   margin: 1rem;
-  border-radius: 6rem;
+  border-radius: 10px;
   text-decoration: none;
   font-size: 1rem;
   color: #f84018;
@@ -105,4 +102,16 @@
 .Login:hover {
   background: #000000;
   border: 2px solid #000;
+}
+.videoBg {
+  object-fit: cover;
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  margin: 3rem 0 0 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  filter: blur(20px);
 }
