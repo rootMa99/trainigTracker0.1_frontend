@@ -2,6 +2,7 @@
     display: flex;
     width: 100%;
     justify-content: space-around;
+    cursor: pointer;
 }
 
 .trainingD, .trainingDi{
