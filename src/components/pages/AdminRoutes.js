@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import Home from "../admin/Home";
 
 const AdminRoutes = (p) => {
     console.log(p.d)
@@ -7,7 +8,7 @@ const AdminRoutes = (p) => {
     <Suspense>
       <Routes>
         <Route index path="/" element={<Navigate replace to="/home" />} />
-        <Route exact path="/home" element={<h1>home</h1>} />
+        <Route exact path="/home" element={<Home />} />
         <Route exact path="/dashboard" element={<h1>dashboard</h1>} />
         <Route exact path="/reporting" element={<h1>reporting</h1>} />
         <Route exact path="/uploadFiles" element={<h1>uploadFiles</h1>} />
