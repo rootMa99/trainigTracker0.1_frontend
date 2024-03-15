@@ -8,8 +8,11 @@ const Employee = (p) => {
         <img src={imglogo} alt="logo for aptiv" />
       </div>
       <div className={c.employeeT}>
-      <span></span>
-      <h1>Employee Info</h1>
+        <span></span>
+        <h1>Employee Info</h1>
+      </div>
+      <div className={c.infoC}>
+
       </div>
     </div>
   );
