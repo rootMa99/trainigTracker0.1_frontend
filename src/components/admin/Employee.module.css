@@ -1,0 +1,66 @@
+.form-container {
+  width: 95%;
+  height: 95%;
+  background: linear-gradient(#000000, #0c0c0c) padding-box,
+    linear-gradient(140deg, transparent 35%, #f33716, orange) border-box;
+  border: 4px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-size: 200% 100%;
+  animation: gradient 5s ease infinite;
+  position: fixed;
+  z-index: 11111;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.logo{
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+.employeeT{
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    position: absolute;
+    left: -20px;
+    top: 10px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.employeeT span{
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    background-color: #f33716;
+}
+.employeeT h1{
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: lighter;
+    /* font-size: 35px; */
+}
