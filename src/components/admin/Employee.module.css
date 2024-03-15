@@ -76,11 +76,14 @@
     height: 100%;
 }
 .perInfo {
-    width: 25%;
+    width: 20%;
     border-right: 2px solid #B7D1CF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 .trainingInfo {
-    width: 75%;
+    width: 80%;
 }
 .wrapData{
     width: 95%;
@@ -88,10 +91,16 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    margin: auto;
+    margin: 0 auto;
     border-bottom: 1px solid #B7D1CF;
 }
 .wrapData h3{
     color: #f33716;
     text-transform: uppercase;
+}
+.wrapData span{
+    text-transform: uppercase;
+    font-weight: bold;
+    /* font-weight: lighter; */
+    font-size: 20px;
 }
