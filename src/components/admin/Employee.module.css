@@ -84,6 +84,10 @@
 }
 .trainingInfo {
     width: 80%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
 }
 .wrapData{
     width: 95%;

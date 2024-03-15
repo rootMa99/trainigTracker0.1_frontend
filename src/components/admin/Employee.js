@@ -41,6 +41,18 @@ const Employee = (p) => {
         </div>
         <div className={c.trainingInfo}>
           <Training />
+          <Training />
+          <Training />
+          <Training />
+          <Training />
+          <Training />
+          <Training />
+          <Training />
+          <Training />
+          <Training />
+          <Training />
+          <Training />
+          <Training />
         </div>
       </div>
     </div>
