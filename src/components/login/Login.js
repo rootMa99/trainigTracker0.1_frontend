@@ -18,28 +18,35 @@ const Login = () => {
     if (loginCred.name.trim() !== "" && loginCred.pwd.trim() !== "") {
       const body = { userName: loginCred.name, password: loginCred.pwd };
 
-      try {
-        const response = await fetch(`${api}/auth/signIn`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        });
+      // try {
+      //   const response = await fetch(`${api}/auth/signIn`, {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(body),
+      //   });
 
-        const data = await response.json();
-        console.log(data);
-        dispatch(
-          loginActions.logIn({
-            role: data.role,
-            userName: data.userName,
-            token: data.token,
-          })
-        );
-      } catch (error) {
-        console.error("Error:", error);
-        setErr(true);
-      }
+      //   const data = await response.json();
+      //   console.log(data);
+      //   dispatch(
+      //     loginActions.logIn({
+      //       role: data.role,
+      //       userName: data.userName,
+      //       token: data.token,
+      //     })
+      //   );
+      // } catch (error) {
+      //   console.error("Error:", error);
+      //   setErr(true);
+      // }
+      dispatch(
+        loginActions.logIn({
+          role: "ROOT",
+          userName: "data.userName",
+          token: "data.token",
+        })
+      );
     }
   };
 

@@ -50,7 +50,7 @@ const Home = (p) => {
       }
       <div className={c.inputHolder}>
         <h1>
-          <span>The Bridge to Success:</span> Training and Transformation
+          <span>Level Up Your Skills:</span> Interactive Training at Your Fingertips
         </h1>
         <input
           type="text"
