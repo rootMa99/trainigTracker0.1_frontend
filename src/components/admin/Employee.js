@@ -53,6 +53,7 @@ const Employee = (p) => {
           <Training />
           <Training />
           <Training />
+          <Training />
         </div>
       </div>
     </div>
