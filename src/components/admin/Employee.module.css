@@ -39,15 +39,15 @@
 
 .logo {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 0.5rem;
+  right: 0.5rem;
 }
 .employeeT {
   display: flex;
   align-items: flex-end;
   gap: 0.5rem;
   position: absolute;
-  left: -20px;
+  left: -15px;
   top: 10px;
   flex-direction: row;
   flex-wrap: nowrap;
