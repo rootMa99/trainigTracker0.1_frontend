@@ -1,0 +1,81 @@
+.headerD {
+  margin-top: 2rem;
+  width: 100%;
+  background: linear-gradient(#000000, #000000) padding-box,
+    linear-gradient(145deg, transparent 35%, #f33716, orange) border-box;
+  border: 2px solid transparent;
+  padding:24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+    align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-size: 200% 100%;
+  animation: gradient 5s ease infinite;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.inputHi{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.inputH{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #717171;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.form-group input {
+  width: 90%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid #414141;
+  margin: auto;
+  text-align: center;
+  text-transform: uppercase;
+}
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
+}
+.form-group input::placeholder,
+.form-group input::placeholder {
+  opacity: 0.5;
+}
+.form-group input::placeholder {
+  color: #717171;
+}
+
+.form-group input:focus,
+.form-group input:hover {
+  outline: none;
+  border-color: #f33716;
+}

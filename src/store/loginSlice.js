@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getThisYearStartToEnd } from "../components/functions/dateFunction";
+
+
 
 const loginS = createSlice({
   name: "logins",
@@ -8,7 +11,8 @@ const loginS = createSlice({
       role: "",
       userName: "",
       token: "",
-    },},
+    },
+  dateBetween:getThisYearStartToEnd()},
     reducers: {
       logIn(s, p) {
         s.isLoged.login = true;
@@ -24,6 +28,15 @@ const loginS = createSlice({
           token: "",
         };
       },
+      setDateBetween(s,p){
+        s.dateBetween=p.payload;
+      },
+      setDateYearStart(s,p){
+        s.dateBetween.start=p.payload;
+      },
+      setDateYearEnd(s,p){
+        s.dateBetween.end=p.payload;
+      }
     },
 });
 

@@ -11,11 +11,14 @@ const Employee = (p) => {
   const onClickHandler = (e) => {
     setAddTraining(true);
   };
+   const close=p=>{
+    setAddTraining(false)
+   }
 
   return (
     <React.Fragment>
     {
-      addTraining && <BackDrop zindex={22221}/>
+      addTraining && <BackDrop zindex={22221} click={close}/>
     }
     {
       addTraining && <AddTrainingForm />

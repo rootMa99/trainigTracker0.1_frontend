@@ -20,6 +20,35 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.formCAdmin p{
+    color: #f1c07e;
+    text-transform: capitalize;
+    margin: 0;
+}
+.formCAdmin .title {
+    margin: 0;
+    color: #717171;
+    text-transform: uppercase;
+  }
+  .formCAdmin .title span{
+    color: #f33716;
+  }
+
+
+@keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+  
+    50% {
+      background-position: 100% 50%;
+    }
+  
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
 .formCAdmin .form {
   display: flex;
   flex-direction: row;
@@ -54,6 +83,10 @@
   text-align: center;
   text-transform: uppercase;
 }
+.formCAdmin .form-group input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+    cursor: pointer;
+  }
 .form-container .form-group input::placeholder,
 .formCAdmin .form-group input::placeholder {
   opacity: 0.5;
@@ -82,7 +115,7 @@
   color: #717171;
   font-weight: 600;
   width: 95%;
-  background: #313131;
+  background: transparent;
   border: 1px solid #414141;
   padding: 12px 16px;
   font-size: inherit;
@@ -97,4 +130,18 @@
   background-color: #f33716;
   border-color: #f33716;
   color: #fff;
+}
+
+
+.deleteTraining{
+    opacity: 0.5;
+    width: fit-content;
+    margin: 0 auto;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.deleteTraining:hover{
+    color: red;
+    opacity: 1;
+    transform: scale(1.1);
 }

@@ -1,8 +1,30 @@
+import React, { useState } from "react";
 import c from "./Training.module.css";
+import BackDrop from "../UI/BackDrop";
+import AddTrainingForm from "./AddTrainingFrom";
 
 const Training = (p) => {
+
+  const [editT, setEditT]=useState(false);
+
+  const clickHandler=e=>{
+    setEditT(true);
+  }
+
+  const close=e=>{
+    setEditT(false)
+  }
+
   return (
-    <div className={c.trainingH}>
+
+<React.Fragment>
+{
+  editT && <BackDrop zindex={22221} click={close}/>
+}
+{
+  editT && <AddTrainingForm note={true} />
+}
+    <div className={c.trainingH} onClick={clickHandler}>
       <div className={c.trainingD}>
         <div className={c.dataT}>
           <span>training title</span>
@@ -40,6 +62,8 @@ const Training = (p) => {
         </div>
       </div>
     </div>
+</React.Fragment>
+
   );
 };
 
