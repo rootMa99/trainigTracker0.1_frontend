@@ -68,6 +68,7 @@ const dispatch= useDispatch();
               onClick={() => dateInputRef.current.showPicker()}
               onChange={e=>dispatch(loginActions.setDateYearStart(e.target.value))}
               value={dateBetween.start}
+              max={dateBetween.end}
             />
           </div>
           <div className={c["form-group"]}>
@@ -82,6 +83,7 @@ const dispatch= useDispatch();
               onClick={() => dateInputRefe.current.showPicker()}
               onChange={e=>dispatch(loginActions.setDateYearEnd(e.target.value))}
               value={dateBetween.end}
+              min={dateBetween.start}
             />
           </div>
         </div>
