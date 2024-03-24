@@ -74,8 +74,8 @@ const customStyles = {
 
 const today = getTodayFormat();
 const AddTrainingForm = React.memo((p) => {
-  const { titleAndType,isLoged } = useSelector((s) => s.login);
-  const dispatch= useDispatch();
+  const { titleAndType, isLoged } = useSelector((s) => s.login);
+  const dispatch = useDispatch();
   const [dataForm, setDataForm] = useState({
     trainingType: p.data !== undefined ? p.data.trainingType : "",
     trainingTitle: p.data !== undefined ? p.data.trainingTitle : "",
@@ -88,9 +88,8 @@ const AddTrainingForm = React.memo((p) => {
     eva: p.data !== undefined ? p.data.eva : false,
     matricules: p.matricule !== undefined ? [p.matricule] : [],
   });
-  const [err, setErr]=useState(false);
-  const [success, setSuccess]=useState(false);
-
+  const [err, setErr] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const dateInputRef = useRef(null);
   const dateInputRefe = useRef(null);
@@ -129,15 +128,18 @@ const AddTrainingForm = React.memo((p) => {
     }
   };
 
-  const submitHandler=async e=>{
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(dataForm)
+    console.log(dataForm);
+    const uri = p.note
+      ? `${api}/admin/updateTrainingById?trainingId=${p.data.trainingId}`
+      : `${api}/admin/addTrainingToEmployees`;
     try {
-      const response = await fetch(`${api}/admin/addTrainingToEmployees`, {
-        method: p.note? "PUT" : "POST",
+      const response = await fetch(uri, {
+        method: p.note ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${isLoged.token}`
+          Authorization: `Bearer ${isLoged.token}`,
         },
         body: JSON.stringify(dataForm),
       });
@@ -145,194 +147,217 @@ const AddTrainingForm = React.memo((p) => {
       const data = await response.json();
       setSuccess(true);
       console.log(data);
-      data.ddb=data.ddb.split('T')[0];
-      data.ddf=data.ddf.split('T')[0];
-      dispatch(
-        loginActions.addTrainingToEmployee(data)
-      );
-      p.click()
+      if (p.note) {
+        data.ddb = data.ddb.split("T")[0];
+        data.ddf = data.ddf.split("T")[0];
+      }
+      if (p.note) {
+        dispatch(
+          loginActions.editTraining({
+            data: { ...dataForm, trainingId: data.trainingId },
+            id: data.trainingId,
+          })
+        );
+      } else {
+        dispatch(loginActions.addTrainingToEmployee(data));
+      }
+      p.click();
     } catch (error) {
       console.error("Error:", error);
       setErr(true);
     }
-  }
+  };
 
   return (
     <React.Fragment>
-    {
-      err && <NetworkNotify message={"Something has gone wrong, we were not able to save this action, please try it again. "} success={false}/>
-    }
-    {
-      success && <NetworkNotify message={p.note? "The training has been successfully updated." :`Adding training to employees with matricule: ${p.matricule}, successful.`} success={true}/>
-    }
-    <div className={c.formCAdmin}>
-      {p.note ? (
-        <h1 className={c.title}>edit training</h1>
-      ) : (
-        <h1 className={c.title}>
-          Add training to <span>{p.matricule}</span>
-        </h1>
+      {err && (
+        <NetworkNotify
+          message={
+            "Something has gone wrong, we were not able to save this action, please try it again. "
+          }
+          success={false}
+        />
       )}
-      {p.note && (
-        <p>
-          Note: When you update this training, it will be updated for all
-          employees who are relying on this training.
-        </p>
+      {success && (
+        <NetworkNotify
+          message={
+            p.note
+              ? "The training has been successfully updated."
+              : `Adding training to employees with matricule: ${p.matricule}, successful.`
+          }
+          success={true}
+        />
       )}
-      <form className={c.form} onSubmit={submitHandler}>
-        <div className={c["form-group"]}>
-          <label htmlFor="userName">training Type</label>
-          <Select
-            options={getTypes(titleAndType)}
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            defaultValue={{
-              label: dataForm.trainingType,
-              value: dataForm.trainingType,
-            }}
-            onChange={(e) => onchangeHandler(e, "type")}
-            placeholder="select training type"
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="traininTitle">training title</label>
-          <Select
-            options={
-              dataForm.trainingType === ""
-                ? []
-                : getlabelandvalue(
-                    titleAndType.filter(
-                      (f) => f.trainingType === dataForm.trainingType
-                    )[0].trainingTitles
-                  )
-            }
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            defaultValue={{
-              label: dataForm.trainingTitle,
-              value: dataForm.trainingTitle,
-            }}
-            onChange={(e) => onchangeHandler(e, "title")}
-            placeholder="select training title"
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="modality">modality</label>
-          <Select
-            options={[
-              { value: "presential", label: "presential" },
-              { value: "remote", label: "remote" },
-            ]}
-            id="modality"
-            inputId="modality"
-            styles={customStyles}
-            defaultValue={{
-              label: dataForm.modalite,
-              value: dataForm.modalite,
-            }}
-            onChange={(e) => onchangeHandler(e, "modality")}
-            placeholder="select modality"
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="tsph">Time spent per hour</label>
-          <input
-            required
-            name="tsph"
-            id="tsph"
-            type="number"
-            value={dataForm.dph}
-            onChange={(e) => onchangeHandler(e, "dph")}
-            placeholder="enter TS/h"
-            min={0}
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="sd">start date</label>
-          <input
-            required
-            name="sd"
-            id="sd"
-            type="date"
-            placeholder="enter TS/h"
-            ref={dateInputRef}
-            onChange={(e) => onchangeHandler(e, "sd")}
-            value={dataForm.ddb}
-            onClick={() => dateInputRef.current.showPicker()}
-            max={dataForm.ddf}
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="ed">end date</label>
-          <input
-            required
-            name="ed"
-            id="ed"
-            type="date"
-            placeholder="enter TS/h"
-            ref={dateInputRefe}
-            onChange={(e) => onchangeHandler(e, "ed")}
-            value={dataForm.ddf}
-            onClick={() => dateInputRefe.current.showPicker()}
-            min={dataForm.ddb}
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="provider">provider</label>
-          <Select
-            options={[
-              { value: "APTIV", label: "APTIV" },
-              { value: "OTHER", label: "other" },
-            ]}
-            id="modality"
-            inputId="privider"
-            styles={customStyles}
-            defaultValue={{
-              label: dataForm.prestataire,
-              value: dataForm.prestataire,
-            }}
-            onChange={(e) => onchangeHandler(e, "provider")}
-            placeholder="enter provider"
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="trainer">trainer</label>
-          <input
-            required
-            name="trainer"
-            id="trainer"
-            type="text"
-            placeholder="enter trainer"
-            onChange={(e) => onchangeHandler(e, "trainer")}
-            value={dataForm.formatteur}
-          />
-        </div>
-        <div className={c["form-group"]} style={{ width: "95%" }}>
-          <label htmlFor="eva">eva</label>
-          <Select
-            options={[
-              { value: false, label: "false" },
-              { value: true, label: "true" },
-            ]}
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            defaultValue={{ label: `${dataForm.eva}`, value: dataForm.eva }}
-            onChange={(e) => onchangeHandler(e, "eva")}
-            placeholder="select eva"
-          />
-        </div>
-
-        <button type="submit" className={c["form-submit-btn"]}>
-          Submit
-        </button>
-        {p.note && (
-          <h5 className={c.deleteTraining}>Delete training to this Employee</h5>
+      <div className={c.formCAdmin}>
+        {p.note ? (
+          <h1 className={c.title}>edit training</h1>
+        ) : (
+          <h1 className={c.title}>
+            Add training to <span>{p.matricule}</span>
+          </h1>
         )}
-      </form>
-    </div>
+        {p.note && (
+          <p>
+            Note: When you update this training, it will be updated for all
+            employees who are relying on this training.
+          </p>
+        )}
+        <form className={c.form} onSubmit={submitHandler}>
+          <div className={c["form-group"]}>
+            <label htmlFor="userName">training Type</label>
+            <Select
+              options={getTypes(titleAndType)}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              defaultValue={{
+                label: dataForm.trainingType,
+                value: dataForm.trainingType,
+              }}
+              onChange={(e) => onchangeHandler(e, "type")}
+              placeholder="select training type"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="traininTitle">training title</label>
+            <Select
+              options={
+                dataForm.trainingType === ""
+                  ? []
+                  : getlabelandvalue(
+                      titleAndType.filter(
+                        (f) => f.trainingType === dataForm.trainingType
+                      )[0].trainingTitles
+                    )
+              }
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              defaultValue={{
+                label: dataForm.trainingTitle,
+                value: dataForm.trainingTitle,
+              }}
+              onChange={(e) => onchangeHandler(e, "title")}
+              placeholder="select training title"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="modality">modality</label>
+            <Select
+              options={[
+                { value: "presential", label: "presential" },
+                { value: "remote", label: "remote" },
+              ]}
+              id="modality"
+              inputId="modality"
+              styles={customStyles}
+              defaultValue={{
+                label: dataForm.modalite,
+                value: dataForm.modalite,
+              }}
+              onChange={(e) => onchangeHandler(e, "modality")}
+              placeholder="select modality"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="tsph">Time spent per hour</label>
+            <input
+              required
+              name="tsph"
+              id="tsph"
+              type="number"
+              value={dataForm.dph}
+              onChange={(e) => onchangeHandler(e, "dph")}
+              placeholder="enter TS/h"
+              min={0}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="sd">start date</label>
+            <input
+              required
+              name="sd"
+              id="sd"
+              type="date"
+              placeholder="enter TS/h"
+              ref={dateInputRef}
+              onChange={(e) => onchangeHandler(e, "sd")}
+              value={dataForm.ddb}
+              onClick={() => dateInputRef.current.showPicker()}
+              max={dataForm.ddf}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="ed">end date</label>
+            <input
+              required
+              name="ed"
+              id="ed"
+              type="date"
+              placeholder="enter TS/h"
+              ref={dateInputRefe}
+              onChange={(e) => onchangeHandler(e, "ed")}
+              value={dataForm.ddf}
+              onClick={() => dateInputRefe.current.showPicker()}
+              min={dataForm.ddb}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="provider">provider</label>
+            <Select
+              options={[
+                { value: "APTIV", label: "APTIV" },
+                { value: "OTHER", label: "other" },
+              ]}
+              id="modality"
+              inputId="privider"
+              styles={customStyles}
+              defaultValue={{
+                label: dataForm.prestataire,
+                value: dataForm.prestataire,
+              }}
+              onChange={(e) => onchangeHandler(e, "provider")}
+              placeholder="enter provider"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="trainer">trainer</label>
+            <input
+              required
+              name="trainer"
+              id="trainer"
+              type="text"
+              placeholder="enter trainer"
+              onChange={(e) => onchangeHandler(e, "trainer")}
+              value={dataForm.formatteur}
+            />
+          </div>
+          <div className={c["form-group"]} style={{ width: "95%" }}>
+            <label htmlFor="eva">eva</label>
+            <Select
+              options={[
+                { value: false, label: "false" },
+                { value: true, label: "true" },
+              ]}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              defaultValue={{ label: `${dataForm.eva}`, value: dataForm.eva }}
+              onChange={(e) => onchangeHandler(e, "eva")}
+              placeholder="select eva"
+            />
+          </div>
+
+          <button type="submit" className={c["form-submit-btn"]}>
+            Submit
+          </button>
+          {p.note && (
+            <h5 className={c.deleteTraining}>
+              Delete training to this Employee
+            </h5>
+          )}
+        </form>
+      </div>
     </React.Fragment>
   );
 });

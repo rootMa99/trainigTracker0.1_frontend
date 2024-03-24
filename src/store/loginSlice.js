@@ -50,6 +50,12 @@ const loginS = createSlice({
         const data=s.employeeData;
         data.trainingFromExcels.push(p.payload);
         s.employeeData=data;
+      },
+      editTraining(s,p){
+        const data = s.employeeData.trainingFromExcels;
+        const newData= data.filter(f=>f.trainingId!== p.payload.id);
+        newData.push(p.payload.data)
+        s.employeeData.trainingFromExcels=newData;
       }
     },
 });
