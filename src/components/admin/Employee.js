@@ -4,25 +4,23 @@ import Training from "./Training";
 import React, { useState } from "react";
 import AddTrainingForm from "./AddTrainingFrom";
 import BackDrop from "../UI/BackDrop";
+import { useSelector } from "react-redux";
 
 const Employee = (p) => {
+  const { employeeData } = useSelector((s) => s.login);
   const [addTraining, setAddTraining] = useState(false);
 
   const onClickHandler = (e) => {
     setAddTraining(true);
   };
-   const close=p=>{
-    setAddTraining(false)
-   }
-
+  const close = (p) => {
+    setAddTraining(false);
+  };
+  console.log(employeeData)
   return (
     <React.Fragment>
-    {
-      addTraining && <BackDrop zindex={22221} click={close}/>
-    }
-    {
-      addTraining && <AddTrainingForm />
-    }
+      {addTraining && <BackDrop zindex={22221} click={close} />}
+      {addTraining && <AddTrainingForm matricule={employeeData.matricule} />}
       <div className={c["form-container"]}>
         <div className={c.logo}>
           <img src={imglogo} alt="logo for aptiv" />
@@ -35,46 +33,38 @@ const Employee = (p) => {
           <div className={c.perInfo}>
             <div className={c.wrapData}>
               <h3>matricule</h3>
-              <span>965</span>
+              <span>{employeeData.matricule}</span>
             </div>
             <div className={c.wrapData}>
               <h3>name</h3>
-              <span>tayia</span>
+              <span>{employeeData.nom}</span>
             </div>
             <div className={c.wrapData}>
               <h3>last name</h3>
-              <span>amin</span>
+              <span>{employeeData.prenom}</span>
             </div>
             <div className={c.wrapData}>
               <h3>category</h3>
-              <span>IH</span>
+              <span>{employeeData.category}</span>
             </div>
             <div className={c.wrapData}>
               <h3>function</h3>
-              <span>Contremaître</span>
+              <span>{employeeData.fonction}</span>
             </div>
             <div className={c.wrapData}>
               <h3>department</h3>
-              <span>ASSEMBLY-4-</span>
+              <span>{employeeData.department}</span>
             </div>
             <button className={c.classBtn} onClick={onClickHandler}>
               add training
             </button>
           </div>
           <div className={c.trainingInfo}>
-            <Training />
-            <Training />
-            <Training />
-            <Training />
-            <Training />
-            <Training />
-            <Training />
-            <Training />
-            <Training />
-            <Training />
-            <Training />
-            <Training />
-            <Training />
+            {employeeData.trainingFromExcels.length === 0 ? (
+              <h3>No data found</h3>
+            ) : (
+              employeeData.trainingFromExcels.map(m=><Training data={m} key={m.trainingId} />)
+            )}
             <Training />
           </div>
         </div>

@@ -3,22 +3,28 @@ import aptivBgVid from "../../assets/videointro.mp4";
 import c from "./Home.module.css";
 import Employee from "./Employee";
 import BackDrop from "../UI/BackDrop";
-
+import api from "../../service/api";
+import { useDispatch, useSelector } from "react-redux";
+import { loginActions } from "../../store/loginSlice";
 
 const Home = (p) => {
+  const {isLoged}=useSelector((s) => s.login);
   const [typing, setTyping] = useState(false);
   const [value, setValue] = useState("");
   const [show, setShow]=useState(false);
+  const [err, setErr]=useState(false);
+  const dispatch= useDispatch();
+
 
   const onChangeHandler = (e) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
       if (value.trim() !== "" && +value !== 0) {
         setTyping(true);
-        setValue(value);
+        setValue(+value);
       } else if (value.trim() === "" || +value === 0) {
         setTyping(false);
-        setValue(e.target.value);
+        setValue(+value);
       }
     }
   };
@@ -27,9 +33,26 @@ const Home = (p) => {
       setTyping(false);
     }
   };
-  const onClickHandler = (e) => {
-    setTyping(false);
+  const onClickHandler =async (e) => {
+    try {
+      const response = await fetch(`${api}/employee/employee?matricule=${value}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      dispatch(loginActions.setEmployeeData(data))
+      setTyping(false);
     setShow(true);
+    } catch (error) {
+      console.error("Error:", error);
+      setErr(true);
+    }
+    
     //setValue("");
   };
   const onClose=e=>{

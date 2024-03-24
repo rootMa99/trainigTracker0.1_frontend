@@ -7,12 +7,11 @@ const AddTrainingForm = (p) => {
 
   return (
     <div className={c.formCAdmin}>
-     
       {p.note ? (
         <h1 className={c.title}>edit training</h1>
       ) : (
         <h1 className={c.title}>
-          Add training to <span>890</span>
+          Add training to <span>{p.matricule}</span>
         </h1>
       )}
       {p.note && (

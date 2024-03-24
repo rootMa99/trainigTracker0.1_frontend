@@ -12,7 +12,9 @@ const loginS = createSlice({
       userName: "",
       token: "",
     },
-  dateBetween:getThisYearStartToEnd()},
+  dateBetween:getThisYearStartToEnd(),
+  employeeData:[]
+},
     reducers: {
       logIn(s, p) {
         s.isLoged.login = true;
@@ -36,6 +38,14 @@ const loginS = createSlice({
       },
       setDateYearEnd(s,p){
         s.dateBetween.end=p.payload;
+      },
+      setEmployeeData(s,p){
+        s.employeeData=p.payload;
+      },
+      addTrainingToEmployee(s,p){
+        const data=s.employeeData;
+        data.trainingFromExcels.push(p.payload);
+        s.employeeData=data;
       }
     },
 });
