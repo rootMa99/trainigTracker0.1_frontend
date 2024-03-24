@@ -1,10 +1,13 @@
 import { useRef } from "react";
 import c from "./AddTrainingFrom.module.css";
+import { useSelector } from "react-redux";
 
 const AddTrainingForm = (p) => {
+  const { titleAndType } = useSelector((s) => s.login);
+
   const dateInputRef = useRef(null);
   const dateInputRefe = useRef(null);
-
+console.log(titleAndType)
   return (
     <div className={c.formCAdmin}>
       {p.note ? (

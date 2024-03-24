@@ -13,9 +13,13 @@ const loginS = createSlice({
       token: "",
     },
   dateBetween:getThisYearStartToEnd(),
-  employeeData:[]
+  employeeData:[],
+  titleAndType:[],
 },
     reducers: {
+      setTitleAndType(s,p){
+        s.titleAndType=p.payload
+      },
       logIn(s, p) {
         s.isLoged.login = true;
         s.isLoged.role = p.payload.role;

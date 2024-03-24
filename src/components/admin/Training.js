@@ -4,7 +4,6 @@ import BackDrop from "../UI/BackDrop";
 import AddTrainingForm from "./AddTrainingFrom";
 
 const Training = ({ data }) => {
-  console.log("runon", data);
   const [editT, setEditT] = useState(false);
 
   const clickHandler = (e) => {
