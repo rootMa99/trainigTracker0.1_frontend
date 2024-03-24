@@ -6,6 +6,7 @@ import BackDrop from "../UI/BackDrop";
 import api from "../../service/api";
 import { useDispatch, useSelector } from "react-redux";
 import { loginActions } from "../../store/loginSlice";
+import NetworkNotify from "../UI/NetworkNotify";
 
 const Home = (p) => {
   const {isLoged}=useSelector((s) => s.login);
@@ -47,6 +48,7 @@ const Home = (p) => {
       console.log(data);
       dispatch(loginActions.setEmployeeData(data))
       setTyping(false);
+    setErr(false);
     setShow(true);
     } catch (error) {
       console.error("Error:", error);
@@ -60,8 +62,16 @@ const Home = (p) => {
     setValue("");
   }
   const classBtn = !typing ? c.buttonOut : c.buttonIn;
+  if (err) {
+    setTimeout(() => {
+      setErr(false);
+    }, 8000);
+  }
   return (
     <React.Fragment>
+    {
+      err && <NetworkNotify message={`No employee found by matricule: ${value}, please try again`} success={false} />
+    }
       <video className={c.videoBg} autoPlay loop playsInline muted>
         <source src={aptivBgVid} type="video/mp4" />
       </video>

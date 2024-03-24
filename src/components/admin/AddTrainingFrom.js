@@ -82,6 +82,7 @@ const AddTrainingForm = (p) => {
     prestataire: "",
     formatteur: "",
     eva: false,
+    matricules: p.matricule !== undefined ? [p.matricule] : [],
   });
 
   const dateInputRef = useRef(null);
@@ -94,7 +95,28 @@ const AddTrainingForm = (p) => {
         setDataForm((prev) => ({ ...prev, trainingType: e.value }));
         break;
       case "title":
-        setDataForm((prev) => ({ ...prev, crew: e.value }));
+        setDataForm((prev) => ({ ...prev, trainingTitle: e.value }));
+        break;
+      case "modality":
+        setDataForm((prev) => ({ ...prev, modalite: e.value }));
+        break;
+      case "dph":
+        setDataForm((prev) => ({ ...prev, dph: e.value }));
+        break;
+      case "sd":
+        setDataForm((prev) => ({ ...prev, ddb: e.value }));
+        break;
+      case "ed":
+        setDataForm((prev) => ({ ...prev, ddf: e.value }));
+        break;
+      case "provider":
+        setDataForm((prev) => ({ ...prev, prestataire: e.value }));
+        break;
+      case "trainer":
+        setDataForm((prev) => ({ ...prev, formatteur: e.value }));
+        break;
+      case "eva":
+        setDataForm((prev) => ({ ...prev, eva: e.value }));
         break;
       default:
         setDataForm((prev) => ({ ...prev, details: e.target.value }));
@@ -228,12 +250,10 @@ const AddTrainingForm = (p) => {
         <div className={c["form-group"]} style={{ width: "95%" }}>
           <label htmlFor="eva">eva</label>
           <Select
-            options={
-             [
-              {value:false, label:"false"},
-              {value:true, label:"true"}
-             ]
-            }
+            options={[
+              { value: false, label: "false" },
+              { value: true, label: "true" },
+            ]}
             id="multiSelect"
             inputId="shiftleader1"
             styles={customStyles}
