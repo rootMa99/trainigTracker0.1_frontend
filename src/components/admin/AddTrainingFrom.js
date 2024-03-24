@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import c from "./AddTrainingFrom.module.css";
 import { useSelector } from "react-redux";
 import Select from "react-select";
@@ -70,7 +70,7 @@ const customStyles = {
 };
 
 const today = getTodayFormat();
-const AddTrainingForm = (p) => {
+const AddTrainingForm = React.memo( (p) => {
   const { titleAndType } = useSelector((s) => s.login);
   const [dataForm, setDataForm] = useState({
     trainingType: "",
@@ -171,13 +171,15 @@ const AddTrainingForm = (p) => {
         </div>
         <div className={c["form-group"]}>
           <label htmlFor="modality">modality</label>
-          <input
-            required
-            name="text"
+          <Select
+            options={[
+              { value: "APTIV", label: "APTIV" },
+              { value: "OTHER", label: "other" },
+            ]}
             id="modality"
-            type="number"
-            placeholder="enter modality"
-            value={dataForm.modalite}
+            inputId="modality"
+            styles={customStyles}
+            defaultValue={" "}
             onChange={(e) => onchangeHandler(e, "modality")}
           />
         </div>
@@ -271,6 +273,6 @@ const AddTrainingForm = (p) => {
       </form>
     </div>
   );
-};
+});
 
 export default AddTrainingForm;

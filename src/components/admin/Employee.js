@@ -6,7 +6,7 @@ import AddTrainingForm from "./AddTrainingFrom";
 import BackDrop from "../UI/BackDrop";
 import { useSelector } from "react-redux";
 
-const Employee = (p) => {
+const Employee =React.memo( (p) => {
   const { employeeData } = useSelector((s) => s.login);
   const [addTraining, setAddTraining] = useState(false);
 
@@ -71,6 +71,6 @@ const Employee = (p) => {
       </div>
     </React.Fragment>
   );
-};
+});
 
 export default Employee;
