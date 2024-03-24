@@ -125,9 +125,7 @@ const Dashboard = (p) => {
   const onchangeHandler = (e, t) => {
     switch (t) {
       case "type":
-        if (e.value === "") {
-          setDataForm((prev) => ({ ...prev, trainingTitle: "" }));
-        }
+          setDataForm((prev) => ({ ...prev, trainingTitle: "" }));       
         setDataForm((prev) => ({ ...prev, trainingType: e.value }));
         break;
       case "title":
