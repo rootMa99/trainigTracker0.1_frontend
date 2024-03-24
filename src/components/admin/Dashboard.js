@@ -71,14 +71,15 @@ const customStyles = {
   }),
 };
 const Dashboard = (p) => {
-  const { dateBetween, dataDashboard, isLoged, titleAndType } = useSelector((s) => s.login);
+  const { dateBetween, dataDashboard, isLoged, titleAndType, handyData } =
+    useSelector((s) => s.login);
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dataForm, setDataForm] = useState({
-    trainingType:"",
-    trainingTitle:  "",
-    category:"",
-    department:""
+    trainingType: "",
+    trainingTitle: "",
+    category: "",
+    department: "",
   });
   const dispatch = useDispatch();
   const dateInputRef = useRef(null);
@@ -114,9 +115,33 @@ const Dashboard = (p) => {
     callback();
   }, [callback]);
 
+  const onchangeHandler = (e, t) => {
+    switch (t) {
+      case "type":
+        if(e.value===""){
+          setDataForm((prev) => ({ ...prev, trainingTitle: "" }));
+        }
+        setDataForm((prev) => ({ ...prev, trainingType: e.value }));
+        break;
+      case "title":
+        setDataForm((prev) => ({ ...prev, trainingTitle: e.value }));
+        break;
+      case "cat":
+        setDataForm((prev) => ({ ...prev, category: e.value }));
+        break;
+      case "dep":
+        setDataForm((prev) => ({ ...prev, department: e.value }));
+        break;
+      default:
+    }
+  };
+
+  
+
+  console.log(dataForm)
+
   return (
     <React.Fragment>
-    
       {err && (
         <NetworkNotify
           message={
@@ -130,52 +155,65 @@ const Dashboard = (p) => {
           <div className={c["form-group"]}>
             <label htmlFor="trainingType">training type</label>
             <Select
-              options={getTypes(titleAndType)}
+              options={[
+                { value: "", label: "n/a" },
+                ...getTypes(titleAndType),
+              ]}
               id="multiSelect"
               inputId="shiftleader1"
               styles={customStyles}
-            
-              // onChange={(e) => onchangeHandler(e, "type")}
+               onChange={(e) => onchangeHandler(e, "type")}
               placeholder="select training type"
             />
           </div>
           <div className={c["form-group"]}>
             <label htmlFor="trainingTitle">training title</label>
             <Select
-              options={
-                dataForm.trainingType === ""
+              options={[
+                { value: "", label: "n/a" },
+                ...(dataForm.trainingType === ""
                   ? []
                   : getlabelandvalue(
                       titleAndType.filter(
                         (f) => f.trainingType === dataForm.trainingType
                       )[0].trainingTitles
-                    )
-              }
-              id="multiSelect"
-              inputId="shiftleader1"
+                    )),
+              ]}
+              value={{
+                value: dataForm.trainingTitle, label: dataForm.trainingTitle
+              }}
               styles={customStyles}
-              // onChange={(e) => onchangeHandler(e, "title")}
+               onChange={(e) => onchangeHandler(e, "title")}
               placeholder="select training title"
             />
           </div>
           <div className={c["form-group"]}>
             <label htmlFor="category">category</label>
-            <input
-              required
-              name="ed"
-              id="category"
-              type="text"
-              placeholder="enter TS/h"
+            <Select
+              options={[
+                { value: "", label: "n/a" },
+                ...getlabelandvalue(handyData.categories),
+              ]}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              
+              onChange={(e) => onchangeHandler(e, "cat")}
+              placeholder="select category"
             />
           </div>
           <div className={c["form-group"]}>
             <label htmlFor="department">department</label>
-            <input
-              required
-              name="ed"
-              id="department"
-              type="text"
-              placeholder="enter TS/h"
+            <Select
+              options={[
+                { value: "", label: "n/a" },
+                ...getlabelandvalue(handyData.departments),
+              ]}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              onChange={(e) => onchangeHandler(e, "dep")}
+              placeholder="select category"
             />
           </div>
         </div>
@@ -215,15 +253,10 @@ const Dashboard = (p) => {
               min={dateBetween.start}
             />
           </div>
-         
         </div>
-        <div className={c.inputH}>
-          
-        </div>
+        <div className={c.inputH}></div>
       </div>
-      {
-        loading && <h1 style={{color: "white"}} >loading....</h1>
-      }
+      {loading && <h1 style={{ color: "white" }}>loading....</h1>}
     </React.Fragment>
   );
 };

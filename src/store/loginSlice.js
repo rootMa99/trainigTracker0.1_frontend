@@ -16,10 +16,14 @@ const loginS = createSlice({
   employeeData:[],
   titleAndType:[],
   dataDashboard:[],
+  handyData:{}
 },
     reducers: {
       setTitleAndType(s,p){
         s.titleAndType=p.payload
+      },
+      setHandyData(s,p){
+        s.handyData=p.payload;
       },
       logIn(s, p) {
         s.isLoged.login = true;

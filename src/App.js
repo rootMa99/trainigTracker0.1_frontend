@@ -14,27 +14,40 @@ function App() {
   const dispatch = useDispatch();
   console.log(isLoged, isLoged.role === "ROOT");
 
-  const callback= useCallback(async ()=>{
+  const callback = useCallback(async () => {
     try {
       const response = await fetch(`${api}/other/trainingTypeAndTitle`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
       });
 
       const data = await response.json();
       console.log(data);
-      dispatch(loginActions.setTitleAndType(data))
-
+      dispatch(loginActions.setTitleAndType(data));
     } catch (error) {
       console.error("Error:", error);
     }
+    try {
+      const response = await fetch(`${api}/other/categoriesAndDepartments`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
+      const data = await response.json();
+      console.log(data);
+      dispatch(loginActions.setHandyData(data));
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }, [dispatch]);
 
-  useEffect(()=>{callback()}, [callback]);
-
+  useEffect(() => {
+    callback();
+  }, [callback]);
 
   return (
     <div className="App">
@@ -44,7 +57,7 @@ function App() {
       ) : isLoged.role === "ROOT" ? (
         <AdminRoutes role={isLoged.role} />
       ) : isLoged.role === "Admin" ? (
-        <AdminRoutes role={isLoged.role}/>
+        <AdminRoutes role={isLoged.role} />
       ) : isLoged.role === "SHIFT_LEADER" ? (
         <ShiftLeaderRoutes />
       ) : (
