@@ -63,8 +63,10 @@ const loginS = createSlice({
         s.employeeData.trainingFromExcels=newData;
       }, 
       deleteTrainigToEmployee(s,p){
-        const data = s.employeeData.trainingFromExcels;
-        s.employeeData.trainingFromExcels=data.filter(f=>f.trainingId!== p.payload.id);
+        console.log(JSON.parse(JSON.stringify(s.employeeData.trainingFromExcels)), p.payload.id)
+        const fd=JSON.parse(JSON.stringify(s.employeeData.trainingFromExcels)).filter(f=>f.trainingId!== p.payload.id)
+        console.log(fd)
+        s.employeeData.trainingFromExcels=fd;
       },
       addDataToDataDashboard(s, p){
         s.dataDashboard=p.payload;

@@ -100,7 +100,7 @@ const Dashboard = (p) => {
       );
 
       const data = await response.json();
-      console.log(data);
+      
       dispatch(loginActions.addDataToDataDashboard(data));
       setLoading(false);
       setErr(false);
@@ -114,7 +114,7 @@ const Dashboard = (p) => {
   useEffect(() => {
     callback();
   }, [callback]);
-
+  console.log(dataDashboard);
   const onchangeHandler = (e, t) => {
     switch (t) {
       case "type":
