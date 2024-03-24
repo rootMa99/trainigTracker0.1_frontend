@@ -15,6 +15,7 @@ const loginS = createSlice({
   dateBetween:getThisYearStartToEnd(),
   employeeData:[],
   titleAndType:[],
+  dataDashboard:[],
 },
     reducers: {
       setTitleAndType(s,p){
@@ -60,6 +61,9 @@ const loginS = createSlice({
       deleteTrainigToEmployee(s,p){
         const data = s.employeeData.trainingFromExcels;
         s.employeeData.trainingFromExcels=data.filter(f=>f.trainingId!== p.payload.id);
+      },
+      addDataToDataDashboard(s, p){
+        s.dataDashboard=p.payload;
       }
     },
 });

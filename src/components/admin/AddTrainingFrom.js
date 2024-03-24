@@ -180,12 +180,11 @@ const AddTrainingForm = React.memo((p) => {
           },
         }
       );
-
-      const data = await response.json();
-      setSuccess(true);
-      console.log(data);
-      dispatch(loginActions.deleteTrainigToEmployee(p.data.trainingId));
-      p.click();
+      if (response.ok) {
+        setSuccess(true);
+        dispatch(loginActions.deleteTrainigToEmployee(p.data.trainingId));
+        p.click();
+      }
     } catch (error) {
       console.error("Error:", error);
       setErr(true);
