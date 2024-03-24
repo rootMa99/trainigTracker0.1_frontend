@@ -74,7 +74,7 @@ const customStyles = {
 
 const today = getTodayFormat();
 const AddTrainingForm = React.memo((p) => {
-  const { titleAndType, isLoged } = useSelector((s) => s.login);
+  const { titleAndType, isLoged, employeeData } = useSelector((s) => s.login);
   const dispatch = useDispatch();
   const [dataForm, setDataForm] = useState({
     trainingType: p.data !== undefined ? p.data.trainingType : "",
@@ -147,20 +147,44 @@ const AddTrainingForm = React.memo((p) => {
       const data = await response.json();
       setSuccess(true);
       console.log(data);
-      if (p.note) {
+      if (!p.note) {
         data.ddb = data.ddb.split("T")[0];
         data.ddf = data.ddf.split("T")[0];
       }
       if (p.note) {
         dispatch(
           loginActions.editTraining({
-            data: { ...dataForm, trainingId: data.trainingId },
-            id: data.trainingId,
+            data: { ...dataForm, trainingId: p.data.trainingId },
+            id: p.data.trainingId,
           })
         );
       } else {
         dispatch(loginActions.addTrainingToEmployee(data));
       }
+      p.click();
+    } catch (error) {
+      console.error("Error:", error);
+      setErr(true);
+    }
+  };
+
+  const deleteTrainingToEmployee = async (e) => {
+    try {
+      const response = await fetch(
+        `${api}/admin/deleteTrainingFe?matricule=${employeeData.matricule}&trainingID=${p.data.trainingId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+      setSuccess(true);
+      console.log(data);
+      dispatch(loginActions.deleteTrainigToEmployee(p.data.trainingId));
       p.click();
     } catch (error) {
       console.error("Error:", error);
@@ -352,7 +376,7 @@ const AddTrainingForm = React.memo((p) => {
             Submit
           </button>
           {p.note && (
-            <h5 className={c.deleteTraining}>
+            <h5 className={c.deleteTraining} onClick={deleteTrainingToEmployee}>
               Delete training to this Employee
             </h5>
           )}

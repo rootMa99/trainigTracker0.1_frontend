@@ -56,6 +56,10 @@ const loginS = createSlice({
         const newData= data.filter(f=>f.trainingId!== p.payload.id);
         newData.push(p.payload.data)
         s.employeeData.trainingFromExcels=newData;
+      }, 
+      deleteTrainigToEmployee(s,p){
+        const data = s.employeeData.trainingFromExcels;
+        s.employeeData.trainingFromExcels=data.filter(f=>f.trainingId!== p.payload.id);
       }
     },
 });

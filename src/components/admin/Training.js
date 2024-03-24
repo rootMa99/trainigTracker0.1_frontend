@@ -17,7 +17,7 @@ const Training = ({ data }) => {
   return (
     <React.Fragment>
       {editT && <BackDrop zindex={22221} click={close} />}
-      {editT && <AddTrainingForm note={true} data={data}/>}
+      {editT && <AddTrainingForm note={true} data={data} click={close}/>}
       {data !== undefined && (
         <div className={c.trainingH} onClick={clickHandler}>
           <div className={c.trainingD}>

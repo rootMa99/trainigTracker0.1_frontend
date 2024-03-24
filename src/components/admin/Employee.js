@@ -63,7 +63,7 @@ const Employee =React.memo( (p) => {
             {employeeData.trainingFromExcels.length === 0 ? (
               <h3>No data found</h3>
             ) : (
-              employeeData.trainingFromExcels.map(m=><Training data={m} key={m.trainingId} />)
+              employeeData.trainingFromExcels.map(m=><Training data={m} key={m.trainingId} click={close}/>)
             )}
             <Training />
           </div>
