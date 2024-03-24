@@ -1,8 +1,11 @@
 import React, { useRef, useState } from "react";
 import c from "./AddTrainingFrom.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { getTodayFormat, getTypes, getlabelandvalue } from "../functions/utils";
+import api from "../../service/api";
+import NetworkNotify from "../UI/NetworkNotify";
+import { loginActions } from "../../store/loginSlice";
 
 const customStyles = {
   control: (provided, state) => ({
@@ -70,20 +73,24 @@ const customStyles = {
 };
 
 const today = getTodayFormat();
-const AddTrainingForm = React.memo( (p) => {
-  const { titleAndType } = useSelector((s) => s.login);
+const AddTrainingForm = React.memo((p) => {
+  const { titleAndType,isLoged } = useSelector((s) => s.login);
+  const dispatch= useDispatch();
   const [dataForm, setDataForm] = useState({
-    trainingType: "",
-    trainingTitle: "",
-    modalite: "",
-    dph: 0,
-    ddb: today,
-    ddf: today,
-    prestataire: "",
-    formatteur: "",
-    eva: false,
+    trainingType: p.data !== undefined ? p.data.trainingType : "",
+    trainingTitle: p.data !== undefined ? p.data.trainingTitle : "",
+    modalite: p.data !== undefined ? p.data.modalite : "",
+    dph: p.data !== undefined ? p.data.dph : 0,
+    ddb: p.data !== undefined ? p.data.ddb : today,
+    ddf: p.data !== undefined ? p.data.ddf : today,
+    prestataire: p.data !== undefined ? p.data.prestataire : "",
+    formatteur: p.data !== undefined ? p.data.formatteur : "",
+    eva: p.data !== undefined ? p.data.eva : false,
     matricules: p.matricule !== undefined ? [p.matricule] : [],
   });
+  const [err, setErr]=useState(false);
+  const [success, setSuccess]=useState(false);
+
 
   const dateInputRef = useRef(null);
   const dateInputRefe = useRef(null);
@@ -101,29 +108,63 @@ const AddTrainingForm = React.memo( (p) => {
         setDataForm((prev) => ({ ...prev, modalite: e.value }));
         break;
       case "dph":
-        setDataForm((prev) => ({ ...prev, dph: e.value }));
+        setDataForm((prev) => ({ ...prev, dph: +e.target.value }));
         break;
       case "sd":
-        setDataForm((prev) => ({ ...prev, ddb: e.value }));
+        setDataForm((prev) => ({ ...prev, ddb: e.target.value }));
         break;
       case "ed":
-        setDataForm((prev) => ({ ...prev, ddf: e.value }));
+        setDataForm((prev) => ({ ...prev, ddf: e.target.value }));
         break;
       case "provider":
         setDataForm((prev) => ({ ...prev, prestataire: e.value }));
         break;
       case "trainer":
-        setDataForm((prev) => ({ ...prev, formatteur: e.value }));
+        setDataForm((prev) => ({ ...prev, formatteur: e.target.value }));
         break;
       case "eva":
         setDataForm((prev) => ({ ...prev, eva: e.value }));
         break;
       default:
-        setDataForm((prev) => ({ ...prev, details: e.target.value }));
     }
   };
 
+  const submitHandler=async e=>{
+    e.preventDefault();
+    console.log(dataForm)
+    try {
+      const response = await fetch(`${api}/admin/addTrainingToEmployees`, {
+        method: p.note? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`
+        },
+        body: JSON.stringify(dataForm),
+      });
+
+      const data = await response.json();
+      setSuccess(true);
+      console.log(data);
+      data.ddb=data.ddb.split('T')[0];
+      data.ddf=data.ddf.split('T')[0];
+      dispatch(
+        loginActions.addTrainingToEmployee(data)
+      );
+      p.click()
+    } catch (error) {
+      console.error("Error:", error);
+      setErr(true);
+    }
+  }
+
   return (
+    <React.Fragment>
+    {
+      err && <NetworkNotify message={"Something has gone wrong, we were not able to save this action, please try it again. "} success={false}/>
+    }
+    {
+      success && <NetworkNotify message={p.note? "The training has been successfully updated." :`Adding training to employees with matricule: ${p.matricule}, successful.`} success={true}/>
+    }
     <div className={c.formCAdmin}>
       {p.note ? (
         <h1 className={c.title}>edit training</h1>
@@ -138,7 +179,7 @@ const AddTrainingForm = React.memo( (p) => {
           employees who are relying on this training.
         </p>
       )}
-      <form className={c.form}>
+      <form className={c.form} onSubmit={submitHandler}>
         <div className={c["form-group"]}>
           <label htmlFor="userName">training Type</label>
           <Select
@@ -146,8 +187,12 @@ const AddTrainingForm = React.memo( (p) => {
             id="multiSelect"
             inputId="shiftleader1"
             styles={customStyles}
-            defaultValue={" "}
+            defaultValue={{
+              label: dataForm.trainingType,
+              value: dataForm.trainingType,
+            }}
             onChange={(e) => onchangeHandler(e, "type")}
+            placeholder="select training type"
           />
         </div>
         <div className={c["form-group"]}>
@@ -165,22 +210,30 @@ const AddTrainingForm = React.memo( (p) => {
             id="multiSelect"
             inputId="shiftleader1"
             styles={customStyles}
-            defaultValue={" "}
+            defaultValue={{
+              label: dataForm.trainingTitle,
+              value: dataForm.trainingTitle,
+            }}
             onChange={(e) => onchangeHandler(e, "title")}
+            placeholder="select training title"
           />
         </div>
         <div className={c["form-group"]}>
           <label htmlFor="modality">modality</label>
           <Select
             options={[
-              { value: "APTIV", label: "APTIV" },
-              { value: "OTHER", label: "other" },
+              { value: "presential", label: "presential" },
+              { value: "remote", label: "remote" },
             ]}
             id="modality"
             inputId="modality"
             styles={customStyles}
-            defaultValue={" "}
+            defaultValue={{
+              label: dataForm.modalite,
+              value: dataForm.modalite,
+            }}
             onChange={(e) => onchangeHandler(e, "modality")}
+            placeholder="select modality"
           />
         </div>
         <div className={c["form-group"]}>
@@ -188,12 +241,12 @@ const AddTrainingForm = React.memo( (p) => {
           <input
             required
             name="tsph"
-            step={0.01}
             id="tsph"
             type="number"
             value={dataForm.dph}
             onChange={(e) => onchangeHandler(e, "dph")}
             placeholder="enter TS/h"
+            min={0}
           />
         </div>
         <div className={c["form-group"]}>
@@ -201,7 +254,6 @@ const AddTrainingForm = React.memo( (p) => {
           <input
             required
             name="sd"
-            step={0.01}
             id="sd"
             type="date"
             placeholder="enter TS/h"
@@ -209,6 +261,7 @@ const AddTrainingForm = React.memo( (p) => {
             onChange={(e) => onchangeHandler(e, "sd")}
             value={dataForm.ddb}
             onClick={() => dateInputRef.current.showPicker()}
+            max={dataForm.ddf}
           />
         </div>
         <div className={c["form-group"]}>
@@ -223,17 +276,24 @@ const AddTrainingForm = React.memo( (p) => {
             onChange={(e) => onchangeHandler(e, "ed")}
             value={dataForm.ddf}
             onClick={() => dateInputRefe.current.showPicker()}
+            min={dataForm.ddb}
           />
         </div>
         <div className={c["form-group"]}>
           <label htmlFor="provider">provider</label>
-          <input
-            required
-            name="provider"
-            id="provider"
-            type="text"
+          <Select
+            options={[
+              { value: "APTIV", label: "APTIV" },
+              { value: "OTHER", label: "other" },
+            ]}
+            id="modality"
+            inputId="privider"
+            styles={customStyles}
+            defaultValue={{
+              label: dataForm.prestataire,
+              value: dataForm.prestataire,
+            }}
             onChange={(e) => onchangeHandler(e, "provider")}
-            value={dataForm.prestataire}
             placeholder="enter provider"
           />
         </div>
@@ -259,8 +319,9 @@ const AddTrainingForm = React.memo( (p) => {
             id="multiSelect"
             inputId="shiftleader1"
             styles={customStyles}
-            defaultValue={" "}
+            defaultValue={{ label: `${dataForm.eva}`, value: dataForm.eva }}
             onChange={(e) => onchangeHandler(e, "eva")}
+            placeholder="select eva"
           />
         </div>
 
@@ -272,6 +333,7 @@ const AddTrainingForm = React.memo( (p) => {
         )}
       </form>
     </div>
+    </React.Fragment>
   );
 });
 

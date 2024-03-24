@@ -20,7 +20,7 @@ const Employee =React.memo( (p) => {
   return (
     <React.Fragment>
       {addTraining && <BackDrop zindex={22221} click={close} />}
-      {addTraining && <AddTrainingForm matricule={employeeData.matricule} />}
+      {addTraining && <AddTrainingForm matricule={employeeData.matricule} click={close} />}
       <div className={c["form-container"]}>
         <div className={c.logo}>
           <img src={imglogo} alt="logo for aptiv" />

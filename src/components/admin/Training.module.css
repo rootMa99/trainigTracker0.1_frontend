@@ -14,6 +14,7 @@
     justify-content: space-evenly;
     width: 50%;
     padding: 1rem;
+    align-items: flex-end;
 }
 .trainingDi{
     background-color: #929D96;
