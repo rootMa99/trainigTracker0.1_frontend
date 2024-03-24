@@ -6,6 +6,11 @@ import api from "../../service/api";
 import NetworkNotify from "../UI/NetworkNotify";
 import Select from "react-select";
 import { getTypes, getlabelandvalue } from "../functions/utils";
+import {
+  getTotals,
+  getfiltredArray,
+  getfiltredArray2,
+} from "../functions/dashboardFunctions";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -100,7 +105,7 @@ const Dashboard = (p) => {
       );
 
       const data = await response.json();
-      
+
       dispatch(loginActions.addDataToDataDashboard(data));
       setLoading(false);
       setErr(false);
@@ -118,7 +123,7 @@ const Dashboard = (p) => {
   const onchangeHandler = (e, t) => {
     switch (t) {
       case "type":
-        if(e.value===""){
+        if (e.value === "") {
           setDataForm((prev) => ({ ...prev, trainingTitle: "" }));
         }
         setDataForm((prev) => ({ ...prev, trainingType: e.value }));
@@ -136,10 +141,13 @@ const Dashboard = (p) => {
     }
   };
 
-  
+  const total = getTotals(dataDashboard);
 
-  console.log(dataForm)
-
+  console.log(dataForm, total);
+  console.log(
+    getfiltredArray(dataDashboard, dataForm),
+    getfiltredArray2(dataDashboard, dataForm)
+  );
   return (
     <React.Fragment>
       {err && (
@@ -155,14 +163,11 @@ const Dashboard = (p) => {
           <div className={c["form-group"]}>
             <label htmlFor="trainingType">training type</label>
             <Select
-              options={[
-                { value: "", label: "n/a" },
-                ...getTypes(titleAndType),
-              ]}
+              options={[{ value: "", label: "n/a" }, ...getTypes(titleAndType)]}
               id="multiSelect"
               inputId="shiftleader1"
               styles={customStyles}
-               onChange={(e) => onchangeHandler(e, "type")}
+              onChange={(e) => onchangeHandler(e, "type")}
               placeholder="select training type"
             />
           </div>
@@ -180,10 +185,11 @@ const Dashboard = (p) => {
                     )),
               ]}
               value={{
-                value: dataForm.trainingTitle, label: dataForm.trainingTitle
+                value: dataForm.trainingTitle,
+                label: dataForm.trainingTitle,
               }}
               styles={customStyles}
-               onChange={(e) => onchangeHandler(e, "title")}
+              onChange={(e) => onchangeHandler(e, "title")}
               placeholder="select training title"
             />
           </div>
@@ -197,7 +203,6 @@ const Dashboard = (p) => {
               id="multiSelect"
               inputId="shiftleader1"
               styles={customStyles}
-              
               onChange={(e) => onchangeHandler(e, "cat")}
               placeholder="select category"
             />
@@ -254,7 +259,23 @@ const Dashboard = (p) => {
             />
           </div>
         </div>
-        <div className={c.inputH}></div>
+        <div className={c.inputHs}>
+          <div className={c.wraperD}>
+            <div className={c.total}>
+              <h5>nb/employees</h5>
+              <p>{total.nbEmployee}</p>
+            </div>
+            <div className={c.total}>
+              <h5>nb/session</h5>
+              <p>{total.nbSession}</p>
+            </div>
+          </div>
+
+          <div className={c.total}>
+            <h5>total hours</h5>
+            <p>{total.totalHour.toFixed(2)}</p>
+          </div>
+        </div>
       </div>
       {loading && <h1 style={{ color: "white" }}>loading....</h1>}
     </React.Fragment>

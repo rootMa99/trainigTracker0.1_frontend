@@ -10,7 +10,7 @@
   color: white;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
     align-items: center;
   gap: 20px;
   box-sizing: border-box;
@@ -37,10 +37,24 @@
     flex-wrap: wrap;
     gap: 1.5rem;
 }
-.inputH{
+.inputH, .inputHs{
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+.inputHs{
+  /* justify-content: center; */
+  gap: 0;
+}
+.wraperD{
+  display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+.inputHs h5{
+  text-transform: uppercase;
+  color: #717171;
 }
 .form-group{
   min-width: 15rem;

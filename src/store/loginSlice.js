@@ -63,8 +63,8 @@ const loginS = createSlice({
         s.employeeData.trainingFromExcels=newData;
       }, 
       deleteTrainigToEmployee(s,p){
-        console.log(JSON.parse(JSON.stringify(s.employeeData.trainingFromExcels)), p.payload.id)
-        const fd=JSON.parse(JSON.stringify(s.employeeData.trainingFromExcels)).filter(f=>f.trainingId!== p.payload.id)
+        console.log(JSON.parse(JSON.stringify(s.employeeData.trainingFromExcels)), p.payload)
+        const fd=JSON.parse(JSON.stringify(s.employeeData.trainingFromExcels)).filter(f=>f.trainingId!== p.payload)
         console.log(fd)
         s.employeeData.trainingFromExcels=fd;
       },
