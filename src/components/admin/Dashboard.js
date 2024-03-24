@@ -7,6 +7,8 @@ import NetworkNotify from "../UI/NetworkNotify";
 import Select from "react-select";
 import { getTypes, getlabelandvalue } from "../functions/utils";
 import {
+  extractedArray,
+  getHoursByCategory,
   getTotals,
   getfiltredArray,
   getfiltredArray2,
@@ -141,11 +143,13 @@ const Dashboard = (p) => {
     }
   };
 
-  const total = getTotals(dataDashboard);
-
+const filA=getfiltredArray(dataDashboard, dataForm);
+const total = getTotals(filA);
+const extractedArr=extractedArray(filA)
   console.log(dataForm, total);
   console.log(
-    getfiltredArray(dataDashboard, dataForm),
+    extractedArr,
+    getHoursByCategory(extractedArr),
     getfiltredArray2(dataDashboard, dataForm)
   );
   return (

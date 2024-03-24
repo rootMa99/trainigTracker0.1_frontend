@@ -206,36 +206,65 @@ export const getfiltredArray = (data, d) => {
   }
 };
 
-
 export const getfiltredArray2 = (data, d) => {
-    const {
-      trainingType,
-      trainingTitle,
-      category,
-      department,
-    } = d;
-  
-    const hasTrainingType = trainingType !== "";
-    const hasTrainingTitle = trainingTitle !== "";
-    const hasCategory = category !== "";
-    const hasDepartment = department !== "";
-  
-    const filterFunctions = [
-      hasTrainingType && ((item) => item.trainingType === trainingType),
-      hasTrainingTitle && ((item) => item.trainingTitle === trainingTitle),
-      hasCategory &&
-        ((item) =>
-          item.employeeRests.some((rest) => rest.category === category)),
-      hasDepartment &&
-        ((item) =>
-          item.employeeRests.some((rest) => rest.department === department)),
-    ].filter(Boolean);
-  
-    if (filterFunctions.length === 0) {
-      return data;
+  const { trainingType, trainingTitle, category, department } = d;
+
+  const hasTrainingType = trainingType !== "";
+  const hasTrainingTitle = trainingTitle !== "";
+  const hasCategory = category !== "";
+  const hasDepartment = department !== "";
+
+  const filterFunctions = [
+    hasTrainingType && ((item) => item.trainingType === trainingType),
+    hasTrainingTitle && ((item) => item.trainingTitle === trainingTitle),
+    hasCategory &&
+      ((item) => item.employeeRests.some((rest) => rest.category === category)),
+    hasDepartment &&
+      ((item) =>
+        item.employeeRests.some((rest) => rest.department === department)),
+  ].filter(Boolean);
+
+  if (filterFunctions.length === 0) {
+    return data;
+  }
+
+  return data.filter((item) => filterFunctions.every((fn) => fn(item)));
+};
+export const extractedArray = (data) => {
+  const rd = [];
+  data.forEach((e) => {
+    if (e.employeeRests.length > 0) {
+      e.employeeRests.forEach((es) => {
+        const exta = { ...e, es };
+        delete exta.employeeRests;
+        rd.push(exta);
+      });
     }
-  
-    return data.filter((item) =>
-      filterFunctions.every((fn) => fn(item))
-    );
-  };
+  });
+  return rd;
+};
+
+export const getHoursByCategory = (d) => {
+  const rd = [];
+  for (const i in d) {
+
+      if (rd.length === 0) {
+        rd.push({
+          cat: d[i].es.category,
+          nbh: d[i].dph,
+        });
+        continue;
+      }
+      const index = rd.findIndex((f) => f.cat === d[i].es.category);
+      if (index === -1) {
+        rd.push({
+          cat: d[i].es.category,
+          nbh: d[i].dph,
+        });
+      } else {
+        rd[index].nbh += d[i].dph;
+      }
+    
+  }
+  return rd;
+};
