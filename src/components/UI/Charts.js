@@ -20,7 +20,7 @@ const Charts = (p) => {
         type: "bar",
         label: p.title,
         data: p.data.map((m) => (m.nbh).toFixed(2)),
-        backgroundColor: "#4E7C88",
+        backgroundColor: "#b7d1cf",
         hoverBackgroundColor: "#929D96",
         borderColor: "black",
         borderWidth: 1,
@@ -74,7 +74,7 @@ const Charts = (p) => {
             let xPos, yPos;
             if (dataset.type === "bar") {
               xPos = element.x;
-              yPos = element.y - 10;
+              yPos = element.y - 5;
             } else if (dataset.type === "line") {
               xPos = element.x;
               yPos = element.y - 10;

@@ -98,6 +98,7 @@
 }
 
 .chartHolder{
+  margin-top: 1rem;
   width: 100%;
   display: flex;
   gap: 4rem 1rem;
@@ -110,6 +111,9 @@
 .chart, .charttt{
   width: 45vw;
   height: 20rem;
+  border: 1px solid #f33716;
+  padding: 10px;
+  padding-bottom: 5rem;
 }
 .charttt{
   width: 80vw;
