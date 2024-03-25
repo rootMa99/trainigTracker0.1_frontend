@@ -7,13 +7,13 @@ import NetworkNotify from "../UI/NetworkNotify";
 import Select from "react-select";
 import { getTypes, getlabelandvalue } from "../functions/utils";
 import {
+  destractArray,
   extractedArray,
   getHoursByCategory,
   getTotals,
-  getfiltredArray,
-  getfiltredArray2,
   getfiltredArrayV2,
 } from "../functions/dashboardFunctions";
+import Charts from "../UI/Charts";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -122,11 +122,11 @@ const Dashboard = (p) => {
   useEffect(() => {
     callback();
   }, [callback]);
-  console.log(dataDashboard);
+  // console.log(dataDashboard);
   const onchangeHandler = (e, t) => {
     switch (t) {
       case "type":
-          setDataForm((prev) => ({ ...prev, trainingTitle: "" }));       
+        setDataForm((prev) => ({ ...prev, trainingTitle: "" }));
         setDataForm((prev) => ({ ...prev, trainingType: e.value }));
         break;
       case "title":
@@ -142,18 +142,20 @@ const Dashboard = (p) => {
     }
   };
 
-const filA=getfiltredArray(dataDashboard, dataForm);
-const total = getTotals(filA);
-const extractedArr=extractedArray(filA)
-  console.log(dataForm, total);
-  console.log(
-    filA,
-    extractedArr,
-    getHoursByCategory(extractedArr),
-    getfiltredArray2(dataDashboard, dataForm)
-    );
-    const estd=getfiltredArrayV2(extractedArray(dataDashboard), dataForm)
-    console.log(estd, getHoursByCategory(estd), );
+  // const filA=getfiltredArray(dataDashboard, dataForm);
+  // const total = getTotals(filA);
+  // const extractedArr=extractedArray(filA)
+  //   console.log(dataForm, total);
+  //   console.log(
+  //     filA,
+  //     extractedArr,
+  //     getHoursByCategory(extractedArr),
+  //     getfiltredArray2(dataDashboard, dataForm)
+  //     );
+  const estd = getfiltredArrayV2(extractedArray(dataDashboard), dataForm);
+  const total = getTotals(destractArray(estd));
+  const hoursByCat = getHoursByCategory(estd);
+  console.log(estd, hoursByCat);
 
   return (
     <React.Fragment>
@@ -285,6 +287,12 @@ const extractedArr=extractedArray(filA)
         </div>
       </div>
       {loading && <h1 style={{ color: "white" }}>loading....</h1>}
+      {!loading && <div className={c.chartHolder}>
+        <Charts title="category chart" data={hoursByCat}/>
+        <Charts title="training type chart" data={hoursByCat} />
+        <Charts title="department chart" data={hoursByCat} />
+        
+        </div>}
     </React.Fragment>
   );
 };

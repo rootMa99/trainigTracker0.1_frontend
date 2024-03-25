@@ -247,28 +247,25 @@ export const extractedArray = (data) => {
 export const getHoursByCategory = (d) => {
   const rd = [];
   for (const i in d) {
-
-      if (rd.length === 0) {
-        rd.push({
-          cat: d[i].es.category,
-          nbh: d[i].dph,
-        });
-        continue;
-      }
-      const index = rd.findIndex((f) => f.cat === d[i].es.category);
-      if (index === -1) {
-        rd.push({
-          cat: d[i].es.category,
-          nbh: d[i].dph,
-        });
-      } else {
-        rd[index].nbh += d[i].dph;
-      }
-    
+    if (rd.length === 0) {
+      rd.push({
+        cat: d[i].es.category,
+        nbh: d[i].dph,
+      });
+      continue;
+    }
+    const index = rd.findIndex((f) => f.cat === d[i].es.category);
+    if (index === -1) {
+      rd.push({
+        cat: d[i].es.category,
+        nbh: d[i].dph,
+      });
+    } else {
+      rd[index].nbh += d[i].dph;
+    }
   }
   return rd;
 };
-
 
 export const getfiltredArrayV2 = (data, d) => {
   if (
@@ -285,9 +282,7 @@ export const getfiltredArrayV2 = (data, d) => {
     d.category === "" &&
     d.department !== ""
   ) {
-    return data.filter((item) =>
-      item.es.department === d.department
-    );
+    return data.filter((item) => item.es.department === d.department);
   }
   if (
     d.trainingType === "" &&
@@ -295,9 +290,7 @@ export const getfiltredArrayV2 = (data, d) => {
     d.category !== "" &&
     d.department === ""
   ) {
-    return data.filter((item) =>
-    item.es.category === d.category
-    );
+    return data.filter((item) => item.es.category === d.category);
   }
   if (
     d.trainingTitle === "" &&
@@ -323,8 +316,7 @@ export const getfiltredArrayV2 = (data, d) => {
   ) {
     return data.filter(
       (item) =>
-        item.trainingTitle === d.trainingTitle &&
-        item.escategory === d.category
+        item.trainingTitle === d.trainingTitle && item.escategory === d.category
     );
   }
   if (
@@ -371,8 +363,7 @@ export const getfiltredArrayV2 = (data, d) => {
   ) {
     return data.filter(
       (item) =>
-        item.trainingType === d.trainingType &&
-        item.es.category === d.category
+        item.trainingType === d.trainingType && item.es.category === d.category
     );
   }
   if (
@@ -381,9 +372,9 @@ export const getfiltredArrayV2 = (data, d) => {
     d.category !== "" &&
     d.department !== ""
   ) {
-    return data.filter((item) =>
-      item.es.category === d.category &&  item.es.department === d.department
-      
+    return data.filter(
+      (item) =>
+        item.es.category === d.category && item.es.department === d.department
     );
   }
   if (
@@ -421,8 +412,8 @@ export const getfiltredArrayV2 = (data, d) => {
     return data.filter(
       (item) =>
         item.trainingType === d.trainingType &&
-        item.es.department && item.es.category === d.category
-        
+        item.es.department &&
+        item.es.category === d.category
     );
   }
   if (
@@ -434,7 +425,8 @@ export const getfiltredArrayV2 = (data, d) => {
     return data.filter(
       (item) =>
         item.trainingTitle === d.trainingTitle &&
-        item.es.department === d.department && item.es.category === d.category
+        item.es.department === d.department &&
+        item.es.category === d.category
     );
   }
   if (
@@ -447,9 +439,52 @@ export const getfiltredArrayV2 = (data, d) => {
       (item) =>
         item.trainingType === d.trainingType &&
         item.trainingTitle === d.trainingTitle &&
-        item.es.department === d.department && item.es.category === d.category
+        item.es.department === d.department &&
+        item.es.category === d.category
     );
   }
 };
 
-
+export const destractArray = (data) => {
+  const rd = [];
+  for (const i in data) {
+    const obj = data[i];
+    if (rd.length === 0) {
+      rd.push({
+        ddb: obj.ddb,
+        ddf: obj.ddf,
+        dph: obj.dph,
+        eva: obj.eva,
+        formatteur: obj.formatteur,
+        modalite: obj.modalite,
+        prestataire: obj.prestataire,
+        trainingId: obj.trainingId,
+        trainingTitle: obj.trainingTitle,
+        trainingType: obj.trainingType,
+        employeeRests: [obj.es],
+      });
+      continue;
+    }
+    const index = rd.findIndex(
+      (f) => f.trainingId === obj.trainingId
+    );
+    if(index===-1){
+      rd.push({
+        ddb: obj.ddb,
+        ddf: obj.ddf,
+        dph: obj.dph,
+        eva: obj.eva,
+        formatteur: obj.formatteur,
+        modalite: obj.modalite,
+        prestataire: obj.prestataire,
+        trainingId: obj.trainingId,
+        trainingTitle: obj.trainingTitle,
+        trainingType: obj.trainingType,
+        employeeRests: [obj.es],
+      });
+    }else{
+      rd[index].employeeRests.push(obj.es)
+    }
+  }
+  return rd
+};
