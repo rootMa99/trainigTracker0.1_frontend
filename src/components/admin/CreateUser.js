@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import c from "./CreateUser.module.css";
 import Select from "react-select";
+import { generateRandomString } from "../functions/utils";
 
 const customStyles = {
   control: (provided, state) => ({
@@ -67,10 +68,10 @@ const customStyles = {
 };
 
 const ROLE = [
-    { label: "SELECT ROLE", value: "" },
-  { label: "SHIFTLEADER", value: "shiftleader" },
-  { label: "ADMIN", value: "admin" },
-  { label: "TRAINER", value: "trainer" },
+  { label: "SELECT ROLE", value: "SELECT ROLE" },
+  { label: "SHIFTLEADER", value: "SHIFTLEADER" },
+  { label: "ADMIN", value: "ADMIN" },
+  { label: "TRAINER", value: "TRAINER" },
 ];
 const SL = [
   { label: "HAMDI ABDERRAHIM", value: "HAMDI ABDERRAHIM" },
@@ -91,12 +92,29 @@ const SL = [
 
 const CreateUser = (p) => {
   const [user, setUser] = useState({
-    role: "",
+    role: "SELECT ROLE",
     data: { userName: "", password: "" },
   });
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(user);
 
-  console.log(user)
+    setUser({
+      role: "SELECT ROLE",
+      data: { userName: "", password: "" },
+    });
+  };
+  const autoClicked = (e) => {
+    setUser((p) => ({
+      ...p,
+      data: {
+        ...p.data,
+        password: generateRandomString(6),
+      },
+    }));
+  };
+  console.log(user);
   return (
     <React.Fragment>
       <div className={c.createUser}>
@@ -104,70 +122,77 @@ const CreateUser = (p) => {
           <span></span>
           <h1> Create User </h1>
         </div>
-      </div>
-      <div className={c.selectContainer}>
-        <p>NOTE: IN ORDER TO CREATE A USER, YOU NEED TO SELECT A ROLE FIRST!</p>
-        <div className={c["form-group"]}>
-          <label htmlFor="trainingType">role</label>
-          <Select
-            options={ROLE}
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            placeholder="select ROLE"
-            onChange={(e) => setUser((p) => ({ ...p, role: e.value }))}
-            defaultValue={{ label: user.role, value: user.role }}
-          />
-        </div>
-        {user.role !== "" && (
-          <form className={c.form}>
-            <div className={c["form-group"]}>
-              <label htmlFor="trainer">username</label>
-              {user.role === "shiftleader" ? (
-                <Select
-                  options={SL}
-                  id="multiSelect"
-                  inputId="shiftleader1"
-                  styles={customStyles}
-                  placeholder="select shiftleader"
-                  onChange={(e) =>
-                    setUser((p) => ({
-                      ...p,
-                      data: {
-                        ...p.data,
-                        userName: e.value,
-                      },
-                    }))
-                  }
-                />
-              ) : (
+        <div className={c.selectContainer}>
+          <p>
+            NOTE: IN ORDER TO CREATE A USER, YOU NEED TO SELECT A ROLE FIRST!
+          </p>
+          <div className={c["form-group"]}>
+            <label htmlFor="trainingType">role</label>
+            <Select
+              options={ROLE}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              placeholder="SELECT ROLE"
+              onChange={(e) =>
+                setUser((p) => ({
+                  role: e.value,
+                  data: { userName: "", password: "" },
+                }))
+              }
+              value={{ label: user.role, value: user.role }}
+            />
+          </div>
+          {user.role !== "SELECT ROLE" && (
+            <form className={c.form} onSubmit={submitHandler}>
+              <div className={c["form-group"]}>
+                <label htmlFor="trainer">username</label>
+                {user.role === "SHIFTLEADER" ? (
+                  <Select
+                    options={SL}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    placeholder="SELECT SHIFTLEADER"
+                    onChange={(e) =>
+                      setUser((p) => ({
+                        ...p,
+                        data: {
+                          ...p.data,
+                          userName: e.value,
+                        },
+                      }))
+                    }
+                  />
+                ) : (
+                  <input
+                    required
+                    name="username"
+                    id="trainer"
+                    type="text"
+                    placeholder="Enter Username"
+                    onChange={(e) =>
+                      setUser((p) => ({
+                        ...p,
+                        data: {
+                          ...p.data,
+                          userName: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+                )}
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="pwd">password</label>
                 <input
                   required
-                  name="username"
-                  id="trainer"
+                  name="pwd"
+                  id="pwd"
                   type="text"
-                  placeholder="enter username"
+                  placeholder="Enter Password"
+                  value={user.data.password}
                   onChange={(e) =>
-                    setUser((p) => ({
-                      ...p,
-                      data: {
-                        ...p.data,
-                        userName: e.target.value,
-                      },
-                    }))
-                  }
-                />
-              )}
-            </div>
-            <div className={c["form-group"]}>
-              <label htmlFor="pwd">password</label>
-              <input
-                required
-                name="pwd"
-                id="pwd"
-                type="text"
-                placeholder="enter password"
-                onChange={(e) =>
                     setUser((p) => ({
                       ...p,
                       data: {
@@ -176,13 +201,27 @@ const CreateUser = (p) => {
                       },
                     }))
                   }
-              />
-            </div>
-            <button type="submit" className={c["form-submit-btn"]}>
-              Submit
-            </button>
-          </form>
-        )}
+                />
+                <label>or</label>
+                <input
+                  type="button"
+                  value="AUTO GENERATE PASSWORD"
+                  className={c.gen}
+                  onClick={autoClicked}
+                />
+              </div>
+              <button type="submit" className={c["form-submit-btn"]}>
+                Submit
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+      <div className={c.createUser}>
+        <div className={c.employeeT}>
+          <span></span>
+          <h1> All Users </h1>
+        </div>
       </div>
     </React.Fragment>
   );

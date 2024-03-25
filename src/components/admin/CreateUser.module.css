@@ -25,6 +25,7 @@ box-sizing: border-box;
   border-radius: 16px;
   background-size: 200% 100%;
   animation: gradient 5s ease infinite;
+  align-items: flex-start;
 }
 
 @keyframes gradient {
@@ -185,7 +186,16 @@ box-sizing: border-box;
 }
 
 .form-group input:focus,
-.form-group input:hover {
+.form-group input:hover{
   outline: none;
   border-color: #f33716;
+}
+.gen{
+    cursor: pointer;
+    color: #717171 !important;
+}
+.gen:hover,
+.gen:focus{
+    background-color: #f33716;
+    color: #fff !important;
 }
