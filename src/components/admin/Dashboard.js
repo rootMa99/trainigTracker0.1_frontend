@@ -19,14 +19,13 @@ const customStyles = {
   control: (provided, state) => ({
     ...provided,
     width: "100%",
-    height: "auto",
-    fontWeight: "600",
+
     textTransform: "uppercase",
     borderRadius: "5px",
     fontFamily: `Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                 "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
                 "Segoe UI Symbol"`,
-    letterSpacing: "2px",
+
     textAlign: "center",
     outline: "none",
     border: "1px solid #414141",
@@ -157,7 +156,11 @@ const Dashboard = (p) => {
   const hoursByDep = getHoursByCategory(estd, "department");
   const hourByt = getHoursBytt(estd);
   console.log(estd, hoursByCat);
-
+  const bool =
+    dataForm.trainingType !== "" ||
+    dataForm.trainingTitle !== "" ||
+    dataForm.category !== "" ||
+    dataForm.department !== "";
   return (
     <React.Fragment>
       {err && (
@@ -169,6 +172,21 @@ const Dashboard = (p) => {
         />
       )}
       <div className={c.headerD}>
+        {bool && (
+          <span
+            className={c.cf}
+            onClick={() =>
+              setDataForm({
+                trainingType: "",
+                trainingTitle: "",
+                category: "",
+                department: "",
+              })
+            }
+          >
+            clear filter
+          </span>
+        )}
         <div className={c.inputHi}>
           <div className={c["form-group"]}>
             <label htmlFor="trainingType">training type</label>
@@ -178,6 +196,10 @@ const Dashboard = (p) => {
               inputId="shiftleader1"
               styles={customStyles}
               onChange={(e) => onchangeHandler(e, "type")}
+              value={{
+                value: dataForm.trainingType,
+                label: dataForm.trainingType,
+              }}
               placeholder="select training type"
             />
           </div>
@@ -213,6 +235,10 @@ const Dashboard = (p) => {
               id="multiSelect"
               inputId="shiftleader1"
               styles={customStyles}
+              value={{
+                value: dataForm.category,
+                label: dataForm.category,
+              }}
               onChange={(e) => onchangeHandler(e, "cat")}
               placeholder="select category"
             />
@@ -227,6 +253,10 @@ const Dashboard = (p) => {
               id="multiSelect"
               inputId="shiftleader1"
               styles={customStyles}
+              value={{
+                value: dataForm.department,
+                label: dataForm.department
+              }}
               onChange={(e) => onchangeHandler(e, "dep")}
               placeholder="select category"
             />

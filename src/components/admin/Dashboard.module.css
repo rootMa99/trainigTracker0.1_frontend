@@ -17,6 +17,7 @@
   border-radius: 16px;
   background-size: 200% 100%;
   animation: gradient 5s ease infinite;
+  position: relative;
 }
 @keyframes gradient {
   0% {
@@ -30,6 +31,21 @@
   100% {
     background-position: 0% 50%;
   }
+}
+.cf{
+  color: #fff;
+  opacity: 0.5;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+.cf:hover{
+  opacity: 1;
+  border-bottom: 1px solid;
+  font-weight: 700;
 }
 .inputHi{
     display: flex;
