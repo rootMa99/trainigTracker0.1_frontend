@@ -17,6 +17,7 @@ import {
 } from "../functions/dashboardFunctions";
 import Charts from "../UI/Charts";
 import Loader from "../UI/Loader";
+import Reporting from "./Reporting";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -316,7 +317,7 @@ const Dashboard = (p) => {
         </div>
       </div>
       {loading && <Loader />}
-      {!loading && (
+      {(!loading&&p.type==="dashboard") && (
         <div className={c.chartHolder}>
           <div className={c.chart}>
             <Charts title="category" data={hoursByCat} type="bar"/>
@@ -332,6 +333,9 @@ const Dashboard = (p) => {
           </div>
         </div>
       )}
+      {
+        (!loading&&p.type==="reporting")&&<Reporting data={estd} />
+      }
     </React.Fragment>
   );
 };
