@@ -268,3 +268,188 @@ export const getHoursByCategory = (d) => {
   }
   return rd;
 };
+
+
+export const getfiltredArrayV2 = (data, d) => {
+  if (
+    d.trainingType === "" &&
+    d.trainingTitle === "" &&
+    d.category === "" &&
+    d.department === ""
+  ) {
+    return data;
+  }
+  if (
+    d.trainingType === "" &&
+    d.trainingTitle === "" &&
+    d.category === "" &&
+    d.department !== ""
+  ) {
+    return data.filter((item) =>
+      item.es.department === d.department
+    );
+  }
+  if (
+    d.trainingType === "" &&
+    d.trainingTitle === "" &&
+    d.category !== "" &&
+    d.department === ""
+  ) {
+    return data.filter((item) =>
+    item.es.category === d.category
+    );
+  }
+  if (
+    d.trainingTitle === "" &&
+    d.trainingType !== "" &&
+    d.category === "" &&
+    d.department === ""
+  ) {
+    return data.filter((item) => item.trainingType === d.trainingType);
+  }
+  if (
+    d.trainingType !== "" &&
+    d.trainingTitle === "" &&
+    d.category === "" &&
+    d.department === ""
+  ) {
+    return data.filter((item) => item.trainingTitle === d.trainingTitle);
+  }
+  if (
+    d.trainingType === "" &&
+    d.trainingTitle !== "" &&
+    d.category !== "" &&
+    d.department === ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingTitle === d.trainingTitle &&
+        item.escategory === d.category
+    );
+  }
+  if (
+    d.trainingType === "" &&
+    d.trainingTitle !== "" &&
+    d.category === "" &&
+    d.department !== ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingTitle === d.trainingTitle &&
+        item.es.department === d.department
+    );
+  }
+  if (
+    d.trainingType !== "" &&
+    d.trainingTitle !== "" &&
+    d.category === "" &&
+    d.department === ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingTitle === d.trainingTitle &&
+        item.trainingType === d.trainingType
+    );
+  }
+  if (
+    d.trainingType !== "" &&
+    d.trainingTitle === "" &&
+    d.category === "" &&
+    d.department !== ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingType === d.trainingType &&
+        item.es.department === d.department
+    );
+  }
+  if (
+    d.trainingType !== "" &&
+    d.trainingTitle === "" &&
+    d.category !== "" &&
+    d.department === ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingType === d.trainingType &&
+        item.es.category === d.category
+    );
+  }
+  if (
+    d.trainingType === "" &&
+    d.trainingTitle === "" &&
+    d.category !== "" &&
+    d.department !== ""
+  ) {
+    return data.filter((item) =>
+      item.es.category === d.category &&  item.es.department === d.department
+      
+    );
+  }
+  if (
+    d.trainingType !== "" &&
+    d.trainingTitle !== "" &&
+    d.category !== "" &&
+    d.department === ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingType === d.trainingType &&
+        item.trainingTitle === d.trainingTitle &&
+        item.es.category === d.category
+    );
+  }
+  if (
+    d.trainingType !== "" &&
+    d.trainingTitle !== "" &&
+    d.category === "" &&
+    d.department !== ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingType === d.trainingType &&
+        item.trainingTitle === d.trainingTitle &&
+        item.es.department === d.department
+    );
+  }
+  if (
+    d.trainingType !== "" &&
+    d.trainingTitle === "" &&
+    d.category !== "" &&
+    d.department !== ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingType === d.trainingType &&
+        item.es.department && item.es.category === d.category
+        
+    );
+  }
+  if (
+    d.trainingType === "" &&
+    d.trainingTitle !== "" &&
+    d.category !== "" &&
+    d.department !== ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingTitle === d.trainingTitle &&
+        item.es.department === d.department && item.es.category === d.category
+    );
+  }
+  if (
+    d.trainingType !== "" &&
+    d.trainingTitle !== "" &&
+    d.category !== "" &&
+    d.department !== ""
+  ) {
+    return data.filter(
+      (item) =>
+        item.trainingType === d.trainingType &&
+        item.trainingTitle === d.trainingTitle &&
+        item.es.department === d.department && item.es.category === d.category
+    );
+  }
+};
+
+

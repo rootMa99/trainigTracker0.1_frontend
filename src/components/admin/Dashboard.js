@@ -12,6 +12,7 @@ import {
   getTotals,
   getfiltredArray,
   getfiltredArray2,
+  getfiltredArrayV2,
 } from "../functions/dashboardFunctions";
 const customStyles = {
   control: (provided, state) => ({
@@ -146,10 +147,14 @@ const total = getTotals(filA);
 const extractedArr=extractedArray(filA)
   console.log(dataForm, total);
   console.log(
+    filA,
     extractedArr,
     getHoursByCategory(extractedArr),
     getfiltredArray2(dataDashboard, dataForm)
-  );
+    );
+    const estd=getfiltredArrayV2(extractedArray(dataDashboard), dataForm)
+    console.log(estd, getHoursByCategory(estd), );
+
   return (
     <React.Fragment>
       {err && (
