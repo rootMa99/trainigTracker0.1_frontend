@@ -27,8 +27,20 @@ const Reporting = (p) => {
         key: column,
         width: 20,
       }));
+      worksheet.eachRow({ includeEmpty: false }, function (row, rowNumber) {
+        if (rowNumber === 1) {
+          row.eachCell({ includeEmpty: true }, function (cell) {
+            cell.fill = {
+              type: 'pattern',
+              pattern: 'solid',
+              fgColor: { argb: 'FFA211' }
+            };
+            cell.font = { bold: true };
+          });
+        }
+      });
 
-      p.data.forEach((obj) => {
+      p.data.forEach((obj, index) => {
         const row = {
           matricule: obj.es.matricule,
           prenom: obj.es.prenom,
@@ -45,7 +57,21 @@ const Reporting = (p) => {
           eva: obj.eva,
         };
 
-        worksheet.addRow(row);
+        const worksheetRow = worksheet.addRow(row);
+        if (index % 2 === 0) {
+            worksheetRow.eachCell({ includeEmpty: true }, function (cell) {
+              cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'D3D3D3' } // Light gray color for even rows
+              };
+            });
+          }
+  
+          // Set font color for all rows
+          worksheetRow.eachCell({ includeEmpty: true }, function (cell) {
+            cell.font = { color: { argb: '000000' } }; // Black font color
+          });
       });
     }
 
