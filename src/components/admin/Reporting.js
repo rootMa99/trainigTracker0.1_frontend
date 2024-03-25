@@ -25,7 +25,7 @@ const Reporting = (p) => {
       worksheet.columns = columns.map((column) => ({
         header: column,
         key: column,
-        width: 20,
+        width: column === 'formation' ? 50 : 20,
       }));
       worksheet.eachRow({ includeEmpty: false }, function (row, rowNumber) {
         if (rowNumber === 1) {
