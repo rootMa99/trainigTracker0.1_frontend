@@ -11,7 +11,7 @@
     gap: 0.5rem;
     position: absolute;
     left: -17px;
-    top:0rem;
+    top:-4rem;
     flex-direction: row;
     flex-wrap: nowrap;
   }
@@ -60,7 +60,7 @@
     background-color: rgba(0, 0, 0, 0.233);
   }
   .table tr:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.596);
+    background-color: rgba(77, 76, 76, 0.233);
   }
   .table td {
     text-align: center;
@@ -80,4 +80,70 @@
   .table tfoot tr td{
     font-weight: 900;
     font-size: larger;
+  }
+
+  
+  .btnhelperholder{
+    position: absolute;
+    right: 10px;
+    top: -3rem;
+
+  }
+.button {
+    position: relative;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid #681a09;
+    background-color: #f84018;
+    overflow: hidden;
+  }
+  
+  .button, .button__icon, .button__text {
+    transition: all 0.3s;
+  }
+  
+  .button .button__text {
+    transform: translateX(22px);
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .button .button__icon {
+    position: absolute;
+    transform: translateX(109px);
+    height: 100%;
+    width: 39px;
+    background-color: #96240b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .button .svg {
+    width: 20px;
+    fill: #fff;
+  }
+  
+  .button:hover {
+    background: #f84018;
+  }
+  
+  .button:hover .button__text {
+    color: transparent;
+  }
+  
+  .button:hover .button__icon {
+    width: 148px;
+    transform: translateX(0);
+  }
+  
+  .button:active .button__icon {
+    background-color: #fa7a5d;
+  }
+  
+  .button:active {
+    border: 1px solid #f84018;
   }
