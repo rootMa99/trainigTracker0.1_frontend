@@ -16,6 +16,7 @@ import {
   getfiltredArrayV2,
 } from "../functions/dashboardFunctions";
 import Charts from "../UI/Charts";
+import Loader from "../UI/Loader";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -314,7 +315,7 @@ const Dashboard = (p) => {
           </div>
         </div>
       </div>
-      {loading && <h1 style={{ color: "white" }}>loading....</h1>}
+      {loading && <Loader />}
       {!loading && (
         <div className={c.chartHolder}>
           <div className={c.chart}>
