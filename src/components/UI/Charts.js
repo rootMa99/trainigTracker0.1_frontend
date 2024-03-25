@@ -18,8 +18,8 @@ const Charts = (p) => {
     datasets: [
       {
         type: "bar",
-        label: "Pareto",
-        data: p.data.map((m) => m.nbh),
+        label: p.title,
+        data: p.data.map((m) => (m.nbh).toFixed(2)),
         backgroundColor: "#4E7C88",
         hoverBackgroundColor: "#929D96",
         borderColor: "black",
@@ -74,7 +74,7 @@ const Charts = (p) => {
             let xPos, yPos;
             if (dataset.type === "bar") {
               xPos = element.x;
-              yPos = element.y + 15;
+              yPos = element.y - 10;
             } else if (dataset.type === "line") {
               xPos = element.x;
               yPos = element.y - 10;
@@ -104,7 +104,7 @@ const Charts = (p) => {
     <div className={c.chartHolder}>
       <div className={c.title}>
         <span></span>
-        <h3> {p.title} </h3>
+        <h3> {p.title} chart</h3>
         <span></span>
       </div>
       <React.Fragment>

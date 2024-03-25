@@ -154,7 +154,8 @@ const Dashboard = (p) => {
   //     );
   const estd = getfiltredArrayV2(extractedArray(dataDashboard), dataForm);
   const total = getTotals(destractArray(estd));
-  const hoursByCat = getHoursByCategory(estd);
+  const hoursByCat = getHoursByCategory(estd, "category");
+  const hoursByDep = getHoursByCategory(estd, "department");
   console.log(estd, hoursByCat);
 
   return (
@@ -287,12 +288,19 @@ const Dashboard = (p) => {
         </div>
       </div>
       {loading && <h1 style={{ color: "white" }}>loading....</h1>}
-      {!loading && <div className={c.chartHolder}>
-        <Charts title="category chart" data={hoursByCat}/>
-        <Charts title="training type chart" data={hoursByCat} />
-        <Charts title="department chart" data={hoursByCat} />
-        
-        </div>}
+      {!loading && (
+        <div className={c.chartHolder}>
+          <div className={c.chart}>
+            <Charts title="category" data={hoursByCat} />
+          </div>
+          <div className={c.chart}>
+            <Charts title="department" data={hoursByDep} />
+          </div>
+          <div className={c.charttt}>
+            <Charts title="training type" data={hoursByCat} />
+          </div>
+        </div>
+      )}
     </React.Fragment>
   );
 };

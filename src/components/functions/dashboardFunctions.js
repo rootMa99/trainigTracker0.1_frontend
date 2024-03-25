@@ -244,20 +244,20 @@ export const extractedArray = (data) => {
   return rd;
 };
 
-export const getHoursByCategory = (d) => {
+export const getHoursByCategory = (d, type) => {
   const rd = [];
   for (const i in d) {
     if (rd.length === 0) {
       rd.push({
-        cat: d[i].es.category,
+        cat: d[i].es[type],
         nbh: d[i].dph,
       });
       continue;
     }
-    const index = rd.findIndex((f) => f.cat === d[i].es.category);
+    const index = rd.findIndex((f) => f.cat === d[i].es[type]);
     if (index === -1) {
       rd.push({
-        cat: d[i].es.category,
+        cat: d[i].es[type],
         nbh: d[i].dph,
       });
     } else {

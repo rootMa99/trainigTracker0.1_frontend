@@ -99,7 +99,18 @@
 
 .chartHolder{
   width: 100%;
-  height: 30rem;
   display: flex;
-  gap: 1rem;
+  gap: 4rem 1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+.chart, .charttt{
+  width: 45vw;
+  height: 20rem;
+}
+.charttt{
+  width: 80vw;
 }
