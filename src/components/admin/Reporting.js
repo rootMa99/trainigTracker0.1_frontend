@@ -25,15 +25,17 @@ const Reporting = (p) => {
       worksheet.columns = columns.map((column) => ({
         header: column,
         key: column,
-        width: column === 'formation' ? 50 : 20,
+        width: column === "formation" ? 50 : 25,
+        height:15,
+        filterButton: true,
       }));
       worksheet.eachRow({ includeEmpty: false }, function (row, rowNumber) {
         if (rowNumber === 1) {
           row.eachCell({ includeEmpty: true }, function (cell) {
             cell.fill = {
-              type: 'pattern',
-              pattern: 'solid',
-              fgColor: { argb: 'FFA211' }
+              type: "pattern",
+              pattern: "solid",
+              fgColor: { argb: "FFA211" },
             };
             cell.font = { bold: true };
           });
@@ -48,7 +50,7 @@ const Reporting = (p) => {
           categorie: obj.es.category,
           "categorie de formation": obj.trainingType,
           formation: obj.trainingTitle,
-          "durée par heure": obj.dph,
+          "durée par heure": obj.dph.toFixed(2),
           "date de début": obj.ddb,
           "date de fin": obj.ddf,
           préstataire: obj.prestataire,
@@ -59,19 +61,24 @@ const Reporting = (p) => {
 
         const worksheetRow = worksheet.addRow(row);
         if (index % 2 === 0) {
-            worksheetRow.eachCell({ includeEmpty: true }, function (cell) {
-              cell.fill = {
-                type: 'pattern',
-                pattern: 'solid',
-                fgColor: { argb: 'D3D3D3' } // Light gray color for even rows
-              };
-            });
-          }
-  
-          // Set font color for all rows
           worksheetRow.eachCell({ includeEmpty: true }, function (cell) {
-            cell.font = { color: { argb: '000000' } }; // Black font color
+            cell.fill = {
+              type: "pattern",
+              pattern: "solid",
+              fgColor: { argb: "D3D3D3" }, // Light gray color for even rows
+            };
           });
+        }
+
+        // Set font color for all rows
+        worksheetRow.eachCell({ includeEmpty: true }, function (cell) {
+          cell.font = { color: { argb: "000000" } }; // Black font color
+        });
+        worksheet.eachRow((row, rowNumber) => {
+          row.eachCell((cell) => {
+            cell.alignment = { horizontal: "center", vertical: "center" };
+          });
+        });
       });
     }
 
