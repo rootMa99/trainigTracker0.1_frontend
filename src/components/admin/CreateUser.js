@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import c from "./CreateUser.module.css";
 import Select from "react-select";
-import { generateRandomString } from "../functions/utils";
+import { generateRandomString, sendEmail } from "../functions/utils";
 
 const customStyles = {
   control: (provided, state) => ({
@@ -99,7 +99,7 @@ const CreateUser = (p) => {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(user);
-
+    sendEmail();
     setUser({
       role: "SELECT ROLE",
       data: { userName: "", password: "" },
