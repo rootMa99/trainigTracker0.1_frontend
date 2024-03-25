@@ -10,6 +10,7 @@ import {
   destractArray,
   extractedArray,
   getHoursByCategory,
+  getHoursByMonth,
   getHoursBytt,
   getTotals,
   getfiltredArrayV2,
@@ -155,7 +156,8 @@ const Dashboard = (p) => {
   const hoursByCat = getHoursByCategory(estd, "category");
   const hoursByDep = getHoursByCategory(estd, "department");
   const hourByt = getHoursBytt(estd);
-  console.log(estd, hoursByCat);
+  const hourByMonth= getHoursByMonth(estd);
+  console.log(estd, hoursByCat, hourByMonth);
   const bool =
     dataForm.trainingType !== "" ||
     dataForm.trainingTitle !== "" ||
@@ -316,13 +318,16 @@ const Dashboard = (p) => {
       {!loading && (
         <div className={c.chartHolder}>
           <div className={c.chart}>
-            <Charts title="category" data={hoursByCat} />
+            <Charts title="category" data={hoursByCat} type="bar"/>
           </div>
           <div className={c.chart}>
-            <Charts title="training type" data={hourByt} />
+            <Charts title="training type" data={hourByt} type="bar"/>
           </div>
           <div className={c.charttt}>
-            <Charts title="department" data={hoursByDep} />
+            <Charts title="department" data={hoursByDep} type="bar"/>
+          </div>
+          <div className={c.charttt}>
+            <Charts title="department" data={hourByMonth} type="line"/>
           </div>
         </div>
       )}

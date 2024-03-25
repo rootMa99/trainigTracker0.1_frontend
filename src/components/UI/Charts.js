@@ -19,11 +19,33 @@ const Charts = (p) => {
       {
         type: "bar",
         label: p.title,
-        data: p.data.map((m) => (m.nbh).toFixed(2)),
+        data: p.data.map((m) => (m.nbh).toFixed(1)),
         backgroundColor: "#b7d1cf",
         hoverBackgroundColor: "#929D96",
         borderColor: "black",
         borderWidth: 1,
+      },
+    ],
+  };
+  const data = {
+    labels: p.data.map((m) => m.cat),
+    datasets: [
+      {
+        type: "line",
+        label: "Target",
+        data: p.data.map((m) => (m.nbh).toFixed(1)),
+        backgroundColor: "#F84018",
+        pointHoverBorderColor: "#FAF0E6",
+        borderColor: "#3BC6EB",
+        fill: false,
+        tension: 0.3,
+        borderWidth: 3,
+        borderCapStyle: "round",
+        pointHoverBackgroundColor: "rgb(88, 3, 3)",
+        pointHoverRadius: 8,
+        pointBorderColor: "#3BC6EB",
+        pointBorderWidth: 8,
+        pointRadius: 1,
       },
     ],
   };
@@ -108,7 +130,8 @@ const Charts = (p) => {
         <span></span>
       </div>
       <React.Fragment>
-        <Bar data={barChart} options={options} />
+        {p.type==="bar"&&<Bar data={barChart} options={options} />}
+        {p.type==="line"&&<Line data={data} options={options} />}
       </React.Fragment>
     </div>
   );
