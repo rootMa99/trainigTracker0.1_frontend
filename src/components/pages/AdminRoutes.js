@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "../admin/Home";
 import Dashboard from "../admin/Dashboard";
+import CreateUser from "../admin/CreateUser";
 
 const AdminRoutes = (p) => {
     console.log(p.d)
@@ -13,7 +14,7 @@ const AdminRoutes = (p) => {
         <Route exact path="/dashboard" element={<Dashboard type="dashboard" />} />
         <Route exact path="/reporting" element={<Dashboard type="reporting" />} />
         <Route exact path="/uploadFiles" element={<h1>uploadFiles</h1>} />
-        {p.role==="ROOT" && <Route exact path="/createuser" element={<h1>createuser</h1>} />}
+        {p.role==="ROOT" && <Route exact path="/createuser" element={<CreateUser />} />}
         <Route path="*" element={<Navigate replace to="/home" />} />
       </Routes>
     </Suspense>
