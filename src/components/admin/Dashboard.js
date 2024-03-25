@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import c from "./Dashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { loginActions } from "../../store/loginSlice";
@@ -10,6 +10,7 @@ import {
   destractArray,
   extractedArray,
   getHoursByCategory,
+  getHoursBytt,
   getTotals,
   getfiltredArrayV2,
 } from "../functions/dashboardFunctions";
@@ -90,8 +91,6 @@ const Dashboard = (p) => {
     department: "",
   });
   const dispatch = useDispatch();
-  const dateInputRef = useRef(null);
-  const dateInputRefe = useRef(null);
 
   const callback = useCallback(async () => {
     setLoading(true);
@@ -156,6 +155,7 @@ const Dashboard = (p) => {
   const total = getTotals(destractArray(estd));
   const hoursByCat = getHoursByCategory(estd, "category");
   const hoursByDep = getHoursByCategory(estd, "department");
+  const hourByt = getHoursBytt(estd);
   console.log(estd, hoursByCat);
 
   return (
@@ -238,12 +238,9 @@ const Dashboard = (p) => {
             <input
               required
               name="sd"
-              step={0.01}
               id="sd"
               type="date"
               placeholder="enter TS/h"
-              ref={dateInputRef}
-              onClick={() => dateInputRef.current.showPicker()}
               onChange={(e) =>
                 dispatch(loginActions.setDateYearStart(e.target.value))
               }
@@ -259,8 +256,6 @@ const Dashboard = (p) => {
               id="ed"
               type="date"
               placeholder="enter TS/h"
-              ref={dateInputRefe}
-              onClick={() => dateInputRefe.current.showPicker()}
               onChange={(e) =>
                 dispatch(loginActions.setDateYearEnd(e.target.value))
               }
@@ -294,10 +289,10 @@ const Dashboard = (p) => {
             <Charts title="category" data={hoursByCat} />
           </div>
           <div className={c.chart}>
-            <Charts title="department" data={hoursByDep} />
+            <Charts title="training type" data={hourByt} />
           </div>
           <div className={c.charttt}>
-            <Charts title="training type" data={hoursByCat} />
+            <Charts title="department" data={hoursByDep} />
           </div>
         </div>
       )}

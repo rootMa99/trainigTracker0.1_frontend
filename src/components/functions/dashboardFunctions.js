@@ -266,6 +266,29 @@ export const getHoursByCategory = (d, type) => {
   }
   return rd;
 };
+export const getHoursBytt = (d) => {
+  const rd = [];
+  for (const i in d) {
+    if (rd.length === 0) {
+      rd.push({
+        cat: d[i].trainingType,
+        nbh: d[i].dph,
+      });
+      continue;
+    }
+    const index = rd.findIndex((f) => f.cat === d[i].trainingType);
+    if (index === -1) {
+      rd.push({
+        cat: d[i].trainingType,
+        nbh: d[i].dph,
+      });
+    } else {
+      rd[index].nbh += d[i].dph;
+    }
+  }
+  return rd;
+};
+
 
 export const getfiltredArrayV2 = (data, d) => {
   if (
