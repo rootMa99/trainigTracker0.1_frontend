@@ -1,11 +1,13 @@
 export const getlabelandvalue = (data) => {
   const retData = [];
-  data.map((m) =>
-    retData.push({
-      value: m,
-      label: m,
-    })
-  );
+  if (data.length > 0) {
+    data.map((m) =>
+      retData.push({
+        value: m,
+        label: m,
+      })
+    );
+  }
   return retData;
 };
 

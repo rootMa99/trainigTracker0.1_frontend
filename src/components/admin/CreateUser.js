@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import c from "./CreateUser.module.css";
 import Select from "react-select";
 import { generateRandomString, sendEmail } from "../functions/utils";
+import { useSelector } from "react-redux";
+import api from "../../service/api";
+
 
 const customStyles = {
   control: (provided, state) => ({
@@ -102,10 +105,48 @@ const users=[
 
 
 const CreateUser = (p) => {
+  const { isLoged } = useSelector((s) => s.login);
   const [user, setUser] = useState({
     role: "SELECT ROLE",
     data: { userName: "", password: "" },
   });
+
+  const callback = useCallback(async () => {
+    try {
+      const response = await fetch(`${api}/root/data/shiftleaders`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    try {
+      const response = await fetch(`${api}/root/data/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }, [isLoged]);
+
+  useEffect(() => {
+    callback();
+  }, [callback]);
+
+
 
   const submitHandler = (e) => {
     e.preventDefault();

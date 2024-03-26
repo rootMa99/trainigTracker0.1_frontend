@@ -223,8 +223,8 @@ box-sizing: border-box;
   z-index: -2;
   top: 0%;
   left: 0%;
-  width: 150px;
-  height: 2000px;
+  width: 100px;
+  height: 1000px;
   border-radius: 50%;
   background-color: #f33716;
   opacity: 1;
@@ -249,17 +249,17 @@ box-sizing: border-box;
     transform: translate(-100%, -100%) translate3d(100%, 0, 0);
   } */
 
-  50% {
+  100% {
     transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
   }
 /* 
   75% {
     transform: translate(-100%, -100%) translate3d(0, 100%, 0);
   } */
-
+/* 
   100% {
     transform: translate(-100%, -100%) translate3d(0, 0, 0);
-  }
+  } */
 }
 
 
