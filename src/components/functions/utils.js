@@ -41,7 +41,7 @@ export const generateRandomString = (length) => {
 
 
 
-export const sendEmail = (email, subjects, bodys ) => {
+export const sendEmail = (email, subjects, bodys) => {
   const recipient = email; 
   const subject = subjects; 
   const body = bodys;

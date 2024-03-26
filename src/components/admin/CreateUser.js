@@ -93,9 +93,7 @@ const CreateUser = (p) => {
   });
   const [err, setErr] = useState({ status: false, message: "" });
   const [success, setSuccess] = useState({ status: false, message: "" });
-  
 
-  
   const callback = useCallback(async () => {
     try {
       const response = await fetch(`${api}/root/data/shiftleaders`, {
@@ -159,6 +157,11 @@ const CreateUser = (p) => {
       const data = await response.json();
       setSuccess({ status: true, message: "Account created successfully" });
       console.log(data);
+      sendEmail(
+        "emailTo@aptiv.com",
+        "new account",
+        `username: ${user.data.userName} your password: ${user.data.password}`
+      );
       setUser({
         role: "SELECT ROLE",
         data: { userName: "", password: "" },
@@ -171,7 +174,6 @@ const CreateUser = (p) => {
           "Something has gone wrong, we were not able to save this action, please try it again. ",
       });
     }
-    // sendEmail();
   };
   const autoClicked = (e) => {
     setUser((p) => ({
@@ -183,140 +185,147 @@ const CreateUser = (p) => {
     }));
   };
   console.log(user);
-  return (
-    <React.Fragment>
-      {err.status && <NetworkNotify message={err.message} success={false} />}
-      {success.status && (
-        <NetworkNotify message={success.message} success={true} />
-      )}
-      <div className={c.createUser}>
-        <div className={c.employeeT}>
-          <span></span>
-          <h1> Create User </h1>
-        </div>
-        <div className={c.selectContainer}>
-          <p>
-            NOTE: IN ORDER TO CREATE A USER, YOU NEED TO SELECT A ROLE FIRST!
-          </p>
-          <div className={c["form-group"]}>
-            <label htmlFor="trainingType">role</label>
-            <Select
-              options={ROLE}
-              id="multiSelect"
-              inputId="shiftleader1"
-              styles={customStyles}
-              placeholder="SELECT ROLE"
-              onChange={(e) =>
-                setUser((p) => ({
-                  role: e.value,
-                  data: { userName: "", password: "" },
-                }))
-              }
-              value={{ label: user.role, value: user.role }}
-            />
+
+  if (err.status || success.status){
+    setTimeout(()=>{
+      setErr({ status: false, message: "" });
+      setSuccess({ status: false, message: "" })
+    }, 2000)
+  }
+    return (
+      <React.Fragment>
+        {err.status && <NetworkNotify message={err.message} success={false} />}
+        {success.status && (
+          <NetworkNotify message={success.message} success={true} />
+        )}
+        <div className={c.createUser}>
+          <div className={c.employeeT}>
+            <span></span>
+            <h1> Create User </h1>
           </div>
-          {user.role !== "SELECT ROLE" && (
-            <form className={c.form} onSubmit={submitHandler}>
-              <div className={c["form-group"]}>
-                <label htmlFor="trainer">username</label>
-                {user.role === "SHIFTLEADER" ? (
-                  <Select
-                    options={getlabelandvalue(
-                      fetchedUsers.shiftleaders.filter((f) => f !== null)
-                    )}
-                    id="multiSelect"
-                    inputId="shiftleader1"
-                    styles={customStyles}
-                    placeholder="SELECT SHIFTLEADER"
-                    onChange={(e) =>
-                      setUser((p) => ({
-                        ...p,
-                        data: {
-                          ...p.data,
-                          userName: e.value,
-                        },
-                      }))
-                    }
-                  />
-                ) : (
+          <div className={c.selectContainer}>
+            <p>
+              NOTE: IN ORDER TO CREATE A USER, YOU NEED TO SELECT A ROLE FIRST!
+            </p>
+            <div className={c["form-group"]}>
+              <label htmlFor="trainingType">role</label>
+              <Select
+                options={ROLE}
+                id="multiSelect"
+                inputId="shiftleader1"
+                styles={customStyles}
+                placeholder="SELECT ROLE"
+                onChange={(e) =>
+                  setUser((p) => ({
+                    role: e.value,
+                    data: { userName: "", password: "" },
+                  }))
+                }
+                value={{ label: user.role, value: user.role }}
+              />
+            </div>
+            {user.role !== "SELECT ROLE" && (
+              <form className={c.form} onSubmit={submitHandler}>
+                <div className={c["form-group"]}>
+                  <label htmlFor="trainer">username</label>
+                  {user.role === "SHIFTLEADER" ? (
+                    <Select
+                      options={getlabelandvalue(
+                        fetchedUsers.shiftleaders.filter((f) => f !== null)
+                      )}
+                      id="multiSelect"
+                      inputId="shiftleader1"
+                      styles={customStyles}
+                      placeholder="SELECT SHIFTLEADER"
+                      onChange={(e) =>
+                        setUser((p) => ({
+                          ...p,
+                          data: {
+                            ...p.data,
+                            userName: e.value,
+                          },
+                        }))
+                      }
+                    />
+                  ) : (
+                    <input
+                      required
+                      name="username"
+                      id="trainer"
+                      type="text"
+                      placeholder="Enter Username"
+                      onChange={(e) =>
+                        setUser((p) => ({
+                          ...p,
+                          data: {
+                            ...p.data,
+                            userName: e.target.value,
+                          },
+                        }))
+                      }
+                    />
+                  )}
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="pwd">password</label>
                   <input
                     required
-                    name="username"
-                    id="trainer"
+                    name="pwd"
+                    id="pwd"
                     type="text"
-                    placeholder="Enter Username"
+                    placeholder="Enter Password"
+                    value={user.data.password}
                     onChange={(e) =>
                       setUser((p) => ({
                         ...p,
                         data: {
                           ...p.data,
-                          userName: e.target.value,
+                          password: e.target.value,
                         },
                       }))
                     }
                   />
-                )}
-              </div>
-              <div className={c["form-group"]}>
-                <label htmlFor="pwd">password</label>
-                <input
-                  required
-                  name="pwd"
-                  id="pwd"
-                  type="text"
-                  placeholder="Enter Password"
-                  value={user.data.password}
-                  onChange={(e) =>
-                    setUser((p) => ({
-                      ...p,
-                      data: {
-                        ...p.data,
-                        password: e.target.value,
-                      },
-                    }))
-                  }
-                />
-                <label>or</label>
-                <input
-                  type="button"
-                  value="AUTO GENERATE PASSWORD"
-                  className={c.gen}
-                  onClick={autoClicked}
-                />
-              </div>
-     
-              <button type="submit" className={c["form-submit-btn"]}>
-                Submit
-              </button>
-            </form>
-          )}
-        </div>
-      </div>
-      <div className={`${c.createUser} ${c.createUserShow}`}>
-        <div className={c.employeeT}>
-          <span></span>
-          <h1> All Users </h1>
-        </div>
-        <div className={c.containerCard}>
-          {fetchedUsers.users.length > 0 &&
-            fetchedUsers.users.map((m, i) => (
-              <div className={c.card} key={i}>
-                <div className={c.bg}>
-                  <div className={c.detailsC}>
-                    <h4>user name</h4>
-                    <h3>{m.userName}</h3>
-                  </div>
-                  <div className={c.detailsC}>
-                    <h4>role</h4>
-                    <h3>{m.role}</h3>
-                  </div>
+                  <label>or</label>
+                  <input
+                    type="button"
+                    value="AUTO GENERATE PASSWORD"
+                    className={c.gen}
+                    onClick={autoClicked}
+                  />
                 </div>
-                <div className={c.blob}></div>
-              </div>
-            ))}
+
+                <button type="submit" className={c["form-submit-btn"]}>
+                  Submit
+                </button>
+              </form>
+            )}
+          </div>
         </div>
-      </div>
-    </React.Fragment>
-  );
+        <div className={`${c.createUser} ${c.createUserShow}`}>
+          <div className={c.employeeT}>
+            <span></span>
+            <h1> All Users </h1>
+          </div>
+          <div className={c.containerCard}>
+            {fetchedUsers.users.length > 0 &&
+              fetchedUsers.users.map((m, i) => (
+                <div className={c.card} key={i}>
+                  <div className={c.bg}>
+                    <div className={c.detailsC}>
+                      <h4>user name</h4>
+                      <h3>{m.userName}</h3>
+                    </div>
+                    <div className={c.detailsC}>
+                      <h4>role</h4>
+                      <h3>{m.role}</h3>
+                    </div>
+                  </div>
+                  <div className={c.blob}></div>
+                </div>
+              ))}
+          </div>
+        </div>
+      </React.Fragment>
+    );
 };
 export default CreateUser;
