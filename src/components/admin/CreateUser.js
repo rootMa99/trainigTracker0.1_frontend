@@ -1,9 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import c from "./CreateUser.module.css";
 import Select from "react-select";
-import { generateRandomString, getlabelandvalue, sendEmail } from "../functions/utils";
+import {
+  generateRandomString,
+  getlabelandvalue,
+  sendEmail,
+} from "../functions/utils";
 import { useSelector } from "react-redux";
 import api from "../../service/api";
+import NetworkNotify from "../UI/NetworkNotify";
 
 const customStyles = {
   control: (provided, state) => ({
@@ -75,22 +80,6 @@ const ROLE = [
   { label: "ADMIN", value: "ADMIN" },
   { label: "TRAINER", value: "TRAINER" },
 ];
-const SL = [
-  { label: "HAMDI ABDERRAHIM", value: "HAMDI ABDERRAHIM" },
-  { label: "TOUMACH MUSTAPHA", value: "TOUMACH MUSTAPHA" },
-  { label: "LAHMAMI ABDERRAHIM", value: "LAHMAMI ABDERRAHIM" },
-  { label: "BENHMIDOU MOHAMMED", value: "BENHMIDOU MOHAMMED" },
-  { label: "MOHAMED HMAMOU", value: "MOHAMED HMAMOU" },
-  { label: "HAMDOUCH KAMAL", value: "HAMDOUCH KAMAL" },
-  { label: "MOURAD LAOURCH", value: "MOURAD LAOURCH" },
-  { label: "EL YAHYAOUI OUADIE", value: "EL YAHYAOUI OUADIE" },
-  { label: "JAMAL IDRISS", value: "JAMAL IDRISS" },
-  { label: "BASTANI YASSINE", value: "BASTANI YASSINE" },
-  { label: "EL AOUFI KAMAL", value: "EL AOUFI KAMAL" },
-  { label: "EL HADI MOHAMED", value: "EL HADI MOHAMED" },
-  { label: "OU-DAALY MUSTAPHA", value: "OU-DAALY MUSTAPHA" },
-  { label: "BAHMANE AHMED", value: "BAHMANE AHMED" },
-];
 
 const CreateUser = (p) => {
   const { isLoged } = useSelector((s) => s.login);
@@ -102,7 +91,11 @@ const CreateUser = (p) => {
     shiftleaders: [],
     users: [],
   });
+  const [err, setErr] = useState({ status: false, message: "" });
+  const [success, setSuccess] = useState({ status: false, message: "" });
+  
 
+  
   const callback = useCallback(async () => {
     try {
       const response = await fetch(`${api}/root/data/shiftleaders`, {
@@ -140,14 +133,45 @@ const CreateUser = (p) => {
     callback();
   }, [callback]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     console.log(user);
-    sendEmail();
-    setUser({
-      role: "SELECT ROLE",
-      data: { userName: "", password: "" },
-    });
+    let uri = `${api}/root`;
+    if (user.role === "SHIFTLEADER") {
+      uri += "/createSl";
+    }
+    if (user.role === "ADMIN") {
+      uri += "/createAdmin";
+    }
+    if (user.role === "TRAINER") {
+      uri += "/createTrainer";
+    }
+    try {
+      const response = await fetch(uri, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+        body: JSON.stringify(user.data),
+      });
+
+      const data = await response.json();
+      setSuccess({ status: true, message: "Account created successfully" });
+      console.log(data);
+      setUser({
+        role: "SELECT ROLE",
+        data: { userName: "", password: "" },
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      setErr({
+        status: true,
+        message:
+          "Something has gone wrong, we were not able to save this action, please try it again. ",
+      });
+    }
+    // sendEmail();
   };
   const autoClicked = (e) => {
     setUser((p) => ({
@@ -161,6 +185,10 @@ const CreateUser = (p) => {
   console.log(user);
   return (
     <React.Fragment>
+      {err.status && <NetworkNotify message={err.message} success={false} />}
+      {success.status && (
+        <NetworkNotify message={success.message} success={true} />
+      )}
       <div className={c.createUser}>
         <div className={c.employeeT}>
           <span></span>
@@ -193,7 +221,9 @@ const CreateUser = (p) => {
                 <label htmlFor="trainer">username</label>
                 {user.role === "SHIFTLEADER" ? (
                   <Select
-                    options={getlabelandvalue((fetchedUsers.shiftleaders).filter(f=>f!==null))}
+                    options={getlabelandvalue(
+                      fetchedUsers.shiftleaders.filter((f) => f !== null)
+                    )}
                     id="multiSelect"
                     inputId="shiftleader1"
                     styles={customStyles}
@@ -254,6 +284,7 @@ const CreateUser = (p) => {
                   onClick={autoClicked}
                 />
               </div>
+     
               <button type="submit" className={c["form-submit-btn"]}>
                 Submit
               </button>
@@ -268,8 +299,8 @@ const CreateUser = (p) => {
         </div>
         <div className={c.containerCard}>
           {fetchedUsers.users.length > 0 &&
-            fetchedUsers.users.map((m) => (
-              <div className={c.card}>
+            fetchedUsers.users.map((m, i) => (
+              <div className={c.card} key={i}>
                 <div className={c.bg}>
                   <div className={c.detailsC}>
                     <h4>user name</h4>

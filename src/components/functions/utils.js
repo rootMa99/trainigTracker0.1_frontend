@@ -38,10 +38,13 @@ export const generateRandomString = (length) => {
   }
   return result;
 };
-export const sendEmail = () => {
-  const recipient = "anasszeroual09@gmail.com"; // Replace with the recipient's email address
-  const subject = "Subject of the email"; // Replace with the subject of the email
-  const body = "Body of the email"; // Replace with the body of the email
+
+
+
+export const sendEmail = (email, subjects, bodys ) => {
+  const recipient = email; 
+  const subject = subjects; 
+  const body = bodys;
 
   window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(
     subject
