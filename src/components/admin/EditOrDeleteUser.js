@@ -52,7 +52,7 @@ const EditOrDeleteUser = (p) => {
           ? `${api}/root/data/updateUserPwd?userName=${p.data.userName}&password=${pwd.pwd}`
           : `${api}/root/data/updateRootPwd?password=${pwd.pwd}`;
       try {
-        const response = await fetch(url, {
+         await fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
