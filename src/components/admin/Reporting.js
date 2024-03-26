@@ -4,7 +4,7 @@ import * as ExcelJS from "exceljs";
 const Reporting = (p) => {
   const generateExcel = () => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet("Sheet 1");
+    const worksheet = workbook.addWorksheet("Déploiement");
 
     if (p.data.length > 0) {
       const columns = [
@@ -89,7 +89,7 @@ const Reporting = (p) => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "data.xlsx";
+      a.download = "plan de formation.xlsx";
       a.click();
       URL.revokeObjectURL(url);
     });

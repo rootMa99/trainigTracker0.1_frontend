@@ -90,6 +90,17 @@ const SL = [
   { label: "BAHMANE AHMED", value: "BAHMANE AHMED" },
 ];
 
+const users=[
+  {userName:"HAMDI ABDERRAHIM", role:"SHIFTLEADER" },
+  {userName:"EL YAHYAOUI OUADIE", role:"SHIFTLEADER" },
+  {userName:"BASTANI YASSINE", role:"SHIFTLEADER" },
+  {userName:"BAHMANE AHMED", role:"SHIFTLEADER" },
+  {userName:"EL HADI MOHAMED", role:"SHIFTLEADER" },
+  {userName:"HAMDOUCH KAMAL", role:"SHIFTLEADER" },
+  {userName:"MOHAMED HMAMOU", role:"SHIFTLEADER" },
+]
+
+
 const CreateUser = (p) => {
   const [user, setUser] = useState({
     role: "SELECT ROLE",
@@ -217,11 +228,25 @@ const CreateUser = (p) => {
           )}
         </div>
       </div>
-      <div className={c.createUser}>
+      <div className={`${c.createUser} ${c.createUserShow}`}>
         <div className={c.employeeT}>
           <span></span>
           <h1> All Users </h1>
         </div>
+
+       {users.length>0 && users.map(m=><div className={c.card}>
+        <div className={c.bg}>
+          <div className={c.detailsC}>
+            <h4>user name</h4>
+            <h3>{m.userName}</h3>
+          </div>
+          <div className={c.detailsC}>
+            <h4>role</h4>
+            <h3>{m.role}</h3>
+          </div>
+        </div>
+        <div className={c.blob}></div>
+      </div>) }
       </div>
     </React.Fragment>
   );
