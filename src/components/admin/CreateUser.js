@@ -328,9 +328,7 @@ const CreateUser = (p) => {
               <div
                 className={c.card}
                 key={i}
-                onClick={() =>
-                  m.role !== "ROOT" && setEdu({ status: true, data: m })
-                }
+                onClick={() => setEdu({ status: true, data: m })}
               >
                 <div className={c.bg}>
                   <div className={c.detailsC}>

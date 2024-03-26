@@ -239,7 +239,7 @@ transform: scale(1.1);
 }
 .detailsC h3{
   color: #fff;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 @keyframes blob-bounce {
@@ -301,7 +301,7 @@ transform: scale(1.1);
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.noteS, .accountS{
+.noteS, .accountS, .notewarning{
   color: #f1c07e;
   text-transform: capitalize;
   margin: 0;
@@ -312,4 +312,27 @@ transform: scale(1.1);
 }
 .accountS span{
   color: #f33716;
+}
+.notewarning{
+  color: red;
+}
+.vibrating-element {
+  animation: vibrate 0.5s infinite linear;
+}
+@keyframes vibrate {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(2px);
+  }
 }
