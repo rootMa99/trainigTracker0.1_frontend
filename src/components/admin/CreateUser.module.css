@@ -203,7 +203,9 @@ box-sizing: border-box;
   box-shadow: 20px 20px 60px #bebebe1f, -20px -20px 60px #ffffff0c;
   cursor: pointer;
 }
-
+.card:hover {
+transform: scale(1.1);
+}
 .bg {
   position: absolute;
   top: 5px;
@@ -278,3 +280,36 @@ box-sizing: border-box;
   justify-content: center;
 }
 
+.deleteTraining{
+  opacity: 0.5;
+  width: fit-content;
+  margin: 0 auto;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: #fff;
+}
+.deleteTraining:hover{
+  color: red;
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.editDelete{
+  position: fixed;
+  z-index: 22222;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.noteS, .accountS{
+  color: #f1c07e;
+  text-transform: capitalize;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+.accountS{
+  color: #ffffff;
+}
+.accountS span{
+  color: #f33716;
+}

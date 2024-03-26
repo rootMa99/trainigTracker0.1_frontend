@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import c from "./CreateUser.module.css";
 import Select from "react-select";
+import BackDrop from "../UI/BackDrop";
 import {
   generateRandomString,
   getlabelandvalue,
@@ -9,6 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import api from "../../service/api";
 import NetworkNotify from "../UI/NetworkNotify";
+import EditOrDeleteUser from "./EditOrDeleteUser";
 
 const customStyles = {
   control: (provided, state) => ({
@@ -93,7 +95,7 @@ const CreateUser = (p) => {
   });
   const [err, setErr] = useState({ status: false, message: "" });
   const [success, setSuccess] = useState({ status: false, message: "" });
-
+  const [edu, setEdu] = useState({ status: false, data: {} });
   const callback = useCallback(async () => {
     try {
       const response = await fetch(`${api}/root/data/shiftleaders`, {
@@ -166,6 +168,9 @@ const CreateUser = (p) => {
         role: "SELECT ROLE",
         data: { userName: "", password: "" },
       });
+      const rdata = fetchedUsers.users;
+      rdata.push({ role: user.role, userName: user.data.userName });
+      setUsers((p) => ({ ...p, users: rdata }));
     } catch (error) {
       console.error("Error:", error);
       setErr({
@@ -186,146 +191,163 @@ const CreateUser = (p) => {
   };
   console.log(user);
 
-  if (err.status || success.status){
-    setTimeout(()=>{
+  if (err.status || success.status) {
+    setTimeout(() => {
       setErr({ status: false, message: "" });
-      setSuccess({ status: false, message: "" })
-    }, 2000)
+      setSuccess({ status: false, message: "" });
+    }, 2000);
   }
-    return (
-      <React.Fragment>
-        {err.status && <NetworkNotify message={err.message} success={false} />}
-        {success.status && (
-          <NetworkNotify message={success.message} success={true} />
-        )}
-        <div className={c.createUser}>
-          <div className={c.employeeT}>
-            <span></span>
-            <h1> Create User </h1>
+  const close = () => {
+    setEdu({ status: false, data: {} });
+  };
+
+  return (
+    <React.Fragment>
+      {edu.status && (
+        <React.Fragment>
+          <BackDrop click={close} />
+          <EditOrDeleteUser data={edu.data} click={close} />
+        </React.Fragment>
+      )}
+
+      {err.status && <NetworkNotify message={err.message} success={false} />}
+      {success.status && (
+        <NetworkNotify message={success.message} success={true} />
+      )}
+      <div className={c.createUser}>
+        <div className={c.employeeT}>
+          <span></span>
+          <h1> Create User </h1>
+        </div>
+        <div className={c.selectContainer}>
+          <p>
+            NOTE: IN ORDER TO CREATE A USER, YOU NEED TO SELECT A ROLE FIRST!
+          </p>
+          <div className={c["form-group"]}>
+            <label htmlFor="trainingType">role</label>
+            <Select
+              options={ROLE}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              placeholder="SELECT ROLE"
+              onChange={(e) =>
+                setUser((p) => ({
+                  role: e.value,
+                  data: { userName: "", password: "" },
+                }))
+              }
+              value={{ label: user.role, value: user.role }}
+            />
           </div>
-          <div className={c.selectContainer}>
-            <p>
-              NOTE: IN ORDER TO CREATE A USER, YOU NEED TO SELECT A ROLE FIRST!
-            </p>
-            <div className={c["form-group"]}>
-              <label htmlFor="trainingType">role</label>
-              <Select
-                options={ROLE}
-                id="multiSelect"
-                inputId="shiftleader1"
-                styles={customStyles}
-                placeholder="SELECT ROLE"
-                onChange={(e) =>
-                  setUser((p) => ({
-                    role: e.value,
-                    data: { userName: "", password: "" },
-                  }))
-                }
-                value={{ label: user.role, value: user.role }}
-              />
-            </div>
-            {user.role !== "SELECT ROLE" && (
-              <form className={c.form} onSubmit={submitHandler}>
-                <div className={c["form-group"]}>
-                  <label htmlFor="trainer">username</label>
-                  {user.role === "SHIFTLEADER" ? (
-                    <Select
-                      options={getlabelandvalue(
-                        fetchedUsers.shiftleaders.filter((f) => f !== null)
-                      )}
-                      id="multiSelect"
-                      inputId="shiftleader1"
-                      styles={customStyles}
-                      placeholder="SELECT SHIFTLEADER"
-                      onChange={(e) =>
-                        setUser((p) => ({
-                          ...p,
-                          data: {
-                            ...p.data,
-                            userName: e.value,
-                          },
-                        }))
-                      }
-                    />
-                  ) : (
-                    <input
-                      required
-                      name="username"
-                      id="trainer"
-                      type="text"
-                      placeholder="Enter Username"
-                      onChange={(e) =>
-                        setUser((p) => ({
-                          ...p,
-                          data: {
-                            ...p.data,
-                            userName: e.target.value,
-                          },
-                        }))
-                      }
-                    />
-                  )}
-                </div>
-                <div className={c["form-group"]}>
-                  <label htmlFor="pwd">password</label>
-                  <input
-                    required
-                    name="pwd"
-                    id="pwd"
-                    type="text"
-                    placeholder="Enter Password"
-                    value={user.data.password}
+          {user.role !== "SELECT ROLE" && (
+            <form className={c.form} onSubmit={submitHandler}>
+              <div className={c["form-group"]}>
+                <label htmlFor="trainer">username</label>
+                {user.role === "SHIFTLEADER" ? (
+                  <Select
+                    options={getlabelandvalue(
+                      fetchedUsers.shiftleaders.filter((f) => f !== null)
+                    )}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    placeholder="SELECT SHIFTLEADER"
                     onChange={(e) =>
                       setUser((p) => ({
                         ...p,
                         data: {
                           ...p.data,
-                          password: e.target.value,
+                          userName: e.value,
                         },
                       }))
                     }
                   />
-                  <label>or</label>
+                ) : (
                   <input
-                    type="button"
-                    value="AUTO GENERATE PASSWORD"
-                    className={c.gen}
-                    onClick={autoClicked}
+                    required
+                    name="username"
+                    id="trainer"
+                    type="text"
+                    placeholder="Enter Username"
+                    onChange={(e) =>
+                      setUser((p) => ({
+                        ...p,
+                        data: {
+                          ...p.data,
+                          userName: e.target.value,
+                        },
+                      }))
+                    }
                   />
-                </div>
+                )}
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="pwd">password</label>
+                <input
+                  required
+                  name="pwd"
+                  id="pwd"
+                  type="text"
+                  placeholder="Enter Password"
+                  value={user.data.password}
+                  onChange={(e) =>
+                    setUser((p) => ({
+                      ...p,
+                      data: {
+                        ...p.data,
+                        password: e.target.value,
+                      },
+                    }))
+                  }
+                />
+                <label>or</label>
+                <input
+                  type="button"
+                  value="AUTO GENERATE PASSWORD"
+                  className={c.gen}
+                  onClick={autoClicked}
+                />
+              </div>
 
-                <button type="submit" className={c["form-submit-btn"]}>
-                  Submit
-                </button>
-              </form>
-            )}
-          </div>
+              <button type="submit" className={c["form-submit-btn"]}>
+                Submit
+              </button>
+            </form>
+          )}
         </div>
-        <div className={`${c.createUser} ${c.createUserShow}`}>
-          <div className={c.employeeT}>
-            <span></span>
-            <h1> All Users </h1>
-          </div>
-          <div className={c.containerCard}>
-            {fetchedUsers.users.length > 0 &&
-              fetchedUsers.users.map((m, i) => (
-                <div className={c.card} key={i}>
-                  <div className={c.bg}>
-                    <div className={c.detailsC}>
-                      <h4>user name</h4>
-                      <h3>{m.userName}</h3>
-                    </div>
-                    <div className={c.detailsC}>
-                      <h4>role</h4>
-                      <h3>{m.role}</h3>
-                    </div>
+      </div>
+      <div className={`${c.createUser} ${c.createUserShow}`}>
+        <div className={c.employeeT}>
+          <span></span>
+          <h1> All Users </h1>
+        </div>
+        <div className={c.containerCard}>
+          {fetchedUsers.users.length > 0 &&
+            fetchedUsers.users.map((m, i) => (
+              <div
+                className={c.card}
+                key={i}
+                onClick={() =>
+                  m.role !== "ROOT" && setEdu({ status: true, data: m })
+                }
+              >
+                <div className={c.bg}>
+                  <div className={c.detailsC}>
+                    <h4>user name</h4>
+                    <h3>{m.userName}</h3>
                   </div>
-                  <div className={c.blob}></div>
+                  <div className={c.detailsC}>
+                    <h4>role</h4>
+                    <h3>{m.role}</h3>
+                  </div>
                 </div>
-              ))}
-          </div>
+                <div className={c.blob}></div>
+              </div>
+            ))}
         </div>
-      </React.Fragment>
-    );
+      </div>
+    </React.Fragment>
+  );
 };
 export default CreateUser;
