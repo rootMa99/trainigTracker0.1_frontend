@@ -265,8 +265,15 @@ box-sizing: border-box;
 
 .createUserShow{
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  /* gap: 1rem; */
+  width: 100%;
+  justify-content: center;
+}
+.containerCard{
+  width: 90%;
+  display: flex;
   gap: 1rem;
+  justify-content: center;
 }

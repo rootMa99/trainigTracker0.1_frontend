@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import c from "./CreateUser.module.css";
 import Select from "react-select";
-import { generateRandomString, sendEmail } from "../functions/utils";
+import { generateRandomString, getlabelandvalue, sendEmail } from "../functions/utils";
 import { useSelector } from "react-redux";
 import api from "../../service/api";
-
 
 const customStyles = {
   control: (provided, state) => ({
@@ -93,22 +92,15 @@ const SL = [
   { label: "BAHMANE AHMED", value: "BAHMANE AHMED" },
 ];
 
-const users=[
-  {userName:"HAMDI ABDERRAHIM", role:"SHIFTLEADER" },
-  {userName:"EL YAHYAOUI OUADIE", role:"SHIFTLEADER" },
-  {userName:"BASTANI YASSINE", role:"SHIFTLEADER" },
-  {userName:"BAHMANE AHMED", role:"SHIFTLEADER" },
-  {userName:"EL HADI MOHAMED", role:"SHIFTLEADER" },
-  {userName:"HAMDOUCH KAMAL", role:"SHIFTLEADER" },
-  {userName:"MOHAMED HMAMOU", role:"SHIFTLEADER" },
-]
-
-
 const CreateUser = (p) => {
   const { isLoged } = useSelector((s) => s.login);
   const [user, setUser] = useState({
     role: "SELECT ROLE",
     data: { userName: "", password: "" },
+  });
+  const [fetchedUsers, setUsers] = useState({
+    shiftleaders: [],
+    users: [],
   });
 
   const callback = useCallback(async () => {
@@ -117,12 +109,13 @@ const CreateUser = (p) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${isLoged.token}`
+          Authorization: `Bearer ${isLoged.token}`,
         },
       });
 
       const data = await response.json();
       console.log(data);
+      setUsers((p) => ({ ...p, shiftleaders: data }));
     } catch (error) {
       console.error("Error:", error);
     }
@@ -131,11 +124,12 @@ const CreateUser = (p) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${isLoged.token}`
+          Authorization: `Bearer ${isLoged.token}`,
         },
       });
 
       const data = await response.json();
+      setUsers((p) => ({ ...p, users: data }));
       console.log(data);
     } catch (error) {
       console.error("Error:", error);
@@ -145,8 +139,6 @@ const CreateUser = (p) => {
   useEffect(() => {
     callback();
   }, [callback]);
-
-
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -201,7 +193,7 @@ const CreateUser = (p) => {
                 <label htmlFor="trainer">username</label>
                 {user.role === "SHIFTLEADER" ? (
                   <Select
-                    options={SL}
+                    options={getlabelandvalue((fetchedUsers.shiftleaders).filter(f=>f!==null))}
                     id="multiSelect"
                     inputId="shiftleader1"
                     styles={customStyles}
@@ -274,33 +266,24 @@ const CreateUser = (p) => {
           <span></span>
           <h1> All Users </h1>
         </div>
-
-       {users.length>0 && users.map(m=><div className={c.card}>
-        <div className={c.bg}>
-          <div className={c.detailsC}>
-            <h4>user name</h4>
-            <h3>{m.userName}</h3>
-          </div>
-          <div className={c.detailsC}>
-            <h4>role</h4>
-            <h3>{m.role}</h3>
-          </div>
+        <div className={c.containerCard}>
+          {fetchedUsers.users.length > 0 &&
+            fetchedUsers.users.map((m) => (
+              <div className={c.card}>
+                <div className={c.bg}>
+                  <div className={c.detailsC}>
+                    <h4>user name</h4>
+                    <h3>{m.userName}</h3>
+                  </div>
+                  <div className={c.detailsC}>
+                    <h4>role</h4>
+                    <h3>{m.role}</h3>
+                  </div>
+                </div>
+                <div className={c.blob}></div>
+              </div>
+            ))}
         </div>
-        <div className={c.blob}></div>
-      </div>) }
-       {users.length>0 && users.map(m=><div className={c.card}>
-        <div className={c.bg}>
-          <div className={c.detailsC}>
-            <h4>user name</h4>
-            <h3>{m.userName}</h3>
-          </div>
-          <div className={c.detailsC}>
-            <h4>role</h4>
-            <h3>{m.role}</h3>
-          </div>
-        </div>
-        <div className={c.blob}></div>
-      </div>) }
       </div>
     </React.Fragment>
   );
