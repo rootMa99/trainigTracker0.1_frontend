@@ -1,9 +1,11 @@
 .trainingH{
     display: flex;
-    width: 100%;
+    width: 95%;
     justify-content: space-around;
     cursor: pointer;
-    margin-top: 1rem;
+    margin: auto;
+    margin-top: 2rem;
+
 }
 .trainingD, .trainingDi{
     display: flex;
