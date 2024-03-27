@@ -50,3 +50,15 @@ export const sendEmail = (email, subjects, bodys) => {
     subject
   )}&body=${encodeURIComponent(body)}`;
 };
+
+
+
+export const getNextWeekDates=()=> {
+  const currentDate = new Date();
+  const currentDayOfWeek = currentDate.getDay(); 
+  const daysUntilNextMonday = 8 - currentDayOfWeek; 
+
+  const nextMonday = new Date(currentDate.getTime() + daysUntilNextMonday * 24 * 60 * 60 * 1000);
+
+  return nextMonday.toISOString().slice(0,10);
+}

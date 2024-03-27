@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "../../service/api";
 import { loginActions } from "../../store/loginSlice";
 import c from "./Home.module.css";
+import MakeOreder from "./MakeOreder";
 
 const Home = (p) => {
   const { isLoged } = useSelector((s) => s.login);
@@ -42,6 +43,7 @@ const Home = (p) => {
               ? { opacity: 1, borderBottom: "2px solid white" }
               : {}
           }
+          onClick={(e) => setSelected("vo")}
         >
           qualification orders
         </li>
@@ -51,10 +53,18 @@ const Home = (p) => {
               ? { opacity: 1, borderBottom: "2px solid white" }
               : {}
           }
+          onClick={(e) => setSelected("mo")}
         >
           make new qualification order
         </li>
       </ul>
+
+      <div className={c.bobyContainer} >
+      {
+        selected==="mo" && <MakeOreder />
+      }
+      </div>
+
     </React.Fragment>
   );
 };
