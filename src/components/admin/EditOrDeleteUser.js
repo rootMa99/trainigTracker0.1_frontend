@@ -114,7 +114,7 @@ const EditOrDeleteUser = (p) => {
               required
               name="rps"
               id="rps"
-              type="text"
+              type="password"
               placeholder="Re-Enter New Password"
               onChange={changeMatchedpwd}
             />

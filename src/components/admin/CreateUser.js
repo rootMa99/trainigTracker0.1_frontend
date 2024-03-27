@@ -161,8 +161,18 @@ const CreateUser = (p) => {
       console.log(data);
       sendEmail(
         "emailTo@aptiv.com",
-        "new account",
-        `username: ${user.data.userName} your password: ${user.data.password}`
+        "Your New Account Details",
+        `Welcome! Your new account has been successfully created. Please find your login credentials below:
+
+          Username: ${user.data.userName}
+          Password: ${user.data.password}
+
+        If you have any other questions or need assistance, please don't hesitate to contact us.
+        Thank you for joining us!
+          
+        Best regards,
+        Training Center/Aptiv
+        `
       );
       setUser({
         role: "SELECT ROLE",
@@ -349,3 +359,5 @@ const CreateUser = (p) => {
   );
 };
 export default CreateUser;
+
+// For security reasons, we recommend changing your password after your first login. You can do this by going to the "Account Settings" section.
