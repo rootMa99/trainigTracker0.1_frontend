@@ -17,7 +17,9 @@
   border-radius: 16px;
   background-size: 200% 100%;
   animation: gradient 5s ease infinite;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 33333;
 }
 @keyframes gradient {
   0% {

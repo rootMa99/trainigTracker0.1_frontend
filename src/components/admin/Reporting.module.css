@@ -41,6 +41,11 @@
   .table thead, .table tfoot {
       background-color: #f84018 ;
     }
+    .table thead{
+        position: sticky;
+        top: 9rem;
+        z-index: 33333;
+    }
   .table th , .table tfoot tr td{
     font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
