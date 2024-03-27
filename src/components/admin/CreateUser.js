@@ -164,10 +164,10 @@ const CreateUser = (p) => {
         "Your New Account Details",
         `Welcome! Your new account has been successfully created. Please find your login credentials below:
 
-          Username: ${user.data.userName}
-          Password: ${user.data.password}
+          Username: *${user.data.userName}*
+          Password: *${user.data.password}*
 
-  If you have any other questions or need assistance, please don't hesitate to contact us.
+If you have any questions or need assistance, please don't hesitate to contact us.
 Thank you for joining us!
           
 Best regards,
