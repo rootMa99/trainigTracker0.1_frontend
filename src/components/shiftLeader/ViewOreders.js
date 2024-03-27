@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../../service/api";
+import Order from "./Order";
 
 const ViewOreders = (p) => {
   const { isLoged } = useSelector((s) => s.login);
@@ -30,5 +31,15 @@ const ViewOreders = (p) => {
   useEffect(() => {
     callback();
   }, [callback]);
+
+  return (
+    <React.Fragment>
+      {orders.length > 0 ? (
+        orders.map((m) => <Order data={m} key={m.qualificationId} />)
+      ) : (
+        <h1>No qualification found</h1>
+      )}
+    </React.Fragment>
+  );
 };
 export default ViewOreders;
