@@ -81,6 +81,7 @@ const MakeOreder = (p) => {
     shift: "",
     matricules: [],
   });
+  const [filled, setFilled]=useState(false);
   const [err, setErr] = useState(false);
   const onchangeHandler = (e, t) => {
     const datap = [];
@@ -110,6 +111,7 @@ const MakeOreder = (p) => {
       order.shift.trim() !== "" ||
       order.matricules.length > 0
     ) {
+        setFilled(false)
       try {
         const response = await fetch(`${api}/other/addOrder`, {
           method: "POST",
@@ -127,9 +129,15 @@ const MakeOreder = (p) => {
         console.error("Error:", error);
         setErr(true);
       }
+    }else{
+        setFilled(true)
     }
   };
-
+  if(filled){
+    setTimeout(()=>{
+        setFilled(false)
+    }, 4000)
+  }
   console.log(order);
   return (
     <React.Fragment>
@@ -142,6 +150,7 @@ const MakeOreder = (p) => {
         />
       )}
       <div className={c.formCAdmin}>
+      {filled&&<p>Be sure to fill out all fields.</p>}
         <form className={c.form} onSubmit={submitHandler}>
           <div className={c["form-group"]}>
             <label htmlFor="userName">qualification</label>
