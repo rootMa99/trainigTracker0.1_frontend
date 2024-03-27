@@ -167,12 +167,11 @@ const CreateUser = (p) => {
           Username: ${user.data.userName}
           Password: ${user.data.password}
 
-        If you have any other questions or need assistance, please don't hesitate to contact us.
-        Thank you for joining us!
+  If you have any other questions or need assistance, please don't hesitate to contact us.
+Thank you for joining us!
           
-        Best regards,
-        Training Center/Aptiv
-        `
+Best regards,
+Training Center/Aptiv`
       );
       setUser({
         role: "SELECT ROLE",

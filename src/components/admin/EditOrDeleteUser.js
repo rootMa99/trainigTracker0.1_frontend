@@ -96,7 +96,7 @@ const EditOrDeleteUser = (p) => {
         <p className={c.accountS}>
           <span>Account:</span> {p.data.userName}
         </p>
-        <form className={c.form} onSubmit={submitHadler}>
+        <form className={c.form} onSubmit={submitHadler} >
           <div className={c["form-group"]}>
             <label htmlFor="tsph">Password</label>
             <input

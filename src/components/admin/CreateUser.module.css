@@ -278,6 +278,9 @@ transform: scale(1.1);
   display: flex;
   gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row;
 }
 
 .deleteTraining{
@@ -315,6 +318,7 @@ transform: scale(1.1);
 }
 .notewarning{
   color: red;
+  font-weight: bolder !important;
 }
 .vibrating-element {
   animation: vibrate 0.5s infinite linear;
