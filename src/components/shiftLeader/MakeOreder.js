@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import Select from "react-select";
 import c from "./MakeOreder.module.css";
 import { getNextWeekDates, getlabelandvalue } from "../functions/utils";
+import api from "../../service/api";
+import NetworkNotify from "../UI/NetworkNotify";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -79,8 +81,10 @@ const MakeOreder = (p) => {
     shift: "",
     matricules: [],
   });
-
+  const [err, setErr] = useState(false);
   const onchangeHandler = (e, t) => {
+    const datap = [];
+    t === "mlls" && e.map((m) => datap.push(m.value));
     switch (t) {
       case "q":
         setOrder((prev) => ({ ...prev, qualification: e.value }));
@@ -92,21 +96,55 @@ const MakeOreder = (p) => {
         setOrder((prev) => ({ ...prev, shift: e.value }));
         break;
       case "mlls":
-        setOrder((prev) => ({ ...prev, matricules: +e.target.value }));
+        setOrder((prev) => ({ ...prev, matricules: datap }));
         break;
-   
+
       default:
     }
   };
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (
+      order.qualification.trim() !== "" ||
+      order.shift.trim() !== "" ||
+      order.matricules.length > 0
+    ) {
+      try {
+        const response = await fetch(`${api}/other/addOrder`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+          body: JSON.stringify([order]),
+        });
 
-  console.log(employeesByShiftLeader, titleAndType);
+        const data = await response.json();
+        console.log(data);
+        p.click();
+      } catch (error) {
+        console.error("Error:", error);
+        setErr(true);
+      }
+    }
+  };
+
+  console.log(order);
   return (
     <React.Fragment>
+    {err && (
+        <NetworkNotify
+          message={
+            "Something has gone wrong, we were not able to save this action, please try it again. "
+          }
+          success={false}
+        />
+      )}
       <div className={c.formCAdmin}>
-        <form className={c.form}>
+        <form className={c.form} onSubmit={submitHandler}>
           <div className={c["form-group"]}>
-            <label htmlFor="userName">training Type</label>
+            <label htmlFor="userName">qualification</label>
             <Select
               options={getlabelandvalue(
                 titleAndType.filter((f) => f.trainingType === "Process")[0]
@@ -116,6 +154,7 @@ const MakeOreder = (p) => {
               inputId="shiftleader1"
               styles={customStyles}
               placeholder="select Qualification"
+              onChange={(e) => onchangeHandler(e, "q")}
             />
           </div>
 
@@ -128,6 +167,7 @@ const MakeOreder = (p) => {
               styles={customStyles}
               placeholder="select Employees"
               isMulti
+              onChange={(e) => onchangeHandler(e, "mlls")}
             />
           </div>
           <div className={c["form-group"]}>
@@ -142,7 +182,7 @@ const MakeOreder = (p) => {
               inputId="modality"
               styles={customStyles}
               placeholder="select shift"
-              isMulti
+              onChange={(e) => onchangeHandler(e, "s")}
             />
           </div>
           <div className={c["form-group"]}>
@@ -154,6 +194,7 @@ const MakeOreder = (p) => {
               type="date"
               placeholder="enter date"
               value={order.orderdate}
+              onChange={(e) => onchangeHandler(e, "od")}
             />
           </div>
           <button type="submit" className={c["form-submit-btn"]}>

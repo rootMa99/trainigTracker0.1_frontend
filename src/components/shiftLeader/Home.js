@@ -4,6 +4,7 @@ import api from "../../service/api";
 import { loginActions } from "../../store/loginSlice";
 import c from "./Home.module.css";
 import MakeOreder from "./MakeOreder";
+import ViewOreders from "./ViewOreders";
 
 const Home = (p) => {
   const { isLoged } = useSelector((s) => s.login);
@@ -33,7 +34,9 @@ const Home = (p) => {
   useEffect(() => {
     callback();
   }, [callback]);
-
+const close=()=>{
+    setSelected("vo")
+}
   return (
     <React.Fragment>
       <ul className={c.options}>
@@ -61,7 +64,10 @@ const Home = (p) => {
 
       <div className={c.bobyContainer} >
       {
-        selected==="mo" && <MakeOreder />
+        selected==="vo" && <ViewOreders />
+      }
+      {
+        selected==="mo" && <MakeOreder click={close} />
       }
       </div>
 
