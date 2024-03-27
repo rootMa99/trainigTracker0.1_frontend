@@ -1,52 +1,71 @@
-.trainingH{
-    display: flex;
-    width: 95%;
-    justify-content: space-around;
-    cursor: pointer;
-    margin: auto;
-    margin-top: 2rem;
+.trainingH {
+  display: flex;
+  width: 95%;
+  justify-content: space-around;
+  margin: auto;
+  /* margin-top: 2rem; */
+}
+.trainingD,
+.trainingDi {
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+  padding: 1rem;
+  align-items: flex-start;
+}
+.trainingDi {
+  width: 40%;
+  background-color: #929d96;
+}
 
+.trainingDi .dataT span {
+  color: #f84018;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: medium;
 }
-.trainingD, .trainingDi{
-    display: flex;
-    justify-content: space-evenly;
-    width: 60%;
-    padding: 1rem;
-    align-items: flex-start;
+.trainingDi .dataT h3 {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: medium;
 }
-.trainingDi{
-    width: 40%;
-    background-color: #929D96;
+.trainingD .dataT h3 {
+  color: #f84018;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: medium;
 }
-
-.trainingDi .dataT span{
-    color: #f84018;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: medium;
+.trainingD .dataT span {
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: medium;
 }
-.trainingDi .dataT h3{
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: medium;
+.mlls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
 }
-.trainingD .dataT h3{
-    color: #f84018;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: medium;
+.exp {
+  cursor: pointer;
 }
-.trainingD .dataT span{
-    color: #ffffff;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: medium;
+.exp:hover {
+  color: #641605 !important;
 }
-.mlls{
-    display: flex;
-    flex-wrap: wrap;
-    gap:1rem;
-    align-items: center;
-    justify-content: center;
+.ulemp {
+  color: #fff;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.ulemp li {
+  display: flex;
+  flex-direction: row;
+  /* align-content: center; */
+  justify-content: space-evenly;
+  text-transform: uppercase;
 }
