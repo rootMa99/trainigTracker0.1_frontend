@@ -74,6 +74,7 @@ const Charts = (p) => {
       },
     },
     plugins: {
+   
       legend: {
         labels: {
           color: "#FAF0E6",
@@ -83,6 +84,11 @@ const Charts = (p) => {
       datalabels: {
         display: true,
       },
+      // hover: {
+      //   mode: "nearest",
+      //   intersect: false,
+      //   animationDuration: 400,
+      // },
     },
     animation: p.home === undefined && {
       onComplete: (animation) => {
