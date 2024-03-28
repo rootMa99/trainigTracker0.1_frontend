@@ -10,10 +10,17 @@ const ViewOreders = (p) => {
   const [orders, setOrders] = useState([]);
   const dispatch = useDispatch();
   const [checkboxState, setCheckboxState] = useState({});
-  const [orderIds, setOrderIds]=useState([])
+  const [orderIds, setOrderIds] = useState([]);
 
   const handleCheckboxChange = (event) => {
     const { id, checked } = event.target;
+    const ids = orderIds;
+    if (checked) {
+      orderIds.push(id);
+      setOrderIds(ids);
+    } else {
+      setOrderIds(ids.filter((f) => f !== id));
+    }
     setCheckboxState({
       ...checkboxState,
       [id]: checked,
@@ -22,7 +29,7 @@ const ViewOreders = (p) => {
 
   const handleCheckAll = () => {
     const updatedCheckboxState = {};
-    const ids=[]
+    const ids = [];
     orders.forEach((order) => {
       updatedCheckboxState[order.qualificationId] = true;
       ids.push(order.qualificationId);
@@ -55,7 +62,6 @@ const ViewOreders = (p) => {
   useEffect(() => {
     callback();
   }, [callback]);
-
 
   console.log(orderIds, checkboxState);
 
@@ -96,21 +102,23 @@ const ViewOreders = (p) => {
 
       {orders.length > 0 ? (
         <div className={c.orderHolder}>
-          <div className={c.orderActions}>
-            <button onClick={handleCheckAll}>check all</button>
-            <button onClick={ e=>setCheckboxState({})}>uncheck all</button>
-            <button>delete</button>
-            <button>update</button>
-          </div>
+          {orderIds.length > 0 && (
+            <div className={c.orderActions}>
+              <button onClick={handleCheckAll}>check all</button>
+              <button onClick={() => setCheckboxState({})}>uncheck</button>
+              <button>delete</button>
+              <button>update</button>
+            </div>
+          )}
           {orders.map((m) => (
-            <div className={c.holy}>
-            <input
-            className={c.checkboxInput}
-            type="checkbox"
-            id={m.qualificationId}
-            checked={checkboxState[m.qualificationId] || false}
-            onChange={handleCheckboxChange}
-          />
+            <div className={c.holy} key={m.qualificationId}>
+              <input
+                className={c.checkboxInput}
+                type="checkbox"
+                id={m.qualificationId}
+                checked={checkboxState[m.qualificationId] || false}
+                onChange={handleCheckboxChange}
+              />
               <Order data={m} key={m.qualificationId} />
             </div>
           ))}

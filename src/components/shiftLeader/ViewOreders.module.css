@@ -184,17 +184,20 @@
     color: #717171;
     font-weight: 600;
     background: transparent;
-    border: 1px solid #414141;
-    padding: 4px;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 4px 10px;
     font-size: inherit;
     cursor: pointer;
-    border-radius: 6px;
+    /* border-radius: 6px; */
     text-transform: uppercase;
+
   }
   .orderActions button:hover {
-    background-color: #f33716;
+    color: #f84018;
     border-color: #f33716;
-    color: #fff;
+    transform: scale(1.1);
   }
   
 .checkboxInput {
