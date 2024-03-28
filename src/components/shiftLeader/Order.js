@@ -6,7 +6,7 @@ const Order = ({ data }) => {
   return (
     <React.Fragment>
     <div className={c.trainingH}>
-    <input className={c.checkboxInput} type="checkbox" />
+    
         <div className={c.trainingD}>
           <div className={c.dataT} style={{ width: "40%" }}>
             <span>qualification</span>

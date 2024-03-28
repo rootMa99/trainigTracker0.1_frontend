@@ -3,12 +3,29 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "../../service/api";
 import Order from "./Order";
 import c from "./ViewOreders.module.css";
-import pic from "../../assets/os.gif"
+import pic from "../../assets/os.gif";
 import { loginActions } from "../../store/loginSlice";
 const ViewOreders = (p) => {
   const { isLoged, orderDates } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
-  const dispatch= useDispatch();
+  const dispatch = useDispatch();
+  const [checkboxState, setCheckboxState] = useState({});
+
+  const handleCheckboxChange = (event) => {
+    const { id, checked } = event.target;
+    setCheckboxState({
+      ...checkboxState,
+      [id]: checked,
+    });
+  };
+
+  const handleCheckAll = () => {
+    const updatedCheckboxState = {};
+    orders.forEach((order) => {
+      updatedCheckboxState[order.qualificationId] = true;
+    });
+    setCheckboxState(updatedCheckboxState);
+  };
   console.log(orderDates);
   const callback = useCallback(async () => {
     try {
@@ -48,7 +65,9 @@ const ViewOreders = (p) => {
             type="date"
             placeholder="enter date"
             value={orderDates.start}
-            onChange={e=>dispatch(loginActions.setDateOdrerweekStart(e.target.value))}
+            onChange={(e) =>
+              dispatch(loginActions.setDateOdrerweekStart(e.target.value))
+            }
           />
         </div>
         <span>TO</span>
@@ -61,12 +80,33 @@ const ViewOreders = (p) => {
             type="date"
             placeholder="enter date"
             value={orderDates.end}
-            onChange={e=>dispatch(loginActions.setDateOdrerweekEnd(e.target.value))}
+            onChange={(e) =>
+              dispatch(loginActions.setDateOdrerweekEnd(e.target.value))
+            }
           />
         </div>
       </div>
+
       {orders.length > 0 ? (
-        orders.map((m) => <Order data={m} key={m.qualificationId} />)
+        <div className={c.orderHolder}>
+          <div className={c.orderActions}>
+            <button onClick={handleCheckAll}>check all</button>
+            <button>delete</button>
+            <button>update</button>
+          </div>
+          {orders.map((m) => (
+            <div className={c.holy}>
+            <input
+            className={c.checkboxInput}
+            type="checkbox"
+            id={m.qualificationId}
+            checked={checkboxState[m.qualificationId] || false}
+            onChange={handleCheckboxChange}
+          />
+              <Order data={m} key={m.qualificationId} />
+            </div>
+          ))}
+        </div>
       ) : (
         <div className={c.notFound}>
           <h1>No qualification found</h1>
