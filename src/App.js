@@ -56,7 +56,7 @@ function App() {
         <Login />
       ) : isLoged.role === "ROOT" ? (
         <AdminRoutes role={isLoged.role} />
-      ) : isLoged.role === "Admin" ? (
+      ) : isLoged.role === "ADMIN" ? (
         <AdminRoutes role={isLoged.role} />
       ) : isLoged.role === "SHIFT_LEADER" ? (
         <ShiftLeaderRoutes />

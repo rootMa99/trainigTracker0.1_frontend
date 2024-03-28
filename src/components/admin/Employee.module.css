@@ -84,8 +84,8 @@
 }
 .trainingInfo {
   width: 80%;
-  overflow-y: scroll;
-  overflow-x: visible;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;

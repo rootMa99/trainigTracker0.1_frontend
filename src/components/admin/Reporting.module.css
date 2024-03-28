@@ -1,154 +1,155 @@
-.datatable{
-    height: 100%;
-    width: 100%;
-    position: relative;
+.datatable {
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
-
 .employeeT {
-    display: flex;
-    align-items: flex-end;
-    gap: 0.5rem;
-    position: absolute;
-    left: -17px;
-    top:-4rem;
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-  .employeeT span {
-    width: 2.1rem;
-    height: 2.1rem;
-    border-radius: 50%;
-    background-color: #f33716;
-  }
-  .employeeT h1 {
-    margin: 0;
-    text-transform: uppercase;
-    font-weight: lighter;
-    color: aliceblue;
-    /* font-size: 35px; */
-  }
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  position: absolute;
+  left: -17px;
+  top: -4rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.employeeT span {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background-color: #f33716;
+}
+.employeeT h1 {
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: lighter;
+  color: aliceblue;
+  /* font-size: 35px; */
+}
 .table {
-    margin-top: 5rem;
-    width: 100%;
-    border-collapse: initial;
-    /* border: 1px solid black; */
-    border-radius: 20px;
-    animation: rsin 0.25s ease-in forwards;
-    table-layout: fixed;
-    box-shadow: 0px 0px 25px 5px rgba(8, 8, 8, 0.788);
-  }
-  .table thead, .table tfoot {
-      background-color: #f84018 ;
-    }
-    .table thead{
-        position: sticky;
-        top: 9rem;
-        z-index: 33333;
-    }
-  .table th , .table tfoot tr td{
-    font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
-    color: rgb(255, 254, 251);
-    text-align: center;
-    text-transform: uppercase;
-    padding: 16px 3px;
-  }
-  .table th:first-of-type {
-    border-radius: 14px 0 0 0;
-  }
-  .table th:last-of-type {
-    border-radius: 0 14px 0 0;
-  }
-  .table tr {
-    background-color: rgba(0, 0, 0, 0.233);
-  }
-  .table tr:nth-child(even) {
-    background-color: rgba(77, 76, 76, 0.233);
-  }
-  .table td {
-    text-align: center;
-    padding: 8px;
-    color: #fdcec4;
-    text-transform: capitalize;
-    font-weight: 450;
-    font-size: small;
-  }
-  
-  .table tr:last-of-type td:last-of-type {
-    border-radius: 0 0 14px 0;
-  }
-  .table tr:last-of-type td:first-of-type {
-    border-radius: 0 0 0 14px;
-  }
-  .table tfoot tr td{
-    font-weight: 900;
-    font-size: larger;
-  }
+  margin-top: 5rem;
+  width: 100%;
+  border-collapse: initial;
+  /* border: 1px solid black; */
+  border-radius: 20px;
+  animation: rsin 0.25s ease-in forwards;
+  table-layout: fixed;
+  box-shadow: 0px 0px 25px 5px rgba(8, 8, 8, 0.788);
+}
+.table thead,
+.table tfoot {
+  background-color: #f84018;
+}
+.table thead {
+  position: sticky;
+  top: 9rem;
+  z-index: 1;
+}
+.table th,
+.table tfoot tr td {
+  font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  color: rgb(255, 254, 251);
+  text-align: center;
+  text-transform: uppercase;
+  padding: 16px 3px;
+}
+.table th:first-of-type {
+  border-radius: 14px 0 0 0;
+}
+.table th:last-of-type {
+  border-radius: 0 14px 0 0;
+}
+.table tr {
+  background-color: rgba(0, 0, 0, 0.233);
+}
+.table tr:nth-child(even) {
+  background-color: rgba(77, 76, 76, 0.233);
+}
+.table td {
+  text-align: center;
+  padding: 8px;
+  color: #fdcec4;
+  text-transform: capitalize;
+  font-weight: 450;
+  font-size: small;
+}
 
-  
-  .btnhelperholder{
-    position: absolute;
-    right: 10px;
-    top: -3rem;
+.table tr:last-of-type td:last-of-type {
+  border-radius: 0 0 14px 0;
+}
+.table tr:last-of-type td:first-of-type {
+  border-radius: 0 0 0 14px;
+}
+.table tfoot tr td {
+  font-weight: 900;
+  font-size: larger;
+}
 
-  }
+.btnhelperholder {
+  position: absolute;
+  right: 10px;
+  top: -3rem;
+}
 .button {
-    position: relative;
-    width: 150px;
-    height: 40px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    border: 1px solid #681a09;
-    background-color: #f84018;
-    overflow: hidden;
-  }
-  
-  .button, .button__icon, .button__text {
-    transition: all 0.3s;
-  }
-  
-  .button .button__text {
-    transform: translateX(22px);
-    color: #fff;
-    font-weight: 600;
-  }
-  
-  .button .button__icon {
-    position: absolute;
-    transform: translateX(109px);
-    height: 100%;
-    width: 39px;
-    background-color: #96240b;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .button .svg {
-    width: 20px;
-    fill: #fff;
-  }
-  
-  .button:hover {
-    background: #f84018;
-  }
-  
-  .button:hover .button__text {
-    color: transparent;
-  }
-  
-  .button:hover .button__icon {
-    width: 148px;
-    transform: translateX(0);
-  }
-  
-  .button:active .button__icon {
-    background-color: #fa7a5d;
-  }
-  
-  .button:active {
-    border: 1px solid #f84018;
-  }
+  position: relative;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #681a09;
+  background-color: #f84018;
+  overflow: hidden;
+}
+
+.button,
+.button__icon,
+.button__text {
+  transition: all 0.3s;
+}
+
+.button .button__text {
+  transform: translateX(22px);
+  color: #fff;
+  font-weight: 600;
+}
+
+.button .button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: #96240b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button .svg {
+  width: 20px;
+  fill: #fff;
+}
+
+.button:hover {
+  background: #f84018;
+}
+
+.button:hover .button__text {
+  color: transparent;
+}
+
+.button:hover .button__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+
+.button:active .button__icon {
+  background-color: #fa7a5d;
+}
+
+.button:active {
+  border: 1px solid #f84018;
+}

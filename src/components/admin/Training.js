@@ -29,13 +29,13 @@ const Training = ({ data }) => {
               <span>training type</span>
               <h3>{data.trainingType}</h3>
             </div>
-            <div className={c.dataT} style={{width:"10%"}}>
+            <div className={c.dataT} style={{width:"20%"}}>
               <span>modality</span>
               <h3>{data.modalite}</h3>
             </div>
             <div className={c.dataT} style={{width:"10%"}}>
               <span>ts/h</span>
-              <h3>{data.dph}</h3>
+              <h3>{(data.dph).toFixed(1)}</h3>
             </div>
           </div>
           <div className={c.trainingDi}>

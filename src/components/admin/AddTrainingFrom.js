@@ -169,25 +169,28 @@ const AddTrainingForm = React.memo((p) => {
   };
 
   const deleteTrainingToEmployee = async (e) => {
-    try {
-      const response = await fetch(
-        `${api}/admin/deleteTrainingFe?matricule=${employeeData.matricule}&trainingID=${p.data.trainingId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${isLoged.token}`,
-          },
+    const confirmed = window.confirm("Do you want to continue?");
+    if (confirmed) {
+      try {
+        const response = await fetch(
+          `${api}/admin/deleteTrainingFe?matricule=${employeeData.matricule}&trainingID=${p.data.trainingId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${isLoged.token}`,
+            },
+          }
+        );
+        if (response.ok) {
+          setSuccess(true);
+          dispatch(loginActions.deleteTrainigToEmployee(p.data.trainingId));
+          p.click();
         }
-      );
-      if (response.ok) {
-        setSuccess(true);
-        dispatch(loginActions.deleteTrainigToEmployee(p.data.trainingId));
-        p.click();
+      } catch (error) {
+        console.error("Error:", error);
+        setErr(true);
       }
-    } catch (error) {
-      console.error("Error:", error);
-      setErr(true);
     }
   };
 
@@ -376,7 +379,7 @@ const AddTrainingForm = React.memo((p) => {
           </button>
           {p.note && (
             <h5 className={c.deleteTraining} onClick={deleteTrainingToEmployee}>
-              Delete training to this Employee
+            DELETE TRAINING SESSION FOR THIS EMPLOYEE
             </h5>
           )}
         </form>

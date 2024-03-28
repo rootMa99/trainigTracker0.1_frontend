@@ -4,10 +4,10 @@
     justify-content: space-around;
     cursor: pointer;
 }
-.trainingH:hover{
-    transform: scaleY(1.04);
-    box-shadow: 1px 1px 20px 3370px #00000080;
-}
+/* .trainingH:hover{
+    transform: scale(1.01);
+    box-shadow: 1px 1px 20px 3370px #00000033;
+} */
 
 .trainingD, .trainingDi{
     display: flex;
