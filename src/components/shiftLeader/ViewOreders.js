@@ -6,6 +6,9 @@ import c from "./ViewOreders.module.css";
 import pic from "../../assets/os.gif";
 import { loginActions } from "../../store/loginSlice";
 import NetworkNotify from "../UI/NetworkNotify";
+import BackDrop from "../UI/BackDrop";
+import EditOrder from "./EditOrder";
+import MakeOreder from "./MakeOreder";
 const ViewOreders = (p) => {
   const { isLoged, orderDates } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
@@ -14,6 +17,7 @@ const ViewOreders = (p) => {
   const [orderIds, setOrderIds] = useState([]);
   const [success, setSuccess] = useState({ status: false, message: "" });
   const [err, setErr] = useState({ status: false, message: "" });
+  const [dataUp, setDataUp] = useState(false);
   const handleCheckboxChange = (event) => {
     const { id, checked } = event.target;
     const ids = orderIds;
@@ -107,11 +111,23 @@ const ViewOreders = (p) => {
       setSuccess({ status: false, message: "" });
     }, 2000);
   }
+
+  const close = (e) => {
+    setDataUp(false);
+    setCheckboxState({});
+    setOrderIds([]);
+  };
   return (
     <React.Fragment>
       {err.status && <NetworkNotify message={err.message} success={false} />}
       {success.status && (
         <NetworkNotify message={success.message} success={true} />
+      )}
+      {dataUp && (
+        <React.Fragment>
+          <MakeOreder click={close} />
+          <BackDrop click={close} zindex={22223} />{" "}
+        </React.Fragment>
       )}
       <div className={c.formCAdmin}>
         <div className={c["form-group"]}>
@@ -149,7 +165,7 @@ const ViewOreders = (p) => {
         <div className={c.orderHolder}>
           {orderIds.length > 0 && (
             <div className={c.orderActions}>
-              {Object.keys(checkboxState).length !== orders.length && (
+              {orderIds.length !== orders.length && (
                 <button onClick={handleCheckAll}>check all</button>
               )}
 
@@ -161,7 +177,9 @@ const ViewOreders = (p) => {
               >
                 uncheck
               </button>
-              {orderIds.length === 1 && <button>edit</button>}
+              {orderIds.length === 1 && (
+                <button onClick={() => setDataUp(true)}>edit</button>
+              )}
               <button className={c.deleteAct} onClick={deleteOrders}>
                 delete
               </button>
