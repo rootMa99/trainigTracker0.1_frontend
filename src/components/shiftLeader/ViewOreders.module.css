@@ -167,11 +167,12 @@
   position: absolute;
   right: 0;
   top: 12rem;
-  width: 44rem;
+  width: 30vw;
 }
 
 .orderHolder {
   position: relative;
+  margin-top: 5rem;
 }
 .orderActions {
   position: absolute;

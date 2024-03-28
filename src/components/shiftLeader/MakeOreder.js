@@ -75,13 +75,17 @@ const MakeOreder = (p) => {
     (s) => s.login
   );
   const [order, setOrder] = useState({
-    qualification: "",
-    orderdate: getNextWeekDates(),
+    qualification: p.order !== undefined ? p.order.qualification : "",
+    orderdate:
+      p.order !== undefined ? p.order.qualificationDate : getNextWeekDates(),
     shiftLeaderName: isLoged.userName,
-    shift: "",
-    matricules: [],
+    shift: p.order !== undefined ? p.order.shift : "",
+    matricules:
+      p.order !== undefined
+        ? p.order.employeeRests.map((m) => m.matricule)
+        : [],
   });
-  const [filled, setFilled]=useState(false);
+  const [filled, setFilled] = useState(false);
   const [err, setErr] = useState(false);
   const onchangeHandler = (e, t) => {
     const datap = [];
@@ -104,11 +108,7 @@ const MakeOreder = (p) => {
     }
   };
 
-
-  console.log(p.order)
-
-
-
+  console.log(p.order, order);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -117,15 +117,19 @@ const MakeOreder = (p) => {
       order.shift.trim() !== "" &&
       order.matricules.length > 0
     ) {
-        setFilled(false)
+      setFilled(false);
       try {
-        const response = await fetch(`${api}/other/addOrder`, {
-          method: "POST",
+        const uri =
+          p.order === undefined
+            ? `${api}/other/addOrder`
+            : `${api}/other/EditOrder?orderId=${p.order.qualificationId}`;
+        const response = await fetch(uri, {
+          method: p.order === undefined ? "POST" : "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${isLoged.token}`,
           },
-          body: JSON.stringify([order]),
+          body: JSON.stringify(p.order === undefined ? [order] : order),
         });
 
         const data = await response.json();
@@ -135,19 +139,19 @@ const MakeOreder = (p) => {
         console.error("Error:", error);
         setErr(true);
       }
-    }else{
-        setFilled(true)
+    } else {
+      setFilled(true);
     }
   };
-  if(filled){
-    setTimeout(()=>{
-        setFilled(false)
-    }, 4000)
+  if (filled) {
+    setTimeout(() => {
+      setFilled(false);
+    }, 4000);
   }
   console.log(order);
   return (
     <React.Fragment>
-    {err && (
+      {err && (
         <NetworkNotify
           message={
             "Something has gone wrong, we were not able to save this action, please try it again. "
@@ -156,7 +160,7 @@ const MakeOreder = (p) => {
         />
       )}
       <div className={c.formCAdmin}>
-      {filled&&<p>Be sure to fill out all fields.</p>}
+        {filled && <p>Be sure to fill out all fields.</p>}
         <form className={c.form} onSubmit={submitHandler}>
           <div className={c["form-group"]}>
             <label htmlFor="userName">qualification</label>
@@ -170,6 +174,10 @@ const MakeOreder = (p) => {
               styles={customStyles}
               placeholder="select Qualification"
               onChange={(e) => onchangeHandler(e, "q")}
+              defaultValue={{
+                label: order.qualification,
+                value: order.qualification,
+              }}
             />
           </div>
 
@@ -183,6 +191,7 @@ const MakeOreder = (p) => {
               placeholder="select Employees"
               isMulti
               onChange={(e) => onchangeHandler(e, "mlls")}
+              defaultValue={getlabelandvalue(order.matricules)}
             />
           </div>
           <div className={c["form-group"]}>
@@ -198,6 +207,7 @@ const MakeOreder = (p) => {
               styles={customStyles}
               placeholder="select shift"
               onChange={(e) => onchangeHandler(e, "s")}
+              defaultValue={{ label: order.shift, value: order.shift }}
             />
           </div>
           <div className={c["form-group"]}>

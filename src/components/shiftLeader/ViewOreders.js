@@ -125,7 +125,7 @@ const ViewOreders = (p) => {
       )}
       {dataUp && (
         <React.Fragment>
-          <MakeOreder click={close} order={orders.filter(f=>f.qualificationId===orderIds[0])} />
+          <MakeOreder click={close} order={(orders.filter(f=>f.qualificationId===orderIds[0]))[0]} />
           <BackDrop click={close} zindex={22223} />{" "}
         </React.Fragment>
       )}
