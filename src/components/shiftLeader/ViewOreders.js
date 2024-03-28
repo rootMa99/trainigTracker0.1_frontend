@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import api from "../../service/api";
 import Order from "./Order";
 import c from "./ViewOreders.module.css";
+import pic from "../../assets/os.gif"
 const ViewOreders = (p) => {
   const { isLoged, orderDates } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
@@ -10,7 +11,7 @@ const ViewOreders = (p) => {
   const callback = useCallback(async () => {
     try {
       const response = await fetch(
-        `${api}/other/orders?shiftLeader=${isLoged.userName}&startDate=${orderDates.start}&endDate=${orderDates.end}`,
+        `${api}/other/orders?shiftLeaders=${isLoged.userName}&startDate=${orderDates.start}&endDate=${orderDates.end}`,
         {
           method: "GET",
           headers: {
@@ -63,7 +64,10 @@ const ViewOreders = (p) => {
       {orders.length > 0 ? (
         orders.map((m) => <Order data={m} key={m.qualificationId} />)
       ) : (
-        <h1>No qualification found</h1>
+        <div className={c.notFound}>
+          <h1>No qualification found</h1>
+          <img src={pic} alt="ter" />
+        </div>
       )}
     </React.Fragment>
   );
