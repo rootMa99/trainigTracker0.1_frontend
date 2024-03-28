@@ -329,7 +329,7 @@ const Dashboard = (p) => {
             <Charts title="department" data={hoursByDep} type="bar"/>
           </div>
           <div className={c.charttt}>
-            <Charts title="department" data={hourByMonth} type="line"/>
+            <Charts title="monthly" data={hourByMonth} type="line"/>
           </div>
         </div>
       )}

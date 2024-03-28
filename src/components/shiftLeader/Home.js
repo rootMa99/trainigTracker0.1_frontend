@@ -58,7 +58,7 @@ const close=()=>{
           }
           onClick={(e) => setSelected("mo")}
         >
-          make new qualification order
+        CREATE A NEW QUALIFICATION REQUEST
         </li>
       </ul>
 
