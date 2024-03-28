@@ -81,15 +81,14 @@ const ViewOreders = (p) => {
         });
 
         setSuccess({ status: true, message: "Deleted successfully" });
-        console.log(orderIds)
-        
-        if(orderIds!==undefined){
+        console.log(orderIds);
 
+        if (orderIds !== undefined) {
           setOrders(
             orders.filter((order) => !orderIds.includes(order.qualificationId))
           );
         }
-        
+
         setCheckboxState({});
         setOrderIds([]);
       } catch (error) {
@@ -115,7 +114,6 @@ const ViewOreders = (p) => {
         <NetworkNotify message={success.message} success={true} />
       )}
       <div className={c.formCAdmin}>
-        
         <div className={c["form-group"]}>
           <label htmlFor="sd">from</label>
           <input
@@ -130,7 +128,7 @@ const ViewOreders = (p) => {
             }
           />
         </div>
-        
+
         <div className={c["form-group"]}>
           <label htmlFor="end">to</label>
           <input
@@ -151,7 +149,10 @@ const ViewOreders = (p) => {
         <div className={c.orderHolder}>
           {orderIds.length > 0 && (
             <div className={c.orderActions}>
-              <button onClick={handleCheckAll}>check all</button>
+              {Object.keys(checkboxState).length !== orders.length && (
+                <button onClick={handleCheckAll}>check all</button>
+              )}
+
               <button
                 onClick={() => {
                   setCheckboxState({});
