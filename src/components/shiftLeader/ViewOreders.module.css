@@ -174,11 +174,28 @@
   }
   .orderActions{
     position: absolute;
-    position: absolute;
     top: -3rem;
     left: 2rem;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
   }
-
+  .orderActions button{
+    color: #717171;
+    font-weight: 600;
+    background: transparent;
+    border: 1px solid #414141;
+    padding: 4px;
+    font-size: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    text-transform: uppercase;
+  }
+  .orderActions button:hover {
+    background-color: #f33716;
+    border-color: #f33716;
+    color: #fff;
+  }
   
 .checkboxInput {
     appearance: none;

@@ -10,6 +10,7 @@ const ViewOreders = (p) => {
   const [orders, setOrders] = useState([]);
   const dispatch = useDispatch();
   const [checkboxState, setCheckboxState] = useState({});
+  const [orderIds, setOrderIds]=useState([])
 
   const handleCheckboxChange = (event) => {
     const { id, checked } = event.target;
@@ -21,10 +22,13 @@ const ViewOreders = (p) => {
 
   const handleCheckAll = () => {
     const updatedCheckboxState = {};
+    const ids=[]
     orders.forEach((order) => {
       updatedCheckboxState[order.qualificationId] = true;
+      ids.push(order.qualificationId);
     });
     setCheckboxState(updatedCheckboxState);
+    setOrderIds(ids);
   };
   console.log(orderDates);
   const callback = useCallback(async () => {
@@ -51,6 +55,9 @@ const ViewOreders = (p) => {
   useEffect(() => {
     callback();
   }, [callback]);
+
+
+  console.log(orderIds, checkboxState);
 
   return (
     <React.Fragment>
@@ -91,6 +98,7 @@ const ViewOreders = (p) => {
         <div className={c.orderHolder}>
           <div className={c.orderActions}>
             <button onClick={handleCheckAll}>check all</button>
+            <button onClick={ e=>setCheckboxState({})}>uncheck all</button>
             <button>delete</button>
             <button>update</button>
           </div>
