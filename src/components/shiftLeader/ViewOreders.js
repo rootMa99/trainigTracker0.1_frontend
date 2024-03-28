@@ -102,7 +102,12 @@ const ViewOreders = (p) => {
       }
     }
   };
-
+  if (err.status || success.status) {
+    setTimeout(() => {
+      setErr({ status: false, message: "" });
+      setSuccess({ status: false, message: "" });
+    }, 2000);
+  }
   return (
     <React.Fragment>
       {err.status && <NetworkNotify message={err.message} success={false} />}
@@ -110,9 +115,9 @@ const ViewOreders = (p) => {
         <NetworkNotify message={success.message} success={true} />
       )}
       <div className={c.formCAdmin}>
-        <span>FROM</span>
+        
         <div className={c["form-group"]}>
-          <label htmlFor="sd">start</label>
+          <label htmlFor="sd">from</label>
           <input
             required
             name="sd"
@@ -125,9 +130,9 @@ const ViewOreders = (p) => {
             }
           />
         </div>
-        <span>TO</span>
+        
         <div className={c["form-group"]}>
-          <label htmlFor="end">date</label>
+          <label htmlFor="end">to</label>
           <input
             required
             name="end"
