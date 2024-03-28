@@ -1,0 +1,116 @@
+.trainingH {
+  display: flex;
+  width: 95%;
+  justify-content: space-around;
+  margin: auto;
+  /* margin-top: 2rem; */
+
+}
+.trainingD,
+.trainingDi {
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+  padding: 1rem;
+  align-items: flex-start;
+}
+.trainingDi {
+  width: 40%;
+  background-color: #929d96;
+  position: relative;
+}
+
+.trainingDi .dataT span {
+  color: #f84018;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: medium;
+}
+.trainingDi .dataT h3 {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: medium;
+}
+.trainingD .dataT h3 {
+  color: #f84018;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: medium;
+}
+.trainingD .dataT span {
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: medium;
+}
+.mlls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+.exp {
+  cursor: pointer;
+  color: #383942 !important;
+}
+.exp:hover {
+  color: #000 !important;
+}
+.ulemp {
+  color: #fff;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 95%;
+  align-items: stretch;
+}
+.ulemp li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  text-transform: uppercase;
+}
+
+.hamburger {
+  cursor: pointer;
+}
+
+.hamburger input {
+  display: none;
+}
+
+.hamburger svg {
+  height: 3em;
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line {
+  fill: none;
+  stroke: white;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+              stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line-top-bottom {
+  stroke-dasharray: 12 63;
+}
+
+.hamburger input:checked + svg {
+  transform: rotate(-45deg);
+}
+
+.hamburger input:checked + svg .line-top-bottom {
+  stroke-dasharray: 20 300;
+  stroke-dashoffset: -32.42;
+}
+
+
+
+
+

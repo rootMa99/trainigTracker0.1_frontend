@@ -135,6 +135,9 @@ const MakeOreder = (p) => {
         const data = await response.json();
         console.log(data);
         p.click();
+        if(p.order !== undefined){
+          p.callback();
+        }
       } catch (error) {
         console.error("Error:", error);
         setErr(true);

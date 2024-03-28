@@ -1,0 +1,18 @@
+.options{
+    color: white;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    list-style: none;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 10;
+}
+.options li{
+    opacity: 0.5;
+    cursor: pointer;
+}
+.options li:hover{
+    opacity: 1;
+    border-bottom: 2px solid white;
+}
