@@ -104,6 +104,12 @@ const MakeOreder = (p) => {
     }
   };
 
+
+  console.log(p.order)
+
+
+
+
   const submitHandler = async (e) => {
     e.preventDefault();
     if (

@@ -7,8 +7,8 @@ import pic from "../../assets/os.gif";
 import { loginActions } from "../../store/loginSlice";
 import NetworkNotify from "../UI/NetworkNotify";
 import BackDrop from "../UI/BackDrop";
-import EditOrder from "./EditOrder";
 import MakeOreder from "./MakeOreder";
+
 const ViewOreders = (p) => {
   const { isLoged, orderDates } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
@@ -125,7 +125,7 @@ const ViewOreders = (p) => {
       )}
       {dataUp && (
         <React.Fragment>
-          <MakeOreder click={close} />
+          <MakeOreder click={close} order={orders.filter(f=>f.qualificationId===orderIds[0])} />
           <BackDrop click={close} zindex={22223} />{" "}
         </React.Fragment>
       )}

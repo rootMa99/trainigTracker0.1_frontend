@@ -15,7 +15,7 @@
     background-size: 200% 100%;
     animation: gradient 5s ease infinite;
     position: fixed;
-    z-index: 22222;
+    z-index: 22224;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
