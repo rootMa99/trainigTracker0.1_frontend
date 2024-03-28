@@ -62,3 +62,18 @@ export const getNextWeekDates=()=> {
 
   return nextMonday.toISOString().slice(0,10);
 }
+
+export const getNextWeek=()=> {
+  const today = new Date();
+  const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+  const nextWeekStart = new Date(nextWeek.getFullYear(), nextWeek.getMonth(), nextWeek.getDate() - nextWeek.getDay() + 1); 
+  const nextWeekEnd = new Date(nextWeekStart.getTime() + 6 * 24 * 60 * 60 * 1000);
+
+  const startDateFormatted = nextWeekStart.toISOString().split('T')[0];
+  const endDateFormatted = nextWeekEnd.toISOString().split('T')[0];
+
+  return {
+      start: startDateFormatted,
+      end: endDateFormatted
+  };
+}

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getThisYearStartToEnd } from "../components/functions/dateFunction";
+import { getNextWeek } from "../components/functions/utils";
 
 const loginS = createSlice({
   name: "logins",
@@ -11,6 +12,7 @@ const loginS = createSlice({
       token: "",
     },
     dateBetween: getThisYearStartToEnd(),
+    orderDates:getNextWeek(),
     employeeData: [],
     titleAndType: [],
     dataDashboard: [],
@@ -49,6 +51,15 @@ const loginS = createSlice({
     },
     setDateYearEnd(s, p) {
       s.dateBetween.end = p.payload;
+    },
+    setDateOdrerBetween(s, p) {
+      s.orderDates = p.payload;
+    },
+    setDateOdrerweekStart(s, p) {
+      s.orderDates.start = p.payload;
+    },
+    setDateOdrerweekEnd(s, p) {
+      s.orderDates.end = p.payload;
     },
     setEmployeeData(s, p) {
       s.employeeData = p.payload;
