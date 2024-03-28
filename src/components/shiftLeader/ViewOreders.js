@@ -5,13 +5,15 @@ import Order from "./Order";
 import c from "./ViewOreders.module.css";
 import pic from "../../assets/os.gif";
 import { loginActions } from "../../store/loginSlice";
+import NetworkNotify from "../UI/NetworkNotify";
 const ViewOreders = (p) => {
   const { isLoged, orderDates } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
   const dispatch = useDispatch();
   const [checkboxState, setCheckboxState] = useState({});
   const [orderIds, setOrderIds] = useState([]);
-
+  const [success, setSuccess] = useState({ status: false, message: "" });
+  const [err, setErr] = useState({ status: false, message: "" });
   const handleCheckboxChange = (event) => {
     const { id, checked } = event.target;
     const ids = orderIds;
@@ -65,8 +67,48 @@ const ViewOreders = (p) => {
 
   console.log(orderIds, checkboxState);
 
+  const deleteOrders = async (e) => {
+    const confirmed = window.confirm("Do you want to continue?");
+    if (confirmed) {
+      try {
+        await fetch(`${api}/other/deleteOrders`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+          body: JSON.stringify(orderIds),
+        });
+
+        setSuccess({ status: true, message: "Deleted successfully" });
+        console.log(orderIds)
+        
+        if(orderIds!==undefined){
+
+          setOrders(
+            orders.filter((order) => !orderIds.includes(order.qualificationId))
+          );
+        }
+        
+        setCheckboxState({});
+        setOrderIds([]);
+      } catch (error) {
+        console.error("Error:", error);
+        setErr({
+          status: true,
+          message:
+            "Something has gone wrong, we were not able to save this action, please try it again. ",
+        });
+      }
+    }
+  };
+
   return (
     <React.Fragment>
+      {err.status && <NetworkNotify message={err.message} success={false} />}
+      {success.status && (
+        <NetworkNotify message={success.message} success={true} />
+      )}
       <div className={c.formCAdmin}>
         <span>FROM</span>
         <div className={c["form-group"]}>
@@ -105,9 +147,18 @@ const ViewOreders = (p) => {
           {orderIds.length > 0 && (
             <div className={c.orderActions}>
               <button onClick={handleCheckAll}>check all</button>
-              <button onClick={() => setCheckboxState({})}>uncheck</button>
-              <button>delete</button>
-              <button>update</button>
+              <button
+                onClick={() => {
+                  setCheckboxState({});
+                  setOrderIds([]);
+                }}
+              >
+                uncheck
+              </button>
+              {orderIds.length === 1 && <button>edit</button>}
+              <button className={c.deleteAct} onClick={deleteOrders}>
+                delete
+              </button>
             </div>
           )}
           {orders.map((m) => (

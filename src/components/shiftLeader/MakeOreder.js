@@ -107,8 +107,8 @@ const MakeOreder = (p) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (
-      order.qualification.trim() !== "" ||
-      order.shift.trim() !== "" ||
+      order.qualification.trim() !== "" &&
+      order.shift.trim() !== "" &&
       order.matricules.length > 0
     ) {
         setFilled(false)
