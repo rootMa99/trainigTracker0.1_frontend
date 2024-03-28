@@ -150,19 +150,21 @@
     width: 100%;
   }
   .notFound h1{
-    color: #fff;
+    color: #fefefe;
     text-transform: uppercase;
     width: -moz-fit-content;
     width: fit-content;
-    left: 0rem;
+    left: 8vw;
     position: absolute;
-    top: 40%;
+    bottom: 22vh;
     font-size: 5rem;
     z-index: 11;
+    margin: 0;
+
   }
   .notFound img{
     position: absolute;
     right: 0;
-    top: 0;
-    width: 60rem;
+    top: 12rem;
+    width: 44rem;
   }

@@ -1,17 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../service/api";
 import Order from "./Order";
 import c from "./ViewOreders.module.css";
 import pic from "../../assets/os.gif"
+import { loginActions } from "../../store/loginSlice";
 const ViewOreders = (p) => {
   const { isLoged, orderDates } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
+  const dispatch= useDispatch();
   console.log(orderDates);
   const callback = useCallback(async () => {
     try {
       const response = await fetch(
-        `${api}/other/orders?shiftLeaders=${isLoged.userName}&startDate=${orderDates.start}&endDate=${orderDates.end}`,
+        `${api}/other/orders?shiftLeader=${isLoged.userName}&startDate=${orderDates.start}&endDate=${orderDates.end}`,
         {
           method: "GET",
           headers: {
@@ -46,6 +48,7 @@ const ViewOreders = (p) => {
             type="date"
             placeholder="enter date"
             value={orderDates.start}
+            onChange={e=>dispatch(loginActions.setDateOdrerweekStart(e.target.value))}
           />
         </div>
         <span>TO</span>
@@ -58,6 +61,7 @@ const ViewOreders = (p) => {
             type="date"
             placeholder="enter date"
             value={orderDates.end}
+            onChange={e=>dispatch(loginActions.setDateOdrerweekEnd(e.target.value))}
           />
         </div>
       </div>
