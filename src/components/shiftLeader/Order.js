@@ -59,7 +59,7 @@ const Order = ({ data }) => {
       </div>
       {exp && (
         <ul className={c.ulemp}>
-          <li style={{borderBottom:"2px solid red", paddingBottom:"10px", borderRadius:"20px"}}>
+          <li style={{backgroundColor:"#F84018", color:"#E5E1DA" , fontWeight:"600", padding:"5px"}}>
             <span style={{ width: "10%" }}>{"matricule"}</span>
             <span style={{ width: "10%" }}>{"last name"}</span>
             <span style={{ width: "10%" }}>{"name"}</span>
