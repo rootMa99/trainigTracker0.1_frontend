@@ -19,25 +19,6 @@ const ViewOreders = (p) => {
   const [err, setErr] = useState({ status: false, message: "" });
   const [dataUp, setDataUp] = useState(false);
 
-  const callbackSL = useCallback(async () => {
-    try {
-      const response = await fetch(`${api}/root/data/shiftleaders`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${isLoged.token}`,
-        },
-      });
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }, [isLoged.token]);
-  useEffect(() => {
-    callbackSL();
-  }, [callbackSL]);
 
   const handleCheckboxChange = (event) => {
     const { id, checked } = event.target;

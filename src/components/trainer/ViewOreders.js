@@ -7,21 +7,105 @@ import pic from "../../assets/os.gif";
 import { loginActions } from "../../store/loginSlice";
 import NetworkNotify from "../UI/NetworkNotify";
 import Select from "react-select";
+import { getlabelandvalue } from "../functions/utils";
+
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    width: "97%",
+    height: "auto",
+    textTransform: "uppercase",
+    borderRadius: "5px",
+    textAlign: "center",
+    outline: "none",
+    border: "1px solid #414141",
+    backgroundColor: "transparent",
+    boxShadow: "none",
+    margin: "auto",
+    "&:hover": {
+      border: "1px solid #f33716",
+      cursor: "pointer",
+    },
+  }),
+  option: (provided, state) => ({
+    width: "97%",
+    padding: "0.5rem",
+    color: state.isFocused ? "#f3f3f3" : "#f33716",
+    backgroundColor: state.isFocused && "#474b4d",
+    fontFamily: `Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                  "Segoe UI Symbol"`,
+    textTransform: "uppercase",
+    outline: "none",
+    textAlign: "center",
+    "&:hover": {
+      cursor: "pointer",
+    },
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: "#f3f3f3",
+  }),
+  singleValue: (p) => ({
+    ...p,
+    color: "#f3f3f3",
+  }),
+  menuList: (provided) => ({
+    maxHeight: "200px",
+    overflowY: "auto",
+    overflowX: "hidden",
+    scrollbarWidth: "thin",
+    msOverflowStyle: "none",
+    "&::-webkit-scrollbar": {
+      width: "5px",
+      backgroundColor: "#535151",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#f33716",
+    },
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: "transparent",
+    },
+  }),
+};
+
 const ViewOreders = (p) => {
   const { isLoged, orderDates } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
+  const [sl, setSl] = useState([]);
+  const [sln, setSln]=useState("");
   const dispatch = useDispatch();
 
   const [success, setSuccess] = useState({ status: false, message: "" });
   const [err, setErr] = useState({ status: false, message: "" });
 
+  const callbackSL = useCallback(async () => {
+    try {
+      const response = await fetch(`${api}/root/data/shiftleaders`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
 
-  
+      const data = await response.json();
+      console.log(data);
+      setSl(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }, [isLoged.token]);
+  useEffect(() => {
+    callbackSL();
+  }, [callbackSL]);
+
   console.log(orderDates);
   const callback = useCallback(async () => {
     try {
+      const uri=sln!==""?`${api}/other/orders?shiftLeader=${sln}&startDate=${orderDates.start}&endDate=${orderDates.end}`:`${api}/other/orders/dateBetween?&startDate=${orderDates.start}&endDate=${orderDates.end}`;
       const response = await fetch(
-        `${api}/other/orders/dateBetween?&startDate=${orderDates.start}&endDate=${orderDates.end}`,
+        uri,
         {
           method: "GET",
           headers: {
@@ -37,13 +121,11 @@ const ViewOreders = (p) => {
     } catch (error) {
       console.error("Error:", error);
     }
-  }, [isLoged, orderDates.start, orderDates.end]);
+  }, [isLoged, orderDates.start, orderDates.end, sln]);
 
   useEffect(() => {
     callback();
   }, [callback]);
-
-
 
   if (err.status || success.status) {
     setTimeout(() => {
@@ -88,14 +170,23 @@ const ViewOreders = (p) => {
             }
           />
         </div>
+        <div className={c["form-group"]}>
+          <label htmlFor="end">shift leader</label>
+          <Select
+            options={[{label:"N/A", value:""} ,...getlabelandvalue(sl.filter(f=>f!==null))]}
+            id="multiSelect"
+            inputId="shiftleader1"
+            styles={customStyles}
+            placeholder="select shift leader"
+            onChange={e=>setSln(e.value)}
+          />
+        </div>
       </div>
 
       {orders.length > 0 ? (
         <div className={c.orderHolder}>
-
           {orders.map((m) => (
             <div className={c.holy} key={m.qualificationId}>
-              
               <Order data={m} key={m.qualificationId} />
             </div>
           ))}

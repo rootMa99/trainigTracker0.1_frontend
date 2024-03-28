@@ -168,20 +168,20 @@ const MakeOreder = (p) => {
           <div className={c["form-group"]}>
             <label htmlFor="userName">qualification</label>
             <Select
-              options={getlabelandvalue(
-                titleAndType.filter((f) => f.trainingType === "Process")[0]
-                  .trainingTitles
-              )}
-              id="multiSelect"
-              inputId="shiftleader1"
-              styles={customStyles}
-              placeholder="select Qualification"
-              onChange={(e) => onchangeHandler(e, "q")}
-              defaultValue={{
-                label: order.qualification,
-                value: order.qualification,
-              }}
-            />
+            options={getlabelandvalue(
+              titleAndType.filter((f) => f.trainingType === "Process")[0]
+                .trainingTitles
+            )}
+            id="multiSelect"
+            inputId="shiftleader1"
+            styles={customStyles}
+            placeholder="select Qualification"
+            onChange={(e) => onchangeHandler(e, "q")}
+            defaultValue={{
+              label: order.qualification,
+              value: order.qualification,
+            }}
+          />
           </div>
 
           <div className={c["form-group"]}>

@@ -1,5 +1,5 @@
 .formCAdmin {
-  width: 45rem;
+  width: 60rem;
   background: linear-gradient(#000000, #000000) padding-box,
     linear-gradient(136deg, transparent 35%, #f33716, orange) border-box;
   border: 2px solid transparent;
@@ -172,7 +172,6 @@
 
 .orderHolder {
   position: relative;
-  margin-top: 5rem;
 }
 .orderActions {
   position: absolute;
