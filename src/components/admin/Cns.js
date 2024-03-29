@@ -2,8 +2,9 @@ import { useSelector } from "react-redux";
 import c from "./AddTrainingFrom.module.css";
 import Select from "react-select";
 import { getTodayFormat, getTypes, getlabelandvalue } from "../functions/utils";
-import { useState } from "react";
-
+import React, { useState } from "react";
+import api from "../../service/api";
+import NetworkNotify from "../UI/NetworkNotify";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -72,6 +73,8 @@ const customStyles = {
 const Cns = (p) => {
   const { titleAndType, isLoged } = useSelector((s) => s.login);
   const today = getTodayFormat();
+  const [err, setErr] = useState({ status: false, message: "" });
+  const [success, setSuccess] = useState({ status: false, message: "" });
   const [dataForm, setDataForm] = useState({
     trainingType: "",
     trainingTitle: "",
@@ -120,166 +123,202 @@ const Cns = (p) => {
     }
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const body = {
       ...dataForm,
       matricules: dataForm.matricules.split(",").map((num) => parseInt(num)),
     };
     console.log(body);
-  };
 
+    try {
+      const response = await fetch(`${api}/admin/addTrainingToEmployees`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+      setSuccess({
+        status: true,
+        message: "The training sessio has been successfully created.",
+      });
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+      setErr({
+        status: true,
+        message:
+          "Something has gone wrong, we were not able to save this action, please try it again. ",
+      });
+    }
+  };
+  if (err.status || success.status) {
+    setTimeout(() => {
+      setErr({ status: false, message: "" });
+      setSuccess({ status: false, message: "" });
+    }, 2000);
+  }
   return (
-    <div className={`${c.formCAdmin} ${c.csn}`}>
-      <form className={c.form} onSubmit={submitHandler}>
-        <div className={c["form-group"]} style={{ width: "95%" }}>
-          <label htmlFor="userName">training Type</label>
-          <Select
-            options={getTypes(titleAndType)}
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            onChange={(e) => onchangeHandler(e, "type")}
-            placeholder="select training type"
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="traininTitle">training title</label>
-          <Select
-            options={
-              dataForm.trainingType === ""
-                ? []
-                : getlabelandvalue(
-                    titleAndType.filter(
-                      (f) => f.trainingType === dataForm.trainingType
-                    )[0].trainingTitles
-                  )
-            }
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            onChange={(e) => onchangeHandler(e, "title")}
-            placeholder="select training title"
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="modality">modality</label>
-          <Select
-            options={[
-              { value: "presential", label: "presential" },
-              { value: "remote", label: "remote" },
-            ]}
-            id="modality"
-            inputId="modality"
-            styles={customStyles}
-            defaultValue={{
-              label: dataForm.modalite,
-              value: dataForm.modalite,
-            }}
-            onChange={(e) => onchangeHandler(e, "modality")}
-            placeholder="select modality"
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="tsph">Time spent per hour</label>
-          <input
-            required
-            name="tsph"
-            id="tsph"
-            type="number"
-            value={dataForm.dph}
-            onChange={(e) => onchangeHandler(e, "dph")}
-            placeholder="enter TS/h"
-            min={0}
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="sd">start date</label>
-          <input
-            required
-            name="sd"
-            id="sd"
-            type="date"
-            placeholder="enter TS/h"
-            onChange={(e) => onchangeHandler(e, "sd")}
-            value={dataForm.ddb}
-            max={dataForm.ddf}
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="ed">end date</label>
-          <input
-            required
-            name="ed"
-            id="ed"
-            type="date"
-            placeholder="enter TS/h"
-            onChange={(e) => onchangeHandler(e, "ed")}
-            value={dataForm.ddf}
-            min={dataForm.ddb}
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="provider">provider</label>
-          <Select
-            options={[
-              { value: "APTIV", label: "APTIV" },
-              { value: "OTHER", label: "other" },
-            ]}
-            id="modality"
-            inputId="privider"
-            styles={customStyles}
-            defaultValue={{
-              label: dataForm.prestataire,
-              value: dataForm.prestataire,
-            }}
-            onChange={(e) => onchangeHandler(e, "provider")}
-            placeholder="enter provider"
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="trainer">trainer</label>
-          <input
-            required
-            name="trainer"
-            id="trainer"
-            type="text"
-            placeholder="enter trainer"
-            onChange={(e) => onchangeHandler(e, "trainer")}
-            value={dataForm.formatteur}
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="eva">eva</label>
-          <Select
-            options={[
-              { value: false, label: "false" },
-              { value: true, label: "true" },
-            ]}
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            defaultValue={{ label: `${dataForm.eva}`, value: dataForm.eva }}
-            onChange={(e) => onchangeHandler(e, "eva")}
-            placeholder="select eva"
-          />
-        </div>
-        <div className={c["form-group"]} style={{ width: "95%" }}>
-          <label htmlFor="matrcules">matrcules</label>
-          <input
-            required
-            name="matricules"
-            id="matricules"
-            type="text"
-            placeholder="enter matricules"
-            onBlur={(e) => onchangeHandler(e, "matricules")}
-          />
-        </div>
-        <button type="submit" className={c["form-submit-btn"]}>
-          Submit
-        </button>
-      </form>
-    </div>
+    <React.Fragment>
+      {err.status && <NetworkNotify message={err.message} success={false} />}
+      {success.status && (
+        <NetworkNotify message={success.message} success={true} />
+      )}
+      <div className={`${c.formCAdmin} ${c.csn}`}>
+        <form className={c.form} onSubmit={submitHandler}>
+          <div className={c["form-group"]} style={{ width: "95%" }}>
+            <label htmlFor="userName">training Type</label>
+            <Select
+              options={getTypes(titleAndType)}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              onChange={(e) => onchangeHandler(e, "type")}
+              placeholder="select training type"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="traininTitle">training title</label>
+            <Select
+              options={
+                dataForm.trainingType === ""
+                  ? []
+                  : getlabelandvalue(
+                      titleAndType.filter(
+                        (f) => f.trainingType === dataForm.trainingType
+                      )[0].trainingTitles
+                    )
+              }
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              onChange={(e) => onchangeHandler(e, "title")}
+              placeholder="select training title"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="modality">modality</label>
+            <Select
+              options={[
+                { value: "presential", label: "presential" },
+                { value: "remote", label: "remote" },
+              ]}
+              id="modality"
+              inputId="modality"
+              styles={customStyles}
+              defaultValue={{
+                label: dataForm.modalite,
+                value: dataForm.modalite,
+              }}
+              onChange={(e) => onchangeHandler(e, "modality")}
+              placeholder="select modality"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="tsph">Time spent per hour</label>
+            <input
+              required
+              name="tsph"
+              id="tsph"
+              type="number"
+              value={dataForm.dph}
+              onChange={(e) => onchangeHandler(e, "dph")}
+              placeholder="enter TS/h"
+              min={0}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="sd">start date</label>
+            <input
+              required
+              name="sd"
+              id="sd"
+              type="date"
+              placeholder="enter TS/h"
+              onChange={(e) => onchangeHandler(e, "sd")}
+              value={dataForm.ddb}
+              max={dataForm.ddf}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="ed">end date</label>
+            <input
+              required
+              name="ed"
+              id="ed"
+              type="date"
+              placeholder="enter TS/h"
+              onChange={(e) => onchangeHandler(e, "ed")}
+              value={dataForm.ddf}
+              min={dataForm.ddb}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="provider">provider</label>
+            <Select
+              options={[
+                { value: "APTIV", label: "APTIV" },
+                { value: "OTHER", label: "other" },
+              ]}
+              id="modality"
+              inputId="privider"
+              styles={customStyles}
+              defaultValue={{
+                label: dataForm.prestataire,
+                value: dataForm.prestataire,
+              }}
+              onChange={(e) => onchangeHandler(e, "provider")}
+              placeholder="enter provider"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="trainer">trainer</label>
+            <input
+              required
+              name="trainer"
+              id="trainer"
+              type="text"
+              placeholder="enter trainer"
+              onChange={(e) => onchangeHandler(e, "trainer")}
+              value={dataForm.formatteur}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="eva">eva</label>
+            <Select
+              options={[
+                { value: false, label: "false" },
+                { value: true, label: "true" },
+              ]}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              defaultValue={{ label: `${dataForm.eva}`, value: dataForm.eva }}
+              onChange={(e) => onchangeHandler(e, "eva")}
+              placeholder="select eva"
+            />
+          </div>
+          <div className={c["form-group"]} style={{ width: "95%" }}>
+            <label htmlFor="matrcules">matrcules</label>
+            <input
+              required
+              name="matricules"
+              id="matricules"
+              type="text"
+              placeholder="enter matricules"
+              onBlur={(e) => onchangeHandler(e, "matricules")}
+            />
+          </div>
+          <button type="submit" className={c["form-submit-btn"]}>
+            Submit
+          </button>
+        </form>
+      </div>
+    </React.Fragment>
   );
 };
 
