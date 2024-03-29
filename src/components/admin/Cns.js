@@ -70,7 +70,7 @@ const customStyles = {
 };
 
 const Cns = (p) => {
-  const { titleAndType, isLoged, employeeData } = useSelector((s) => s.login);
+  const { titleAndType, isLoged } = useSelector((s) => s.login);
   const today = getTodayFormat();
   const [dataForm, setDataForm] = useState({
     trainingType: "",
@@ -82,9 +82,8 @@ const Cns = (p) => {
     prestataire: "",
     formatteur: "",
     eva: false,
-    matricules: [],
+    matricules: "",
   });
-
   const onchangeHandler = (e, t) => {
     switch (t) {
       case "type":
@@ -114,16 +113,26 @@ const Cns = (p) => {
       case "eva":
         setDataForm((prev) => ({ ...prev, eva: e.value }));
         break;
+      case "matricules":
+        setDataForm((prev) => ({ ...prev, matricules: e.target.value }));
+        break;
       default:
     }
   };
 
-  const submitHandler = (e) => {};
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const body = {
+      ...dataForm,
+      matricules: dataForm.matricules.split(",").map((num) => parseInt(num)),
+    };
+    console.log(body);
+  };
 
   return (
     <div className={`${c.formCAdmin} ${c.csn}`}>
       <form className={c.form} onSubmit={submitHandler}>
-        <div className={c["form-group"]}>
+        <div className={c["form-group"]} style={{ width: "95%" }}>
           <label htmlFor="userName">training Type</label>
           <Select
             options={getTypes(titleAndType)}
@@ -240,7 +249,7 @@ const Cns = (p) => {
             value={dataForm.formatteur}
           />
         </div>
-        <div className={c["form-group"]} style={{ width: "95%" }}>
+        <div className={c["form-group"]}>
           <label htmlFor="eva">eva</label>
           <Select
             options={[
@@ -255,19 +264,17 @@ const Cns = (p) => {
             placeholder="select eva"
           />
         </div>
-        <div className={c["form-group"]}>
-        <label htmlFor="sd">start date</label>
-        <input
-          required
-          name="sd"
-          id="sd"
-          type="date"
-          placeholder="enter TS/h"
-          onChange={(e) => onchangeHandler(e, "sd")}
-          value={dataForm.ddb}
-          max={dataForm.ddf}
-        />
-      </div>
+        <div className={c["form-group"]} style={{ width: "95%" }}>
+          <label htmlFor="matrcules">matrcules</label>
+          <input
+            required
+            name="matricules"
+            id="matricules"
+            type="text"
+            placeholder="enter matricules"
+            onBlur={(e) => onchangeHandler(e, "matricules")}
+          />
+        </div>
         <button type="submit" className={c["form-submit-btn"]}>
           Submit
         </button>
