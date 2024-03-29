@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import c from "./AddSession.module.css";
 import Cns from "./Cns";
+import UploadFiles from "./UploadFiles";
 
 const AddSession = (p) => {
   const [switcher, setSwitcher] = useState("cns");
@@ -39,7 +40,7 @@ const AddSession = (p) => {
       </ul>
 
       {switcher === "cns" && <Cns />}
-      {switcher === "uf" && <h1>uf</h1>}
+      {switcher === "uf" && <UploadFiles />}
     </React.Fragment>
   );
 };
