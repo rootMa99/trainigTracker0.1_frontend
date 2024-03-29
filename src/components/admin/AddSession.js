@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import c from "./AddSession.module.css";
+import Cns from "./Cns";
 
 const AddSession = (p) => {
   const [switcher, setSwitcher] = useState("cns");
@@ -37,7 +38,7 @@ const AddSession = (p) => {
         </li>
       </ul>
 
-      {switcher === "cns" && <h1>cns</h1>}
+      {switcher === "cns" && <Cns />}
       {switcher === "uf" && <h1>uf</h1>}
     </React.Fragment>
   );

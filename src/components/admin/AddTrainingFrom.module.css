@@ -146,3 +146,14 @@
     opacity: 1;
     transform: scale(1.1);
 }
+
+.csn{
+  width: 90%;
+  min-width: 40rem;
+  position: static;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  transform: translate(0%, 0%);
+  margin: auto;
+}
