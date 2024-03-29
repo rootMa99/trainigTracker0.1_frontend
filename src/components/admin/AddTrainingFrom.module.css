@@ -156,4 +156,7 @@
   left: 0;
   transform: translate(0%, 0%);
   margin: auto;
+  background:none;
+  border: 1px solid #717171;
+  margin-top: 1rem;
 }

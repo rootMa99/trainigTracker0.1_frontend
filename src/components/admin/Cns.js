@@ -10,13 +10,9 @@ const customStyles = {
     ...provided,
     width: "97%",
     height: "auto",
-    fontWeight: "600",
+    fontWeight: "lighter",
     textTransform: "uppercase",
-    borderRadius: "5px",
-    fontFamily: `Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                  "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-                  "Segoe UI Symbol"`,
-    letterSpacing: "2px",
+    borderRadius: "8px",
     textAlign: "center",
     outline: "none",
     border: "1px solid #414141",
@@ -210,10 +206,6 @@ const Cns = (p) => {
               id="modality"
               inputId="modality"
               styles={customStyles}
-              defaultValue={{
-                label: dataForm.modalite,
-                value: dataForm.modalite,
-              }}
               onChange={(e) => onchangeHandler(e, "modality")}
               placeholder="select modality"
             />
@@ -225,7 +217,6 @@ const Cns = (p) => {
               name="tsph"
               id="tsph"
               type="number"
-              value={dataForm.dph}
               onChange={(e) => onchangeHandler(e, "dph")}
               placeholder="enter TS/h"
               min={0}
@@ -267,10 +258,6 @@ const Cns = (p) => {
               id="modality"
               inputId="privider"
               styles={customStyles}
-              defaultValue={{
-                label: dataForm.prestataire,
-                value: dataForm.prestataire,
-              }}
               onChange={(e) => onchangeHandler(e, "provider")}
               placeholder="enter provider"
             />
@@ -302,7 +289,7 @@ const Cns = (p) => {
               placeholder="select eva"
             />
           </div>
-          <div className={c["form-group"]} style={{ width: "95%" }}>
+          <div className={c["form-group"]} style={{ width: "100%" }}>
             <label htmlFor="matrcules">matrcules</label>
             <input
               required
