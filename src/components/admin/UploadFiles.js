@@ -18,6 +18,7 @@ const UploadFiles = (p) => {
         alert("Please drop an Excel file (xls, xlsx, csv).");
         return;
       }
+      console.log("here")
       setSelectedFile(file);
     }
   };
