@@ -59,7 +59,7 @@ const NavBar = (p) => {
                       isActive ? c.activeLink : c.link
                     }
                   >
-                    upload Files
+                  Add a new training session
                   </NavLink>
                 </li>
                 {isLoged.role === "ROOT" && (

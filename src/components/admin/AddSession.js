@@ -1,0 +1,46 @@
+import React, { useState } from "react";
+import c from "./AddSession.module.css";
+
+const AddSession = (p) => {
+  const [switcher, setSwitcher] = useState("cns");
+
+  return (
+    <React.Fragment>
+      <ul className={c.interLink}>
+        <li
+          style={
+            switcher === "cns"
+              ? {
+                  opacity: "1",
+
+                  borderBottom: "2px solid white",
+                }
+              : {}
+          }
+          onClick={(e) => setSwitcher("cns")}
+        >
+          create a new session
+        </li>
+        <li
+          style={
+            switcher === "uf"
+              ? {
+                  opacity: "1",
+
+                  borderBottom: "2px solid white",
+                }
+              : {}
+          }
+          onClick={(e) => setSwitcher("uf")}
+        >
+          upload files
+        </li>
+      </ul>
+
+      {switcher === "cns" && <h1>cns</h1>}
+      {switcher === "uf" && <h1>uf</h1>}
+    </React.Fragment>
+  );
+};
+
+export default AddSession;

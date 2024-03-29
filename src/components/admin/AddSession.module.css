@@ -1,0 +1,23 @@
+.interLink{
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: auto;
+    width: fit-content;
+    margin-top: 1rem;
+
+}
+
+.interLink li{
+    color: white;
+    opacity: 0.5;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+
+}
+.interLink li:hover{
+    opacity: 1;
+    transform: scale(1.1);
+    border-bottom: 2px solid white;
+}
