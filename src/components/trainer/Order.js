@@ -5,7 +5,7 @@ const Order = ({ data }) => {
   const [exp, setExp] = useState(false);
   return (
     <React.Fragment>
-      <div className={c.trainingH}>
+      <div className={c.trainingH} onClick={(e) => setExp(!exp)}>
         <div className={c.trainingD}>
           <div className={c.dataT} style={{ width: "40%" }}>
             <span>qualification</span>
@@ -26,7 +26,7 @@ const Order = ({ data }) => {
           </div>
         </div>
         <div className={c.trainingDi}>
-          <div className={c.dataT} style={{ width: "40%" }}>
+          <div className={c.dataT} style={{ width: "35%" }}>
             <span>shiftLeader</span>
             <h3>{data.shiftLeader}</h3>
           </div>
@@ -38,22 +38,10 @@ const Order = ({ data }) => {
               ))}
             </div>
           </div>
-          <div className={c.dataT} style={{ width: "10%" }}>
-            <span></span>
-            <label className={c.hamburger}>
-              <input
-                type="checkbox"
-                className={c.exp}
-                onClick={(e) => setExp(!exp)}
-              />
-              <svg viewBox="0 0 32 32">
-                <path
-                  className={c["line line-top-bottom"]}
-                  d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
-                ></path>
-                <path className={c.line} d="M7 16 27 16"></path>
-              </svg>
-            </label>
+          <div className={c.dataT} style={{ width: "15%" }}>
+            <span>status</span>
+            <h3>not set</h3>
+              
           </div>
         </div>
       </div>

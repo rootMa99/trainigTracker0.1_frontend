@@ -5,7 +5,7 @@ const Order = ({ data }) => {
   const [exp, setExp] = useState(false);
   return (
     <React.Fragment>
-      <div className={c.trainingH}>
+      <div className={c.trainingH} onClick={(e) => setExp(!exp)}>
         <div className={c.trainingD}>
           <div className={c.dataT} style={{ width: "40%" }}>
             <span>qualification</span>

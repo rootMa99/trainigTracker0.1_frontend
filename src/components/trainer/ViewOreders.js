@@ -232,7 +232,7 @@ const ViewOreders = (p) => {
             
               <button onClick={() => setDataUp(true)}>confirm</button>
               <button onClick={() => setDataUp(true)}>not confirmed</button>
-              <button onClick={() => setDataUp(true)}>Edit Date</button>
+              <button onClick={() => setDataUp(true)}>Edit qualification Date</button>
             
             
           </div>
