@@ -70,7 +70,7 @@ const customStyles = {
     },
   }),
 };
-
+let BACKUPDATA=[];
 const ViewOreders = (p) => {
   const { isLoged, orderDates } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
@@ -150,6 +150,7 @@ const ViewOreders = (p) => {
       const data = await response.json();
       console.log(data);
       setOrders(data);
+      BACKUPDATA=data;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -170,6 +171,7 @@ const ViewOreders = (p) => {
     setCheckboxState({});
     setOrderIds([]);
   };
+  console.log(BACKUPDATA)
   return (
     <React.Fragment>
     {dataUp && (
