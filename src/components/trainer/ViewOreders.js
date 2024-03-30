@@ -8,6 +8,8 @@ import { loginActions } from "../../store/loginSlice";
 import NetworkNotify from "../UI/NetworkNotify";
 import Select from "react-select";
 import { getlabelandvalue } from "../functions/utils";
+import EditDate from "./EditDate";
+import BackDrop from "../UI/BackDrop";
 
 const customStyles = {
   control: (provided, state) => ({
@@ -163,9 +165,23 @@ const ViewOreders = (p) => {
       setSuccess({ status: false, message: "" });
     }, 2000);
   }
-
+  const close = (e) => {
+    setDataUp(false);
+    setCheckboxState({});
+    setOrderIds([]);
+  };
   return (
     <React.Fragment>
+    {dataUp && (
+      <React.Fragment>
+        <EditDate
+          click={close}
+          order={orderIds}
+          callback={callback}
+        />
+        <BackDrop click={close} zindex={22223} />{" "}
+      </React.Fragment>
+    )}
       {err.status && <NetworkNotify message={err.message} success={false} />}
       {success.status && (
         <NetworkNotify message={success.message} success={true} />
@@ -212,7 +228,6 @@ const ViewOreders = (p) => {
           />
         </div>
       </div>
-
       {orders.length > 0 ? (
         <div className={c.orderHolder}>
         {orderIds.length > 0 && (
