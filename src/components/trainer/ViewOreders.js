@@ -75,9 +75,39 @@ const ViewOreders = (p) => {
   const [sl, setSl] = useState([]);
   const [sln, setSln]=useState("");
   const dispatch = useDispatch();
-
+  const [checkboxState, setCheckboxState] = useState({});
+  const [orderIds, setOrderIds] = useState([]);
   const [success, setSuccess] = useState({ status: false, message: "" });
   const [err, setErr] = useState({ status: false, message: "" });
+  const [dataUp, setDataUp] = useState(false);
+
+
+  const handleCheckboxChange = (event) => {
+    const { id, checked } = event.target;
+    const ids = orderIds;
+    if (checked) {
+      orderIds.push(id);
+      setOrderIds(ids);
+    } else {
+      setOrderIds(ids.filter((f) => f !== id));
+    }
+    setCheckboxState({
+      ...checkboxState,
+      [id]: checked,
+    });
+  };
+
+  const handleCheckAll = () => {
+    const updatedCheckboxState = {};
+    const ids = [];
+    orders.forEach((order) => {
+      updatedCheckboxState[order.qualificationId] = true;
+      ids.push(order.qualificationId);
+    });
+    setCheckboxState(updatedCheckboxState);
+    setOrderIds(ids);
+  };
+
 
   const callbackSL = useCallback(async () => {
     try {
@@ -185,8 +215,35 @@ const ViewOreders = (p) => {
 
       {orders.length > 0 ? (
         <div className={c.orderHolder}>
+        {orderIds.length > 0 && (
+          <div className={c.orderActions} style={{marginTop:"1rem"}}>
+            {orderIds.length !== orders.length && (
+              <button onClick={handleCheckAll}>check all</button>
+            )}
+
+            <button
+              onClick={() => {
+                setCheckboxState({});
+                setOrderIds([]);
+              }}
+            >
+              uncheck
+            </button>
+            {orderIds.length === 1 && (
+              <button onClick={() => setDataUp(true)}>edit</button>
+            )}
+            
+          </div>
+        )}
           {orders.map((m) => (
             <div className={c.holy} key={m.qualificationId}>
+            <input
+                className={c.checkboxInput}
+                type="checkbox"
+                id={m.qualificationId}
+                checked={checkboxState[m.qualificationId] || false}
+                onChange={handleCheckboxChange}
+              />
               <Order data={m} key={m.qualificationId} />
             </div>
           ))}
