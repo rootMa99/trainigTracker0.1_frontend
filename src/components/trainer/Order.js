@@ -33,21 +33,38 @@ const Order = ({ data }) => {
           <div className={c.dataT} style={{ width: "50%" }}>
             <span>employees</span>
             <div className={c.mlls}>
-              {data.employeeRests!==undefined&& data.employeeRests.map((m, i) => (
-                <h3 key={i}>{m.matricule}</h3>
-              ))}
+              {data.employeeRests !== undefined &&
+                data.employeeRests.map((m, i) => (
+                  <h3 key={i}>{m.matricule}</h3>
+                ))}
             </div>
           </div>
           <div className={c.dataT} style={{ width: "15%" }}>
             <span>status</span>
-            <h3>not set</h3>
-              
+            <h3
+              style={
+                data.status === "confirmed"
+                  ? { color: "green" }
+                  : data.status === "not confirmed"
+                  ? { color: "red" }
+                  : { color: "blue" }
+              }
+            >
+              {data.status === null ? "not set" : data.status}
+            </h3>
           </div>
         </div>
       </div>
       {exp && (
         <ul className={c.ulemp}>
-          <li style={{backgroundColor:"#F84018", color:"#E5E1DA" , fontWeight:"600", padding:"5px"}}>
+          <li
+            style={{
+              backgroundColor: "#F84018",
+              color: "#E5E1DA",
+              fontWeight: "600",
+              padding: "5px",
+            }}
+          >
             <span style={{ width: "10%" }}>{"matricule"}</span>
             <span style={{ width: "10%" }}>{"last name"}</span>
             <span style={{ width: "10%" }}>{"name"}</span>
