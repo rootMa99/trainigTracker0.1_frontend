@@ -224,7 +224,11 @@
   background-color: #f84018;
   border-color: #f84018;
 }
+.checkboxInput:hover{
+  border-color: #f84018;
+  transform: scale(1.1);
 
+}
 .holy {
     display: flex;
     flex-direction: column;
