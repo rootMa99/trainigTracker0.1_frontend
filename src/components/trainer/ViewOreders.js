@@ -229,9 +229,11 @@ const ViewOreders = (p) => {
             >
               uncheck
             </button>
-            {orderIds.length === 1 && (
-              <button onClick={() => setDataUp(true)}>edit</button>
-            )}
+            
+              <button onClick={() => setDataUp(true)}>confirm</button>
+              <button onClick={() => setDataUp(true)}>not confirmed</button>
+              <button onClick={() => setDataUp(true)}>Edit Date</button>
+            
             
           </div>
         )}
