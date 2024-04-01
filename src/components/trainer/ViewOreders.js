@@ -201,6 +201,7 @@ const ViewOreders = (p) => {
             onChange={(e) =>
               dispatch(loginActions.setDateOdrerweekStart(e.target.value))
             }
+            max={orderDates.end}
           />
         </div>
 
@@ -216,6 +217,7 @@ const ViewOreders = (p) => {
             onChange={(e) =>
               dispatch(loginActions.setDateOdrerweekEnd(e.target.value))
             }
+            min={orderDates.start}
           />
         </div>
         <div className={c["form-group"]}>

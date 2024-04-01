@@ -13,7 +13,7 @@ const EditDate = (p) => {
 
     try {
       const response = await fetch(
-        `${api}/other/updateOrder/trainer/endDate=${p.order.qualificationId}`,
+        `${api}/other/updateOrder/trainer?endDate=${orderDt}`,
         {
           method: "PUT",
           headers: {
