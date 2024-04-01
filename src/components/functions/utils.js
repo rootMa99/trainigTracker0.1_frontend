@@ -83,18 +83,37 @@ export const getNextWeek = () => {
 };
 
 export const filtData = (data, fil) => {
-  if (fil.qua.trim() === "" && fil.shift.trim() === "") {
+  if (fil.qua.trim() === "" && fil.shift.trim() === "" && fil.sts === "") {
     return data;
   }
-  if (fil.qua.trim() === "" && fil.shift.trim() !== "") {
+  if (fil.qua.trim() === "" && fil.shift.trim() !== "" && fil.sts === "") {
     return data.filter((f) => f.shift === fil.shift);
   }
-  if (fil.qua.trim() !== "" && fil.shift.trim() === "") {
+  if (fil.qua.trim() !== "" && fil.shift.trim() === "" && fil.sts === "") {
     return data.filter((f) => f.qualification === fil.qua);
   }
-  if (fil.qua.trim() !== "" && fil.shift.trim() !== "") {
+  if (fil.qua.trim() === "" && fil.shift.trim() === "" && fil.sts !== "") {
+    return data.filter((f) => f.status === fil.sts);
+  }
+  if (fil.qua.trim() !== "" && fil.shift.trim() !== "" && fil.sts === "") {
     return data.filter(
       (f) => f.shift === fil.shift && f.qualification === fil.qua
+    );
+  }
+  if (fil.qua.trim() === "" && fil.shift.trim() !== "" && fil.sts !== "") {
+    return data.filter((f) => f.shift === fil.shift && f.status === fil.sts);
+  }
+  if (fil.qua.trim() !== "" && fil.shift.trim() === "" && fil.sts !== "") {
+    return data.filter(
+      (f) => f.qualification === fil.qua && f.status === fil.sts
+    );
+  }
+  if (fil.qua.trim() !== "" && fil.shift.trim() !== "" && fil.sts !== "") {
+    return data.filter(
+      (f) =>
+        f.qualification === fil.qua &&
+        f.status === fil.sts &&
+        f.shift === fil.shift
     );
   }
 };

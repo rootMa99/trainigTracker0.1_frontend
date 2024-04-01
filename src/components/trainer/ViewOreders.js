@@ -82,7 +82,7 @@ const ViewOreders = (p) => {
   const [success, setSuccess] = useState({ status: false, message: "" });
   const [err, setErr] = useState({ status: false, message: "" });
   const [dataUp, setDataUp] = useState(false);
-  const [filtred, setFiltred] = useState({ shift: "", qua: "" });
+  const [filtred, setFiltred] = useState({ shift: "", qua: "", sts:"" });
   console.log("re", titleAndType);
   let filtredData = [];
   const handleCheckboxChange = (event) => {
@@ -205,14 +205,14 @@ filtredData=filtData(orders, filtred)
       {dataUp && (
         <React.Fragment>
           <EditDate click={close} order={orderIds} callback={callback} />
-          <BackDrop click={close} zindex={22223} />{" "}
+          <BackDrop click={close} zindex={22223} />
         </React.Fragment>
       )}
       {err.status && <NetworkNotify message={err.message} success={false} />}
       {success.status && (
         <NetworkNotify message={success.message} success={true} />
       )}
-      <div className={c.formCAdmin}>
+      <div className={c.formCAdmin} style={{flexWrap:"wrap"}}>
         <div className={c["form-group"]}>
           <label htmlFor="sd">from</label>
           <input
@@ -245,14 +245,13 @@ filtredData=filtData(orders, filtred)
           />
         </div>
         <div className={c["form-group"]}>
-          <label htmlFor="end">shift leader</label>
+          <label>shift leader</label>
           <Select
             options={[
               { label: "N/A", value: "" },
               ...getlabelandvalue(sl.filter((f) => f !== null)),
             ]}
-            id="multiSelect"
-            inputId="shiftleader1"
+
             styles={customStyles}
             placeholder="select shift leader"
             onChange={(e) => setSln(e.value)}
@@ -267,8 +266,6 @@ filtredData=filtData(orders, filtred)
               { label: "evening", value: "evening" },
               { label: "nigth", value: "nigth" },
             ]}
-            id="multiSelect"
-            inputId="shiftleader1"
             styles={customStyles}
             onChange={(e) => setFiltred((p) => ({ ...p, shift: e.value }))}
           />
@@ -283,10 +280,22 @@ filtredData=filtData(orders, filtred)
                   .trainingTitles
               ),
             ]}
-            id="multiSelect"
-            inputId="shiftleader1"
             styles={customStyles}
             onChange={(e) => setFiltred((p) => ({ ...p, qua: e.value }))}
+          />
+        </div>
+        <div className={c["form-group"]}>
+          <label htmlFor="sft">status</label>
+          <Select
+            options={[
+              { label: "N/A", value: "" },
+              { label: "not set", value: null },
+              { label: "confimed", value: "Confirmed" },
+              { label: "not confimed", value: "not confirmed" },
+              
+            ]}
+            styles={customStyles}
+            onChange={(e) => setFiltred((p) => ({ ...p, sts: e.value }))}
           />
         </div>
       </div>
