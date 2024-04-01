@@ -72,7 +72,7 @@ const customStyles = {
 };
 let BACKUPDATA = [];
 const ViewOreders = (p) => {
-  const { isLoged, orderDates } = useSelector((s) => s.login);
+  const { isLoged, orderDates, titleAndType } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
   const [sl, setSl] = useState([]);
   const [sln, setSln] = useState("");
@@ -82,6 +82,9 @@ const ViewOreders = (p) => {
   const [success, setSuccess] = useState({ status: false, message: "" });
   const [err, setErr] = useState({ status: false, message: "" });
   const [dataUp, setDataUp] = useState(false);
+
+  console.log("re", titleAndType)
+
 
   const handleCheckboxChange = (event) => {
     const { id, checked } = event.target;
@@ -173,9 +176,9 @@ const ViewOreders = (p) => {
 
   const confirmStatus = async (e, s) => {
     const uri =
-      s === "nc"
-        ? `${api}/other/updateOrder/status?status="Confirmed"`
-        : `${api}/other/updateOrder/status?status="not confirmed"`;
+      s === "c"
+        ? `${api}/other/updateOrder/status?status=Confirmed`
+        : `${api}/other/updateOrder/status?status=not confirmed`;
     try {
       await fetch(uri, {
         method: "PUT",
@@ -183,13 +186,20 @@ const ViewOreders = (p) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${isLoged.token}`,
         },
-        body: JSON.stringify(p.order),
+        body: JSON.stringify(orderIds),
       });
-      p.click();
-      p.callback();
+      callback();
+      setSuccess({
+        status: true,
+        message: "Status has been successfully changed!",
+      });
     } catch (error) {
       console.error("Error:", error);
-      setErr(true);
+      setErr({
+        status: true,
+        message:
+          "Something has gone wrong, we were not able to save this action, please try it again. ",
+      });
     }
   };
 
@@ -251,6 +261,36 @@ const ViewOreders = (p) => {
             onChange={(e) => setSln(e.value)}
           />
         </div>
+        <div className={c["form-group"]}>
+          <label htmlFor="sft">shift</label>
+          <Select
+            options={[
+              { label: "N/A", value: "" },
+              { label: "mornining", value: "mornining" },
+              { label: "evening", value: "evening" },
+              { label: "nigth", value: "nigth" },
+            ]}
+            id="multiSelect"
+            inputId="shiftleader1"
+            styles={customStyles}
+            onChange={(e) => setSln(e.value)}
+          />
+        </div>
+        <div className={c["form-group"]}>
+          <label htmlFor="sft">qualification</label>
+          <Select
+            options={[
+              { label: "N/A", value: "" },
+              { label: "mornining", value: "mornining" },
+              { label: "evening", value: "evening" },
+              { label: "nigth", value: "nigth" },
+            ]}
+            id="multiSelect"
+            inputId="shiftleader1"
+            styles={customStyles}
+            onChange={(e) => setSln(e.value)}
+          />
+        </div>
       </div>
       {orders.length > 0 ? (
         <div className={c.orderHolder}>
@@ -268,8 +308,7 @@ const ViewOreders = (p) => {
               >
                 uncheck
               </button>
-
-              <button onClick={() => setDataUp(true)}>Confirmed</button>
+              <button onClick={(e) => confirmStatus(e, "c")}>Confirmed</button>
               <button onClick={(e) => confirmStatus(e, "nc")}>
                 not confirmed
               </button>

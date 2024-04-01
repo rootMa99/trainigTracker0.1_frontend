@@ -1,5 +1,5 @@
 .formCAdmin {
-  width: 60rem;
+  width: fit-content;
   background: linear-gradient(#000000, #000000) padding-box,
     linear-gradient(136deg, transparent 35%, #f33716, orange) border-box;
   border: 2px solid transparent;
@@ -9,7 +9,7 @@
   color: white;
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 2rem;
   box-sizing: border-box;
   border-radius: 16px;
   background-size: 200% 100%;
@@ -20,6 +20,7 @@
   z-index: 22222;
   top: 10px;
   align-items: center;
+  justify-content: center;
 }
 .formCAdmin span {
   color: #f1c07e;
@@ -64,7 +65,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  width: 95%;
+  width: 15rem;
 }
 .formCAdmin .form-group label {
   display: block;
