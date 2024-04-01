@@ -13,23 +13,27 @@ const EditOrDeleteUser = (p) => {
   const [isVibrating, setIsVibrating] = useState(true);
 
   useEffect(() => {
+    if(p.data.userName === "root") {
     const timeout = setTimeout(() => {
       setIsVibrating(false); 
     }, 2000);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }
+  }, [p.data.userName]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsVibrating(true); 
-      setTimeout(() => {
-        setIsVibrating(false); 
-      }, 2000);
-    }, 4000); 
-
-    return () => clearInterval(interval);
-  }, []);
+    if(p.data.userName === "root"){
+      const interval = setInterval(() => {
+        setIsVibrating(true); 
+        setTimeout(() => {
+          setIsVibrating(false); 
+        }, 2000);
+      }, 4000); 
+  
+      return () => clearInterval(interval);
+    }
+  }, [p.data.userName]);
 
   const changeMatchedpwd = (e) => {
     setPwd((prevState) => {
@@ -79,7 +83,7 @@ const EditOrDeleteUser = (p) => {
     const confirmed = window.confirm("Do you want to continue?");
     if (confirmed) {
       try {
-        await fetch(`${api}/other/deleteOrders`, {
+        await fetch(`${api}/root/data/deleteUser?un=${p.data.userName}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -87,7 +91,11 @@ const EditOrDeleteUser = (p) => {
           },
         });
 
+       
+
         setSuccess({ status: true, message: "Deleted successfully" });
+        p.click();
+        p.callback()
       } catch (error) {
         console.error("Error:", error);
         setErr({
@@ -98,6 +106,8 @@ const EditOrDeleteUser = (p) => {
       }
     }
   };
+
+  console.log(p.data, "see what we have here")
 
   return (
     <React.Fragment>
