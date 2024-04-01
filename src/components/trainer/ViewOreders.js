@@ -7,7 +7,7 @@ import pic from "../../assets/os.gif";
 import { loginActions } from "../../store/loginSlice";
 import NetworkNotify from "../UI/NetworkNotify";
 import Select from "react-select";
-import { getlabelandvalue } from "../functions/utils";
+import { filtData, getlabelandvalue } from "../functions/utils";
 import EditDate from "./EditDate";
 import BackDrop from "../UI/BackDrop";
 
@@ -199,7 +199,7 @@ const ViewOreders = (p) => {
       });
     }
   };
-
+filtredData=filtData(orders, filtred)
   return (
     <React.Fragment>
       {dataUp && (
@@ -290,11 +290,11 @@ const ViewOreders = (p) => {
           />
         </div>
       </div>
-      {orders.length > 0 ? (
+      {filtredData.length > 0 ? (
         <div className={c.orderHolder}>
           {orderIds.length > 0 && (
             <div className={c.orderActions} style={{ marginTop: "1rem" }}>
-              {orderIds.length !== orders.length && (
+              {orderIds.length !== filtredData.length && (
                 <button onClick={handleCheckAll}>check all</button>
               )}
 
@@ -315,7 +315,7 @@ const ViewOreders = (p) => {
               </button>
             </div>
           )}
-          {orders.map((m) => (
+          {filtredData.map((m) => (
             <div className={c.holy} key={m.qualificationId}>
               <input
                 className={c.checkboxInput}
