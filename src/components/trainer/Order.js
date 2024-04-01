@@ -43,7 +43,7 @@ const Order = ({ data }) => {
             <span>status</span>
             <h3
               style={
-                data.status === "confirmed"
+                data.status === "Confirmed"
                   ? { color: "green" }
                   : data.status === "not confirmed"
                   ? { color: "red" }

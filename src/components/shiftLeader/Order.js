@@ -40,7 +40,13 @@ const Order = ({ data }) => {
           </div>
           <div className={c.dataT} style={{ width: "15%" }}>
           <span>status</span>
-          <h3>not set</h3>
+          <h3 style={
+            data.status === "Confirmed"
+              ? { color: "green" }
+              : data.status === "not confirmed"
+              ? { color: "red" }
+              : { color: "blue" }
+          }>{data.status === null ? "not set" : data.status}</h3>
           </div>
         </div>
       </div>

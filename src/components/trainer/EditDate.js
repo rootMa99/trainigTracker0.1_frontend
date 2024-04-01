@@ -12,23 +12,16 @@ const EditDate = (p) => {
     console.log(p, orderDt);
 
     try {
-      const response = await fetch(
-        `${api}/other/updateOrder/trainer?endDate=${orderDt}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${isLoged.token}`,
-          },
-          body: JSON.stringify(p.order),
-        }
-      );
-
-      const data = await response.json();
-      console.log(data);
+      await fetch(`${api}/other/updateOrder/trainer?endDate=${orderDt}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+        body: JSON.stringify(p.order),
+      });
       p.click();
-        p.callback();
-     
+      p.callback();
     } catch (error) {
       console.error("Error:", error);
       setErr(true);
@@ -37,9 +30,14 @@ const EditDate = (p) => {
 
   return (
     <React.Fragment>
-    {err && <NetworkNotify message={
-      "Something has gone wrong, we were not able to save this action, please try it again. "
-    } success={false} />}
+      {err && (
+        <NetworkNotify
+          message={
+            "Something has gone wrong, we were not able to save this action, please try it again. "
+          }
+          success={false}
+        />
+      )}
       <div
         className={c.formCAdmin}
         style={{
