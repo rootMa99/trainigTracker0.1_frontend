@@ -77,26 +77,26 @@ const EditOrDeleteUser = (p) => {
 
   const deleteOrders = async (e) => {
     const confirmed = window.confirm("Do you want to continue?");
-    // if (confirmed) {
-    //   try {
-    //     await fetch(`${api}/other/deleteOrders`, {
-    //       method: "DELETE",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${isLoged.token}`,
-    //       },
-    //     });
+    if (confirmed) {
+      try {
+        await fetch(`${api}/other/deleteOrders`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+        });
 
-    //     setSuccess({ status: true, message: "Deleted successfully" });
-    //   } catch (error) {
-    //     console.error("Error:", error);
-    //     setErr({
-    //       status: true,
-    //       message:
-    //         "Something has gone wrong, we were not able to save this action, please try it again. ",
-    //     });
-    //   }
-    // }
+        setSuccess({ status: true, message: "Deleted successfully" });
+      } catch (error) {
+        console.error("Error:", error);
+        setErr({
+          status: true,
+          message:
+            "Something has gone wrong, we were not able to save this action, please try it again. ",
+        });
+      }
+    }
   };
 
   return (

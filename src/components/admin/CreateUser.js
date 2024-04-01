@@ -215,7 +215,7 @@ Training Center/Aptiv`
       {edu.status && (
         <React.Fragment>
           <BackDrop click={close} />
-          <EditOrDeleteUser data={edu.data} click={close} />
+          <EditOrDeleteUser data={edu.data} callback={callback} click={close} />
         </React.Fragment>
       )}
 
@@ -359,4 +359,4 @@ Training Center/Aptiv`
 };
 export default CreateUser;
 
-// For security reasons, we recommend changing your password after your first login. You can do this by going to the "Account Settings" section.
+
