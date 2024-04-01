@@ -14,7 +14,7 @@ const EditOrDeleteUser = (p) => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setIsVibrating(false); // Stop vibration after 2 seconds
+      setIsVibrating(false); 
     }, 2000);
 
     return () => clearTimeout(timeout);
@@ -22,11 +22,11 @@ const EditOrDeleteUser = (p) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsVibrating(true); // Start vibration again after 2 seconds
+      setIsVibrating(true); 
       setTimeout(() => {
-        setIsVibrating(false); // Stop vibration after 2 seconds
+        setIsVibrating(false); 
       }, 2000);
-    }, 4000); // Interval of 4 seconds (2 seconds stop + 2 seconds wait)
+    }, 4000); 
 
     return () => clearInterval(interval);
   }, []);
@@ -73,6 +73,30 @@ const EditOrDeleteUser = (p) => {
         });
       }
     }
+  };
+
+  const deleteOrders = async (e) => {
+    const confirmed = window.confirm("Do you want to continue?");
+    // if (confirmed) {
+    //   try {
+    //     await fetch(`${api}/other/deleteOrders`, {
+    //       method: "DELETE",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${isLoged.token}`,
+    //       },
+    //     });
+
+    //     setSuccess({ status: true, message: "Deleted successfully" });
+    //   } catch (error) {
+    //     console.error("Error:", error);
+    //     setErr({
+    //       status: true,
+    //       message:
+    //         "Something has gone wrong, we were not able to save this action, please try it again. ",
+    //     });
+    //   }
+    // }
   };
 
   return (
@@ -123,7 +147,7 @@ const EditOrDeleteUser = (p) => {
             Submit
           </button>
           {p.data.userName !== "root" && (
-            <h5 className={c.deleteTraining}>Delete this account</h5>
+            <h5 className={c.deleteTraining} onClick={deleteOrders}>Delete this account</h5>
           )}
         </form>
       </div>
