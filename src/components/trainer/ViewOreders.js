@@ -70,19 +70,18 @@ const customStyles = {
     },
   }),
 };
-let BACKUPDATA=[];
+let BACKUPDATA = [];
 const ViewOreders = (p) => {
   const { isLoged, orderDates } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
   const [sl, setSl] = useState([]);
-  const [sln, setSln]=useState("");
+  const [sln, setSln] = useState("");
   const dispatch = useDispatch();
   const [checkboxState, setCheckboxState] = useState({});
   const [orderIds, setOrderIds] = useState([]);
   const [success, setSuccess] = useState({ status: false, message: "" });
   const [err, setErr] = useState({ status: false, message: "" });
   const [dataUp, setDataUp] = useState(false);
-
 
   const handleCheckboxChange = (event) => {
     const { id, checked } = event.target;
@@ -110,7 +109,6 @@ const ViewOreders = (p) => {
     setOrderIds(ids);
   };
 
-
   const callbackSL = useCallback(async () => {
     try {
       const response = await fetch(`${api}/root/data/shiftleaders`, {
@@ -135,22 +133,22 @@ const ViewOreders = (p) => {
   console.log(orderDates);
   const callback = useCallback(async () => {
     try {
-      const uri=sln!==""?`${api}/other/orders?shiftLeader=${sln}&startDate=${orderDates.start}&endDate=${orderDates.end}`:`${api}/other/orders/dateBetween?&startDate=${orderDates.start}&endDate=${orderDates.end}`;
-      const response = await fetch(
-        uri,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${isLoged.token}`,
-          },
-        }
-      );
+      const uri =
+        sln !== ""
+          ? `${api}/other/orders?shiftLeader=${sln}&startDate=${orderDates.start}&endDate=${orderDates.end}`
+          : `${api}/other/orders/dateBetween?&startDate=${orderDates.start}&endDate=${orderDates.end}`;
+      const response = await fetch(uri, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
 
       const data = await response.json();
       console.log(data);
       setOrders(data);
-      BACKUPDATA=data;
+      BACKUPDATA = data;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -171,19 +169,38 @@ const ViewOreders = (p) => {
     setCheckboxState({});
     setOrderIds([]);
   };
-  console.log(BACKUPDATA)
+  console.log(BACKUPDATA);
+
+  const confirmStatus = async (e, s) => {
+    const uri =
+      s === "nc"
+        ? `${api}/other/updateOrder/status?status="Confirmed"`
+        : `${api}/other/updateOrder/status?status="not confirmed"`;
+    try {
+      await fetch(uri, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+        body: JSON.stringify(p.order),
+      });
+      p.click();
+      p.callback();
+    } catch (error) {
+      console.error("Error:", error);
+      setErr(true);
+    }
+  };
+
   return (
     <React.Fragment>
-    {dataUp && (
-      <React.Fragment>
-        <EditDate
-          click={close}
-          order={orderIds}
-          callback={callback}
-        />
-        <BackDrop click={close} zindex={22223} />{" "}
-      </React.Fragment>
-    )}
+      {dataUp && (
+        <React.Fragment>
+          <EditDate click={close} order={orderIds} callback={callback} />
+          <BackDrop click={close} zindex={22223} />{" "}
+        </React.Fragment>
+      )}
       {err.status && <NetworkNotify message={err.message} success={false} />}
       {success.status && (
         <NetworkNotify message={success.message} success={true} />
@@ -223,42 +240,47 @@ const ViewOreders = (p) => {
         <div className={c["form-group"]}>
           <label htmlFor="end">shift leader</label>
           <Select
-            options={[{label:"N/A", value:""} ,...getlabelandvalue(sl.filter(f=>f!==null))]}
+            options={[
+              { label: "N/A", value: "" },
+              ...getlabelandvalue(sl.filter((f) => f !== null)),
+            ]}
             id="multiSelect"
             inputId="shiftleader1"
             styles={customStyles}
             placeholder="select shift leader"
-            onChange={e=>setSln(e.value)}
+            onChange={(e) => setSln(e.value)}
           />
         </div>
       </div>
       {orders.length > 0 ? (
         <div className={c.orderHolder}>
-        {orderIds.length > 0 && (
-          <div className={c.orderActions} style={{marginTop:"1rem"}}>
-            {orderIds.length !== orders.length && (
-              <button onClick={handleCheckAll}>check all</button>
-            )}
+          {orderIds.length > 0 && (
+            <div className={c.orderActions} style={{ marginTop: "1rem" }}>
+              {orderIds.length !== orders.length && (
+                <button onClick={handleCheckAll}>check all</button>
+              )}
 
-            <button
-              onClick={() => {
-                setCheckboxState({});
-                setOrderIds([]);
-              }}
-            >
-              uncheck
-            </button>
-            
-              <button onClick={() => setDataUp(true)}>confirm</button>
-              <button onClick={() => setDataUp(true)}>not confirmed</button>
-              <button onClick={() => setDataUp(true)}>Edit qualification Date</button>
-            
-            
-          </div>
-        )}
+              <button
+                onClick={() => {
+                  setCheckboxState({});
+                  setOrderIds([]);
+                }}
+              >
+                uncheck
+              </button>
+
+              <button onClick={() => setDataUp(true)}>Confirmed</button>
+              <button onClick={(e) => confirmStatus(e, "nc")}>
+                not confirmed
+              </button>
+              <button onClick={() => setDataUp(true)}>
+                Edit qualification Date
+              </button>
+            </div>
+          )}
           {orders.map((m) => (
             <div className={c.holy} key={m.qualificationId}>
-            <input
+              <input
                 className={c.checkboxInput}
                 type="checkbox"
                 id={m.qualificationId}
