@@ -70,7 +70,7 @@ const customStyles = {
     },
   }),
 };
-let BACKUPDATA = [];
+
 const ViewOreders = (p) => {
   const { isLoged, orderDates, titleAndType } = useSelector((s) => s.login);
   const [orders, setOrders] = useState([]);
@@ -82,10 +82,9 @@ const ViewOreders = (p) => {
   const [success, setSuccess] = useState({ status: false, message: "" });
   const [err, setErr] = useState({ status: false, message: "" });
   const [dataUp, setDataUp] = useState(false);
-
-  console.log("re", titleAndType)
-
-
+  const [filtred, setFiltred] = useState({ shift: "", qua: "" });
+  console.log("re", titleAndType);
+  let filtredData = [];
   const handleCheckboxChange = (event) => {
     const { id, checked } = event.target;
     const ids = orderIds;
@@ -151,7 +150,6 @@ const ViewOreders = (p) => {
       const data = await response.json();
       console.log(data);
       setOrders(data);
-      BACKUPDATA = data;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -172,7 +170,6 @@ const ViewOreders = (p) => {
     setCheckboxState({});
     setOrderIds([]);
   };
-  console.log(BACKUPDATA);
 
   const confirmStatus = async (e, s) => {
     const uri =
@@ -266,14 +263,14 @@ const ViewOreders = (p) => {
           <Select
             options={[
               { label: "N/A", value: "" },
-              { label: "mornining", value: "mornining" },
+              { label: "morning", value: "morning" },
               { label: "evening", value: "evening" },
               { label: "nigth", value: "nigth" },
             ]}
             id="multiSelect"
             inputId="shiftleader1"
             styles={customStyles}
-            onChange={(e) => setSln(e.value)}
+            onChange={(e) => setFiltred((p) => ({ ...p, shift: e.value }))}
           />
         </div>
         <div className={c["form-group"]}>
@@ -281,14 +278,15 @@ const ViewOreders = (p) => {
           <Select
             options={[
               { label: "N/A", value: "" },
-              { label: "mornining", value: "mornining" },
-              { label: "evening", value: "evening" },
-              { label: "nigth", value: "nigth" },
+              ...getlabelandvalue(
+                titleAndType.filter((f) => f.trainingType === "Process")[0]
+                  .trainingTitles
+              ),
             ]}
             id="multiSelect"
             inputId="shiftleader1"
             styles={customStyles}
-            onChange={(e) => setSln(e.value)}
+            onChange={(e) => setFiltred((p) => ({ ...p, qua: e.value }))}
           />
         </div>
       </div>

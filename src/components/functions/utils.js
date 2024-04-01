@@ -39,11 +39,9 @@ export const generateRandomString = (length) => {
   return result;
 };
 
-
-
 export const sendEmail = (email, subjects, bodys) => {
-  const recipient = email; 
-  const subject = subjects; 
+  const recipient = email;
+  const subject = subjects;
   const body = bodys;
 
   window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(
@@ -51,29 +49,52 @@ export const sendEmail = (email, subjects, bodys) => {
   )}&body=${encodeURIComponent(body)}`;
 };
 
-
-
-export const getNextWeekDates=()=> {
+export const getNextWeekDates = () => {
   const currentDate = new Date();
-  const currentDayOfWeek = currentDate.getDay(); 
-  const daysUntilNextMonday = 8 - currentDayOfWeek; 
+  const currentDayOfWeek = currentDate.getDay();
+  const daysUntilNextMonday = 8 - currentDayOfWeek;
 
-  const nextMonday = new Date(currentDate.getTime() + daysUntilNextMonday * 24 * 60 * 60 * 1000);
+  const nextMonday = new Date(
+    currentDate.getTime() + daysUntilNextMonday * 24 * 60 * 60 * 1000
+  );
 
-  return nextMonday.toISOString().slice(0,10);
-}
+  return nextMonday.toISOString().slice(0, 10);
+};
 
-export const getNextWeek=()=> {
+export const getNextWeek = () => {
   const today = new Date();
   const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-  const nextWeekStart = new Date(nextWeek.getFullYear(), nextWeek.getMonth(), nextWeek.getDate() - nextWeek.getDay() + 1); 
-  const nextWeekEnd = new Date(nextWeekStart.getTime() + 6 * 24 * 60 * 60 * 1000);
+  const nextWeekStart = new Date(
+    nextWeek.getFullYear(),
+    nextWeek.getMonth(),
+    nextWeek.getDate() - nextWeek.getDay() + 1
+  );
+  const nextWeekEnd = new Date(
+    nextWeekStart.getTime() + 6 * 24 * 60 * 60 * 1000
+  );
 
-  const startDateFormatted = nextWeekStart.toISOString().split('T')[0];
-  const endDateFormatted = nextWeekEnd.toISOString().split('T')[0];
+  const startDateFormatted = nextWeekStart.toISOString().split("T")[0];
+  const endDateFormatted = nextWeekEnd.toISOString().split("T")[0];
 
   return {
-      start: startDateFormatted,
-      end: endDateFormatted
+    start: startDateFormatted,
+    end: endDateFormatted,
   };
-}
+};
+
+export const filtData = (data, fil) => {
+  if (fil.qua.trim() === "" && fil.shift.trim() === "") {
+    return data;
+  }
+  if (fil.qua.trim() === "" && fil.shift.trim() !== "") {
+    return data.filter((f) => f.shift === fil.shift);
+  }
+  if (fil.qua.trim() !== "" && fil.shift.trim() === "") {
+    return data.filter((f) => f.qualification === fil.qua);
+  }
+  if (fil.qua.trim() !== "" && fil.shift.trim() !== "") {
+    return data.filter(
+      (f) => f.shift === fil.shift && f.qualification === fil.qua
+    );
+  }
+};
