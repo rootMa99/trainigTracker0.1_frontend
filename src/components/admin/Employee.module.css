@@ -136,21 +136,21 @@
   font-weight: bold;
   cursor: pointer;
   width: fit-content;
-    margin: 0 auto;
+  margin: 0 auto;
 }
 .classBtn:hover {
   border: 2px solid rgb(255, 255, 255);
   color: rgb(235, 235, 235);
   transform: scale(1.1);
 }
-.nfd{
+.nfd {
   width: 100%;
 }
-.nfd{
+.nfd {
   text-transform: uppercase;
-    font-size: x-large;
+  font-size: x-large;
 }
-/* .nfd img{
-  opacity: 0.4;
-} */
-
+.nfd img {
+  width: 20rem;
+  opacity: 0.9;
+}

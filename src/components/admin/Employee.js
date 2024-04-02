@@ -66,7 +66,7 @@ const Employee = React.memo((p) => {
           <div className={c.trainingInfo}>
             {employeeData.trainingFromExcels.length === 0 ? (
               <div className={c.nfd}>
-                <h3>No data found</h3>
+                <h3>No session was found</h3>
                 <img src={im} alt="nf" />
               </div>
             ) : (
