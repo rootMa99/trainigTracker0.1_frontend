@@ -6,7 +6,7 @@ import AddTrainingForm from "./AddTrainingFrom";
 import BackDrop from "../UI/BackDrop";
 import { useSelector } from "react-redux";
 
-const Employee =React.memo( (p) => {
+const Employee = React.memo((p) => {
   const { employeeData } = useSelector((s) => s.login);
   const [addTraining, setAddTraining] = useState(false);
 
@@ -16,11 +16,13 @@ const Employee =React.memo( (p) => {
   const close = (p) => {
     setAddTraining(false);
   };
-  console.log(employeeData)
+  console.log(employeeData);
   return (
     <React.Fragment>
       {addTraining && <BackDrop zindex={22221} click={close} />}
-      {addTraining && <AddTrainingForm matricule={employeeData.matricule} click={close} />}
+      {addTraining && (
+        <AddTrainingForm matricule={employeeData.matricule} click={close} />
+      )}
       <div className={c["form-container"]}>
         <div className={c.logo}>
           <img src={imglogo} alt="logo for aptiv" />
@@ -37,11 +39,11 @@ const Employee =React.memo( (p) => {
             </div>
             <div className={c.wrapData}>
               <h3>name</h3>
-              <span>{employeeData.nom}</span>
+              <span>{employeeData.prenom}</span>
             </div>
             <div className={c.wrapData}>
               <h3>last name</h3>
-              <span>{employeeData.prenom}</span>
+              <span>{employeeData.nom}</span>
             </div>
             <div className={c.wrapData}>
               <h3>category</h3>
@@ -63,7 +65,9 @@ const Employee =React.memo( (p) => {
             {employeeData.trainingFromExcels.length === 0 ? (
               <h3>No data found</h3>
             ) : (
-              employeeData.trainingFromExcels.map(m=><Training data={m} key={m.trainingId} click={close}/>)
+              employeeData.trainingFromExcels.map((m) => (
+                <Training data={m} key={m.trainingId} click={close} />
+              ))
             )}
             <Training />
           </div>
