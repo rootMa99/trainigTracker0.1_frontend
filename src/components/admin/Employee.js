@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import AddTrainingForm from "./AddTrainingFrom";
 import BackDrop from "../UI/BackDrop";
 import { useSelector } from "react-redux";
+import im from "../../assets/notFound.svg"
+
 
 const Employee = React.memo((p) => {
   const { employeeData } = useSelector((s) => s.login);
@@ -63,7 +65,10 @@ const Employee = React.memo((p) => {
           </div>
           <div className={c.trainingInfo}>
             {employeeData.trainingFromExcels.length === 0 ? (
-              <h3>No data found</h3>
+              <div className={c.nfd}>
+                <h3>No data found</h3>
+                <img src={im} alt="nf" />
+              </div>
             ) : (
               employeeData.trainingFromExcels.map((m) => (
                 <Training data={m} key={m.trainingId} click={close} />

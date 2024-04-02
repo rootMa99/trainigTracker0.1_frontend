@@ -143,3 +143,14 @@
   color: rgb(235, 235, 235);
   transform: scale(1.1);
 }
+.nfd{
+  width: 100%;
+}
+.nfd{
+  text-transform: uppercase;
+    font-size: x-large;
+}
+.nfd img{
+  opacity: 0.4;
+}
+
