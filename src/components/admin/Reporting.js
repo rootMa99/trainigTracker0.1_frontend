@@ -69,8 +69,7 @@ const Reporting = (p) => {
             };
           });
         }
-
-        // Set font color for all rows
+        
         worksheetRow.eachCell({ includeEmpty: true }, function (cell) {
           cell.font = { color: { argb: "000000" } }; // Black font color
         });
