@@ -19,7 +19,7 @@ const Charts = (p) => {
       {
         type: "bar",
         label: p.title,
-        data: p.data.map((m) => (m.nbh).toFixed(1)),
+        data: p.data.map((m) => m.nbh.toFixed(1)),
         backgroundColor: "#b7d1cf",
         hoverBackgroundColor: "#929D96",
         borderColor: "black",
@@ -33,7 +33,7 @@ const Charts = (p) => {
       {
         type: "line",
         label: "Target",
-        data: p.data.map((m) => (m.nbh).toFixed(1)),
+        data: p.data.map((m) => m.nbh.toFixed(1)),
         backgroundColor: "#F84018",
         pointHoverBorderColor: "#FAF0E6",
         borderColor: "#3BC6EB",
@@ -46,6 +46,15 @@ const Charts = (p) => {
         pointBorderColor: "#3BC6EB",
         pointBorderWidth: 8,
         pointRadius: 1,
+      },
+      {
+        type: "bar",
+        label: p.title,
+        data: p.data.map((m) => m.nbh.toFixed(1)),
+        backgroundColor: "#b7d1cf",
+        hoverBackgroundColor: "#929D96",
+        borderColor: "black",
+        borderWidth: 1,
       },
     ],
   };
@@ -74,7 +83,6 @@ const Charts = (p) => {
       },
     },
     plugins: {
-   
       legend: {
         labels: {
           color: "#FAF0E6",
@@ -136,8 +144,8 @@ const Charts = (p) => {
         <span></span>
       </div>
       <React.Fragment>
-        {p.type==="bar"&&<Bar data={barChart} options={options} />}
-        {p.type==="line"&&<Line data={data} options={options} />}
+        {p.type === "bar" && <Bar data={barChart} options={options} />}
+        {p.type === "line" && <Line data={data} options={options} />}
       </React.Fragment>
     </div>
   );
