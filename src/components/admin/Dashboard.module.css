@@ -1,6 +1,7 @@
 .headerD {
+  margin: auto;
   margin-top: 1rem;
-  width: 100%;
+  width: 99%;
   background: linear-gradient(#000000, #000000) padding-box,
     linear-gradient(145deg, transparent 35%, #f33716, orange) border-box;
   border: 2px solid transparent;
