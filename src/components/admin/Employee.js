@@ -5,7 +5,8 @@ import React, { useState } from "react";
 import AddTrainingForm from "./AddTrainingFrom";
 import BackDrop from "../UI/BackDrop";
 import { useSelector } from "react-redux";
-import im from "../../assets/notFound.svg"
+// import im from "../../assets/notFound.svg"
+import im from "../../assets/No data-pana.svg"
 
 
 const Employee = React.memo((p) => {
