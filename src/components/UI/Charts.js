@@ -92,11 +92,11 @@ const Charts = (p) => {
       datalabels: {
         display: true,
       },
-      // hover: {
-      //   mode: "nearest",
-      //   intersect: false,
-      //   animationDuration: 400,
-      // },
+      hover: {
+        mode: "nearest",
+        intersect: false,
+        animationDuration: 400,
+      },
     },
     animation: {
       onComplete: (animation) => {
@@ -117,8 +117,8 @@ const Charts = (p) => {
             }
             ctx.save();
             ctx.textAlign = "center";
-            ctx.fillStyle = dataset.type === "bar" ? "#CF3335" : "#EEEEEE";
-            ctx.font = "17px Arial";
+            ctx.fillStyle = dataset.type === "bar" ? "#383942" : "#EEEEEE";
+            ctx.font = "bold 17px Arial";
             ctx.fillText(data, xPos, yPos);
             ctx.restore();
           });
