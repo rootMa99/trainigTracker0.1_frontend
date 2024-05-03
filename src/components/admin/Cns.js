@@ -165,7 +165,11 @@ const Cns = (p) => {
         <NetworkNotify message={success.message} success={true} />
       )}
       <div className={`${c.formCAdmin} ${c.csn}`}>
-        <form className={c.form} onSubmit={submitHandler}>
+        <form
+          className={c.form}
+          style={{ height: "100%" }}
+          onSubmit={submitHandler}
+        >
           <div className={c["form-group"]} style={{ width: "95%" }}>
             <label htmlFor="userName">training Type</label>
             <Select
@@ -220,6 +224,7 @@ const Cns = (p) => {
               onChange={(e) => onchangeHandler(e, "dph")}
               placeholder="enter TS/h"
               min={0}
+              style={{ marginTop: 0 }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -233,6 +238,7 @@ const Cns = (p) => {
               onChange={(e) => onchangeHandler(e, "sd")}
               value={dataForm.ddb}
               max={dataForm.ddf}
+              style={{ marginTop: 0 }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -246,6 +252,7 @@ const Cns = (p) => {
               onChange={(e) => onchangeHandler(e, "ed")}
               value={dataForm.ddf}
               min={dataForm.ddb}
+              style={{ marginTop: 0 }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -272,6 +279,7 @@ const Cns = (p) => {
               placeholder="enter trainer"
               onChange={(e) => onchangeHandler(e, "trainer")}
               value={dataForm.formatteur}
+              style={{ marginTop: 0 }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -290,15 +298,19 @@ const Cns = (p) => {
             />
           </div>
           <div className={c["form-group"]} style={{ width: "100%" }}>
-            <label htmlFor="matrcules">matrcules</label>
+            <label htmlFor="matrcules">matrcules*</label>
             <input
               required
               name="matricules"
               id="matricules"
               type="text"
-              placeholder="enter matricules"
+              placeholder={`enter matricules i.e: "m1,m2,m3..."`}
               onBlur={(e) => onchangeHandler(e, "matricules")}
             />
+            <p>
+              note: The list of matricules must be entered as "1,22,33" with no
+              spaces, only commas ","**
+            </p>
           </div>
           <button type="submit" className={c["form-submit-btn"]}>
             Submit
