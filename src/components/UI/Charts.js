@@ -87,7 +87,7 @@ const Charts = (p) => {
         labels: {
           color: "#FAF0E6",
         },
-        display: true,
+        display: false,
       },
       datalabels: {
         display: true,
@@ -117,7 +117,7 @@ const Charts = (p) => {
             }
             ctx.save();
             ctx.textAlign = "center";
-            ctx.fillStyle = dataset.type === "bar" ? "#383942" : "#EEEEEE";
+            ctx.fillStyle = dataset.type === "bar" ? "#006B63" : "#EEEEEE";
             ctx.font = "bold 17px Arial";
             ctx.fillText(data, xPos, yPos);
             ctx.restore();
