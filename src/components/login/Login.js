@@ -71,7 +71,7 @@ const Login = () => {
       </video>
       <div className={c.cont}>
         <span className={c.cer}> </span>
-        <h1 className={c.titlte}>training center tracker Application</h1>
+        <h1 className={c.titlte}>training center Application</h1>
         <span className={c.cer}> </span>
       </div>
       <form className={c["Form-container"]} onSubmit={ClickHandler}>
