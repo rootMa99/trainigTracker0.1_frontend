@@ -17,16 +17,15 @@
   gap: 20px;
   justify-content: center;
   background: linear-gradient(#000000, #000000) padding-box,
-  linear-gradient(145deg, transparent 35%, #f33716, orange) border-box;
-border: 2px solid transparent;
-padding: 32px 24px;
-font-size: 14px;
-box-sizing: border-box;
+    linear-gradient(145deg, transparent 35%, #f33716, orange) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  box-sizing: border-box;
   border-radius: 16px;
   background-size: 200% 100%;
   align-items: flex-start;
 }
-
 
 .form-group {
   display: flex;
@@ -104,6 +103,7 @@ box-sizing: border-box;
   width: fit-content;
   text-transform: uppercase;
   font-size: small;
+  font-weight: 900;
 }
 .employeeT {
   display: flex;
@@ -165,22 +165,19 @@ box-sizing: border-box;
 }
 
 .form-group input:focus,
-.form-group input:hover{
+.form-group input:hover {
   outline: none;
   border-color: #f33716;
 }
-.gen{
-    cursor: pointer;
-    color: #717171 !important;
+.gen {
+  cursor: pointer;
+  color: #717171 !important;
 }
 .gen:hover,
-.gen:focus{
-    background-color: #f33716;
-    color: #fff !important;
+.gen:focus {
+  background-color: #f33716;
+  color: #fff !important;
 }
-
-
-
 
 .card {
   position: relative;
@@ -197,7 +194,7 @@ box-sizing: border-box;
   cursor: pointer;
 }
 .card:hover {
-transform: scale(1.1);
+  transform: scale(1.1);
 }
 .bg {
   position: absolute;
@@ -226,11 +223,11 @@ transform: scale(1.1);
   filter: blur(12px);
   /* animation: blob-bounce 5s infinite; */
 }
-.detailsC h4{
+.detailsC h4 {
   color: #717171;
   text-transform: uppercase;
 }
-.detailsC h3{
+.detailsC h3 {
   color: #fff;
   /* text-transform: uppercase; */
 }
@@ -247,18 +244,17 @@ transform: scale(1.1);
   100% {
     transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
   }
-/* 
+  /* 
   75% {
     transform: translate(-100%, -100%) translate3d(0, 100%, 0);
   } */
-/* 
+  /* 
   100% {
     transform: translate(-100%, -100%) translate3d(0, 0, 0);
   } */
 }
 
-
-.createUserShow{
+.createUserShow {
   display: flex;
   /* flex-direction: row; */
   /* flex-wrap: wrap; */
@@ -266,7 +262,7 @@ transform: scale(1.1);
   width: 100%;
   justify-content: center;
 }
-.containerCard{
+.containerCard {
   width: 90%;
   display: flex;
   gap: 1rem;
@@ -276,7 +272,7 @@ transform: scale(1.1);
   flex-direction: row;
 }
 
-.deleteTraining{
+.deleteTraining {
   opacity: 0.5;
   width: fit-content;
   margin: 0 auto;
@@ -284,32 +280,34 @@ transform: scale(1.1);
   text-transform: uppercase;
   color: #fff;
 }
-.deleteTraining:hover{
+.deleteTraining:hover {
   color: red;
   opacity: 1;
   transform: scale(1.1);
 }
 
-.editDelete{
+.editDelete {
   position: fixed;
   z-index: 22222;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.noteS, .accountS, .notewarning{
+.noteS,
+.accountS,
+.notewarning {
   color: #f1c07e;
   text-transform: capitalize;
   margin: 0;
   margin-bottom: 1rem;
 }
-.accountS{
+.accountS {
   color: #ffffff;
 }
-.accountS span{
+.accountS span {
   color: #f33716;
 }
-.notewarning{
+.notewarning {
   color: red;
   font-weight: bolder !important;
 }
